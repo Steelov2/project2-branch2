@@ -10,8 +10,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class PublisherDTO {
+public class PublisherUpdateDto {
     private long id;
 
     private String name;
@@ -19,7 +18,7 @@ public class PublisherDTO {
     private List<BookGetDto> publishedBooks;
 
 
-    public  Publisher convertPublisherDtoToEntity( ) {
+    public Publisher convertPublisherUpdateDtoToEntity( ) {
         Publisher publisher = new Publisher();
         publisher.setName(this.getName());
         publisher.setId(this.getId());

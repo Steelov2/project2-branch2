@@ -25,21 +25,16 @@ public class Book {
             strategy = GenerationType.SEQUENCE,
             generator = "book_sequence"
     )
-    private long id;
+    private Long id;
     private int price;
-    @ManyToMany
-    @JoinTable(
-            name = "authors_book",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
-
+    @ManyToMany(mappedBy = "authorsBooksList")
     private List<Author> authorList;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
-            name = "books_genre",
-            joinColumns = @JoinColumn(name = "genre_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
+            name = "book_genre",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> booksGenreList;
 
 

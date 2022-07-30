@@ -3,9 +3,9 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.DTOs.BookDTO;
 import com.example.bookstore.DTOs.BookGetDto;
 import com.example.bookstore.Repos.BookRepo;
-import com.example.bookstore.entities.Author;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +44,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(BookDTO bookDTO, Long id) {
         Book existingBook;
-        Book book=bookDTO.convertToEntity();
+        Book book=bookDTO.convertBookDtoToEntity();
         try {
             existingBook = bookRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingBook.setName(book.getName());
@@ -54,6 +54,7 @@ public class BookServiceImpl implements BookService {
             existingBook.setId(book.getId());
             existingBook.setPublisher(book.getPublisher());
             existingBook.setYearOfIssue(book.getYearOfIssue());
+            existingBook.setBooksGenreList(book.getBooksGenreList());
             bookRepo.save(book);
         } catch (ChangeSetPersister.NotFoundException e) {
             e.printStackTrace();

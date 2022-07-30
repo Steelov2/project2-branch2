@@ -23,14 +23,20 @@ public class AuthorDTO {
     private List<BookGetDto> authorsBooksList;
     private List<GenreDTO> authorsGenresList;
 
-    public Author convertToEntity() {
+    public Author convertAuthorDtoToEntity() {
         Author author = new Author();
         author.setName(this.getName());
         author.setId(this.getId());
         if (this.getAuthorsBooksList() != null)
-            author.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(BookGetDto::convertGetDtoToEntity).toList());
+            author.setAuthorsBooksList(this.getAuthorsBooksList()
+                    .stream()
+                    .map(BookGetDto::convertGetDtoToEntity)
+                    .toList());
         if (this.getAuthorsBooksList() != null)
-            author.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(GenreDTO::convertToEntity).toList());
+            author.setAuthorsGenresList(this.getAuthorsGenresList()
+                    .stream()
+                    .map(GenreDTO::convertGenreDtoToEntity)
+                    .toList());
         author.setPatronymic(this.getPatronymic());
         author.setSurname(this.getSurname());
         author.setDateOfBirth(this.getDateOfBirth());

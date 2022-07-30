@@ -3,14 +3,11 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.DTOs.PublisherDTO;
 import com.example.bookstore.DTOs.PublisherGetDto;
 import com.example.bookstore.Repos.PublisherRepo;
-import com.example.bookstore.entities.Book;
-import com.example.bookstore.entities.Genre;
 import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.PublisherService;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import javax.websocket.server.ServerEndpoint;
 import java.util.List;
 import java.util.Optional;
 @Service
@@ -44,7 +41,7 @@ public class PublisherServiceImpl implements PublisherService {
     @Override
     public void update(PublisherDTO publisherDTO, Long id) {
         Publisher existingPublisher;
-        Publisher publisher=publisherDTO.convertToEntity();
+        Publisher publisher=publisherDTO.convertPublisherDtoToEntity();
 
         try {
             existingPublisher = publisherRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);

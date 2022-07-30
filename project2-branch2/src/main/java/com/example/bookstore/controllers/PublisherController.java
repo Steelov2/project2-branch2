@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping()
 public class PublisherController {
-    private ModelMapper modelMapper;
     private final PublisherService publisherService;
     @Autowired
     public PublisherController(PublisherService publisherService){
@@ -41,7 +40,7 @@ public class PublisherController {
         return publisherService.getByNameContaining(name);
     }
     @DeleteMapping("/publisher/{publisherID}")
-    private void deletePublisherById(@PathVariable("publisherID") long id)
+    private void deletePublisherById(@PathVariable("publisherID") Long id)
     {
         publisherService.deleteByID(id);
     }
@@ -51,7 +50,7 @@ public class PublisherController {
         return  publisherService.create(publisherGetDTO);
     }
     @PutMapping("/publisher/{publisherID}")
-    private void updatePublisher(@RequestBody PublisherDTO publisherDTO,@PathVariable("publisherID") long id)    {
+    private void updatePublisher(@RequestBody PublisherDTO publisherDTO,@PathVariable("publisherID") Long id)    {
         if(!Objects.equals(id, publisherDTO.getId())){
             throw new IllegalArgumentException("IDs don't match");
         }

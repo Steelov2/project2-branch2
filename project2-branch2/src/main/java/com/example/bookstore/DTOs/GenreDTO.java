@@ -13,7 +13,7 @@ import lombok.*;
 public class GenreDTO {
     private long id;
     private String name;
-    public Genre convertToEntity( ) {
+    public Genre convertGenreDtoToEntity( ) {
         Genre genre = new Genre();
         genre.setName(this.getName());
         genre.setId(this.getId());

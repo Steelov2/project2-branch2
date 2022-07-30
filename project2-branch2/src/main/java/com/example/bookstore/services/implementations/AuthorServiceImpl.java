@@ -3,9 +3,9 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.DTOs.AuthorDTO;
 import com.example.bookstore.DTOs.AuthorGetDto;
 import com.example.bookstore.Repos.AuthorRepo;
-import com.example.bookstore.Repos.GenreRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,14 +52,15 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public void update(AuthorDTO authorDTO,Long id) throws Throwable {
             Author existingAuthor;
-            Author author=authorDTO.convertToEntity();
+            Author author=authorDTO.convertAuthorDtoToEntity();
             existingAuthor = authorRepo.findById(id).orElseThrow();
             existingAuthor.setName(author.getName());
             existingAuthor.setSurname(author.getSurname());
             existingAuthor.setPatronymic(author.getPatronymic());
             existingAuthor.setDateOfBirth(author.getDateOfBirth());
             existingAuthor.setId(author.getId());
-            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
+//            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
+//            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
             authorRepo.save(author);
     }
 

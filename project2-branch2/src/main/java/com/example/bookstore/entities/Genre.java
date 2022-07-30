@@ -23,7 +23,7 @@ public class Genre {
             strategy = GenerationType.SEQUENCE,
             generator = "genre_sequence"
     )
-    private long id;
+    private Long id;
     @Column(name = "name")
     private String name;
 

@@ -26,7 +26,7 @@ public class Publisher {
             strategy = GenerationType.SEQUENCE,
             generator = "publisher_sequence"
     )
-    private long id;
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "publisher")
     private List<Book> publishedBooksList;

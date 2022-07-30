@@ -2,10 +2,9 @@ package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.DTOs.GenreDTO;
 import com.example.bookstore.Repos.GenreRepo;
-import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Genre;
-import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.GenreService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +12,8 @@ import java.util.List;
 import java.util.Optional;
 @Service
 public class GenreServiceImpl implements GenreService {
-    private GenreRepo genreRepo;
 
+    private GenreRepo genreRepo;
     public GenreServiceImpl(GenreRepo genreRepo) {
         this.genreRepo = genreRepo;
     }
@@ -30,21 +29,20 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void deleteByID(long id) {
+    public void deleteByID(Long id) {
         genreRepo.deleteById(id);
     }
 
     @Override
     public GenreDTO create(GenreDTO genreDTO) {
-        Genre genre=genreDTO.convertToEntity();
+        Genre genre=genreDTO.convertGenreDtoToEntity();
         return genreRepo.save(genre).convertGenreToDto();
     }
 
     @Override
     public void update(GenreDTO genreDTO, Long id)  {
         Genre existingGenre;
-        Genre genre=genreDTO.convertToEntity();
-
+        Genre genre=genreDTO.convertGenreDtoToEntity();
         try {
             existingGenre = genreRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingGenre.setName(genre.getName());
@@ -55,7 +53,6 @@ public class GenreServiceImpl implements GenreService {
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
-
     }
 
     @Override

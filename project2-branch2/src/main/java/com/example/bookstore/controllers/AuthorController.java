@@ -23,6 +23,7 @@ import java.util.stream.Stream;
 @RestController
 @RequestMapping
 public class AuthorController {
+    @Autowired
     private final AuthorService authorService;
 
     @Autowired

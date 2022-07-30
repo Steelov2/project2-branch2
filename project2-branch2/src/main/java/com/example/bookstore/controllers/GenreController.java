@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping
 public class GenreController {
+    @Autowired
     private final GenreService genreService;
 
 

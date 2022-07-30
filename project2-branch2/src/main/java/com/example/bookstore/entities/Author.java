@@ -28,7 +28,7 @@ public class Author {
             strategy = GenerationType.SEQUENCE,
             generator = "author_sequence"
     )
-    private long id;
+    private Long id;
     @Column(name = "surname")
     private String surname;
     @Column(name = "name")
@@ -37,7 +37,7 @@ public class Author {
     private String patronymic;
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "author_books",
             joinColumns = @JoinColumn(name = "author_id"),
@@ -45,7 +45,7 @@ public class Author {
     private List<Book> authorsBooksList;
 
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "author_genre",
             joinColumns = @JoinColumn(name = "author_id"),

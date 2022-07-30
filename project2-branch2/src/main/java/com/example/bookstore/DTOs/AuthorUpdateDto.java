@@ -4,40 +4,31 @@ import com.example.bookstore.entities.Author;
 import lombok.*;
 
 import java.time.LocalDate;
-
+import java.util.List;
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class AuthorGetDto {
+public class AuthorUpdateDto {
     private Long id;
     private String surname;
     private String name;
     private String patronymic;
     private LocalDate dateOfBirth;
+    private List<BookGetDto> authorsBooksList;
+    private List<GenreDTO> authorsGenresList;
 
-    public AuthorGetDto(String surname,
-                        String name,
-                        String patronymic,
-                        LocalDate dateOfBirth) {
-        this.surname = surname;
-        this.name = name;
-        this.patronymic = patronymic;
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Author convertAuthorGetDtoToEntity() {
+    public Author convertAuthorUpdateDtoToEntity() {
         Author author = new Author();
         author.setName(this.getName());
-        if (this.getId() != null)
-            author.setId(this.getId());
+        author.setId(this.getId());
+        author.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(BookGetDto::convertGetDtoToEntity).toList());
+        author.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(GenreDTO::convertGenreDtoToEntity).toList());
         author.setPatronymic(this.getPatronymic());
         author.setSurname(this.getSurname());
         author.setDateOfBirth(this.getDateOfBirth());
-
         return author;
     }
 }

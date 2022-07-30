@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping
 public class BookController {
+    @Autowired
     private final BookService bookService;
-    private ModelMapper modelMapper;
 
     @Autowired
     public BookController(BookService bookService) {
