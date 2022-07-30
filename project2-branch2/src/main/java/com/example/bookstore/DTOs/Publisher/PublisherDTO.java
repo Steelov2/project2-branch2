@@ -1,5 +1,6 @@
-package com.example.bookstore.DTOs;
+package com.example.bookstore.DTOs.Publisher;
 
+import com.example.bookstore.DTOs.Book.BookGetDto;
 import com.example.bookstore.entities.Publisher;
 import lombok.*;
 
@@ -10,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PublisherUpdateDto {
+
+public class PublisherDTO {
     private long id;
 
     private String name;
@@ -18,7 +20,7 @@ public class PublisherUpdateDto {
     private List<BookGetDto> publishedBooks;
 
 
-    public Publisher convertPublisherUpdateDtoToEntity( ) {
+    public  Publisher convertPublisherDtoToEntity( ) {
         Publisher publisher = new Publisher();
         publisher.setName(this.getName());
         publisher.setId(this.getId());

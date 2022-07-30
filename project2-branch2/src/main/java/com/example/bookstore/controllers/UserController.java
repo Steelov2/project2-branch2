@@ -1,12 +1,9 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.PublisherDTO;
-import com.example.bookstore.DTOs.PublisherGetDto;
-import com.example.bookstore.DTOs.UserDto;
-import com.example.bookstore.DTOs.UserGetDto;
+import com.example.bookstore.DTOs.User.UserDto;
+import com.example.bookstore.DTOs.User.UserGetDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

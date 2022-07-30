@@ -1,11 +1,10 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.AuthorDTO;
-import com.example.bookstore.DTOs.AuthorGetDto;
+import com.example.bookstore.DTOs.Author.AuthorDTO;
+import com.example.bookstore.DTOs.Author.AuthorGetDto;
 import com.example.bookstore.Repos.AuthorRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

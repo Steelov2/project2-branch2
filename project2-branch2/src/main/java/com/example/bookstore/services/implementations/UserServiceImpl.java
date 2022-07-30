@@ -1,15 +1,12 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.UserDto;
-import com.example.bookstore.DTOs.UserGetDto;
+import com.example.bookstore.DTOs.User.UserDto;
+import com.example.bookstore.DTOs.User.UserGetDto;
 import com.example.bookstore.Repos.UserRepo;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

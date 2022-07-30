@@ -1,5 +1,8 @@
-package com.example.bookstore.DTOs;
+package com.example.bookstore.DTOs.Book;
 
+import com.example.bookstore.DTOs.Author.AuthorGetDto;
+import com.example.bookstore.DTOs.Genre.GenreDTO;
+import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
 import com.example.bookstore.entities.Book;
 import lombok.*;
 

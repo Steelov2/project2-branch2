@@ -1,10 +1,9 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.GenreDTO;
+import com.example.bookstore.DTOs.Genre.GenreDTO;
 import com.example.bookstore.Repos.GenreRepo;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.services.GenreService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 

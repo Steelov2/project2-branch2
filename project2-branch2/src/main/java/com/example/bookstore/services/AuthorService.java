@@ -1,9 +1,7 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.AuthorDTO;
-import com.example.bookstore.DTOs.AuthorGetDto;
-import com.example.bookstore.entities.Author;
-import com.example.bookstore.entities.Genre;
+import com.example.bookstore.DTOs.Author.AuthorDTO;
+import com.example.bookstore.DTOs.Author.AuthorGetDto;
 
 import java.util.List;
 import java.util.Optional;

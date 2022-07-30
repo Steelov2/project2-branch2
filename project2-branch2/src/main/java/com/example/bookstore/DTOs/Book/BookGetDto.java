@@ -1,11 +1,10 @@
-package com.example.bookstore.DTOs;
+package com.example.bookstore.DTOs.Book;
 
-import com.example.bookstore.entities.Author;
+import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
 import com.example.bookstore.entities.Book;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @Getter

@@ -1,10 +1,7 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.GenreDTO;
-import com.example.bookstore.DTOs.UserDto;
-import com.example.bookstore.DTOs.UserGetDto;
-import com.example.bookstore.entities.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import com.example.bookstore.DTOs.User.UserDto;
+import com.example.bookstore.DTOs.User.UserGetDto;
 
 import java.util.List;
 import java.util.Optional;

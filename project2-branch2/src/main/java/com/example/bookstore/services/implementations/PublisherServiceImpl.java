@@ -1,7 +1,7 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.PublisherDTO;
-import com.example.bookstore.DTOs.PublisherGetDto;
+import com.example.bookstore.DTOs.Publisher.PublisherDTO;
+import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
 import com.example.bookstore.Repos.PublisherRepo;
 import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.PublisherService;

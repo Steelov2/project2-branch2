@@ -1,11 +1,10 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.BookDTO;
-import com.example.bookstore.DTOs.BookGetDto;
+import com.example.bookstore.DTOs.Book.BookDTO;
+import com.example.bookstore.DTOs.Book.BookGetDto;
 import com.example.bookstore.Repos.BookRepo;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 

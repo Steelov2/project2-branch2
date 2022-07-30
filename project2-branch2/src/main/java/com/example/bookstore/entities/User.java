@@ -1,15 +1,10 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.UserDto;
-import com.example.bookstore.DTOs.UserGetDto;
+import com.example.bookstore.DTOs.User.UserDto;
+import com.example.bookstore.DTOs.User.UserGetDto;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Table(name = "users")

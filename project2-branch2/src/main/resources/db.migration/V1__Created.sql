@@ -1,0 +1,149 @@
+-- create sequence author_sequence start 1 increment 1;
+-- create sequence book_sequence start 1 increment 1;
+-- create sequence genre_sequence start 1 increment 1;
+-- create sequence publisher_sequence start 1 increment 1;
+-- create sequence user_sequence start 1 increment 1;
+--
+--
+-- create table author (
+--                         id int8 not null,
+--                         date_of_birth date,
+--                         name varchar(255),
+--                         patronymic varchar(255),
+--                         surname varchar(255),
+--                         primary key (id)
+-- );
+--
+--
+-- create table author_books (
+--                               author_id int8 not null,
+--                               book_id int8 not null
+-- );
+--
+--
+-- create table author_genre (
+--                               author_id int8 not null,
+--                               genre_id int8 not null
+-- );
+--
+--
+-- create table book (
+--                       id int8 not null,
+--                       name varchar(255),
+--                       number_of_pages int4 not null,
+--                       price int4 not null,
+--                       year_of_issue date,
+--                       publisher_id int8,
+--                       primary key (id)
+-- );
+--
+--
+-- create table book_genre (
+--                             book_id int8 not null,
+--                             genre_id int8 not null
+-- );
+--
+--
+-- create table genre (
+--                        id int8 not null,
+--                        name varchar(255),
+--                        primary key (id)
+-- );
+--
+--
+-- create table order_book (
+--                             order_id int8 not null,
+--                             book_id int8 not null
+-- );
+--
+--
+-- create table orders (
+--                         id int8 not null,
+--                         user_id int8 not null,
+--                         primary key (id)
+-- );
+--
+--
+-- create table publisher (
+--                            id int8 not null,
+--                            name varchar(255),
+--                            primary key (id)
+-- );
+--
+--
+-- create table users (
+--                        id int8 not null,
+--                        is_blocked boolean,
+--                        password varchar(255) not null,
+--                        role int4,
+--                        username varchar(255) not null,
+--                        primary key (id)
+-- );
+--
+--
+-- alter table order_book
+--     add constraint UK_s0ie13l9fq9us7rddthubw05v unique (book_id);
+--
+--
+-- alter table users
+--     add constraint UK_r43af9ap4edm43mmtq01oddj6 unique (username);
+--
+--
+-- alter table author_books
+--     add constraint FKgg8l7xyje2rjham3sgxfk2dxm
+--         foreign key (book_id)
+--             references book;
+--
+--
+-- alter table author_books
+--     add constraint FKfvabqdr9njwv4khjqkf1pbmma
+--         foreign key (author_id)
+--             references author;
+--
+--
+-- alter table author_genre
+--     add constraint FKlu5xvc2dh0agyi19xsnk0mo9k
+--         foreign key (genre_id)
+--             references genre;
+--
+--
+-- alter table author_genre
+--     add constraint FKjwsiyuy9puhhonnwh15dcy8vx
+--         foreign key (author_id)
+--             references author;
+--
+--
+-- alter table book
+--     add constraint FKgtvt7p649s4x80y6f4842pnfq
+--         foreign key (publisher_id)
+--             references publisher;
+--
+--
+-- alter table book_genre
+--     add constraint FK8l6ops8exmjrlr89hmfow4mmo
+--         foreign key (genre_id)
+--             references genre;
+--
+--
+-- alter table book_genre
+--     add constraint FK52evq6pdc5ypanf41bij5u218
+--         foreign key (book_id)
+--             references book;
+--
+--
+-- alter table order_book
+--     add constraint FK9yvsui1wgflf4dy9q77rsl280
+--         foreign key (book_id)
+--             references book;
+--
+--
+-- alter table order_book
+--     add constraint FKpci06ofdi2x6lbcan47nlhe2y
+--         foreign key (order_id)
+--             references orders;
+--
+--
+-- alter table orders
+--     add constraint FK32ql8ubntj5uh44ph9659tiih
+--         foreign key (user_id)
+--             references users;

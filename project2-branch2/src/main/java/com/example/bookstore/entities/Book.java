@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.BookDTO;
-import com.example.bookstore.DTOs.BookGetDto;
+import com.example.bookstore.DTOs.Book.BookDTO;
+import com.example.bookstore.DTOs.Book.BookGetDto;
 import lombok.*;
 
 import javax.persistence.*;

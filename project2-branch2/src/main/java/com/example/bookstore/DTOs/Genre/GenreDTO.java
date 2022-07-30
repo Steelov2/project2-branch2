@@ -1,4 +1,4 @@
-package com.example.bookstore.DTOs;
+package com.example.bookstore.DTOs.Genre;
 
 import com.example.bookstore.entities.Genre;
 import lombok.*;

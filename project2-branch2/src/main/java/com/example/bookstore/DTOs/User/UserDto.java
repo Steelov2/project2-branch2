@@ -1,4 +1,4 @@
-package com.example.bookstore.DTOs;
+package com.example.bookstore.DTOs.User;
 
 import com.example.bookstore.entities.Role;
 import com.example.bookstore.entities.User;

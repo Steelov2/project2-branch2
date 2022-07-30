@@ -1,15 +1,15 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.PublisherDTO;
+import com.example.bookstore.DTOs.Publisher.PublisherDTO;
 
 import javax.persistence.*;
 import java.util.List;
 
-import com.example.bookstore.DTOs.PublisherGetDto;
+import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
 import lombok.*;
 
 @Entity
-@Table(name = "PUBLISHER")
+@Table(name = "publisher")
 @Getter
 @Setter
 @AllArgsConstructor

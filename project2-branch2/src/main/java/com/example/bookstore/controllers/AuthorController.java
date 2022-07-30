@@ -1,24 +1,14 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.AuthorDTO;
-import com.example.bookstore.DTOs.AuthorGetDto;
-import com.example.bookstore.DTOs.GenreDTO;
-import com.example.bookstore.entities.Author;
-import com.example.bookstore.entities.Book;
-import com.example.bookstore.entities.Genre;
+import com.example.bookstore.DTOs.Author.AuthorDTO;
+import com.example.bookstore.DTOs.Author.AuthorGetDto;
 import com.example.bookstore.services.AuthorService;
-import com.example.bookstore.services.BookService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @RestController
 @RequestMapping
