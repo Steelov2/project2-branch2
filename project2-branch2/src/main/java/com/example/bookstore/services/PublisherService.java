@@ -1,16 +1,17 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Publisher.PublisherDTO;
-import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
+import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
+import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
+import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PublisherService {
-     List<PublisherDTO> getAll();
-     Optional<PublisherDTO> getByID(Long id);
+     List<PublisherRequestDto> getAll();
+     Optional<PublisherRequestDto> getByID(Long id);
      void deleteByID(Long id);
-     PublisherGetDto create(PublisherGetDto publisherGetDto);
-     void update(PublisherDTO publisherDTO, Long id);
-    List<PublisherDTO> getByNameContaining(String name);
+     PublisherResponseDto create(PublisherResponseDto publisherResponseDto);
+     void update(PublisherUpdateDto publisherUpdateDto, Long id);
+    List<PublisherRequestDto> getByNameContaining(String name);
 }

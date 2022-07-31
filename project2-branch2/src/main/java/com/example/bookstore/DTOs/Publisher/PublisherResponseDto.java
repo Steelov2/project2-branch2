@@ -10,12 +10,12 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 
-public class PublisherGetDto {
+public class PublisherResponseDto {
     private long id;
 
     private String name;
 
-    public PublisherGetDto(String name) {
+    public PublisherResponseDto(String name) {
         this.name = name;
     }
 

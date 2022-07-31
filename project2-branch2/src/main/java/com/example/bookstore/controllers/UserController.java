@@ -1,7 +1,7 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.User.UserDto;
-import com.example.bookstore.DTOs.User.UserGetDto;
+import com.example.bookstore.DTOs.User.UserResponseDto;
+import com.example.bookstore.DTOs.User.UserRequestDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,17 +17,17 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/users")
-    public List<UserGetDto> getAll(){
+    public List<UserRequestDto> getAll(){
         return  userService.getAll();
     }
 
     @GetMapping("/user/{userID}")
-    private Optional<UserGetDto> getByID (@PathVariable("userID") Long id)
+    private Optional<UserRequestDto> getByID (@PathVariable("userID") Long id)
     {
         return userService.getByID(id);
     }
     @GetMapping("/user/username/{username}")
-    private List<UserGetDto> getAuthorByUserName(@PathVariable("username") String username){
+    private List<UserRequestDto> getAuthorByUserName(@PathVariable("username") String username){
         return userService.getByUsernameContaining(username);
     }
     @DeleteMapping("/user/{userID}")
@@ -37,16 +37,16 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private UserDto savePublisher(@RequestBody UserDto userDto)
+    private UserResponseDto savePublisher(@RequestBody UserResponseDto userResponseDto)
     {
-        return  userService.create(userDto);
+        return  userService.create(userResponseDto);
     }
     @PutMapping("/user/{userID}")
-    private void updatePublisher(@RequestBody UserDto userDto,@PathVariable("userID") Long id)    {
-        if(!Objects.equals(id, userDto.getId())){
+    private void updatePublisher(@RequestBody UserResponseDto userResponseDto, @PathVariable("userID") Long id)    {
+        if(!Objects.equals(id, userResponseDto.getId())){
             throw new IllegalArgumentException("IDs don't match");
         }
-        userService.update(userDto,id);
+        userService.update(userResponseDto,id);
     }
 
 }

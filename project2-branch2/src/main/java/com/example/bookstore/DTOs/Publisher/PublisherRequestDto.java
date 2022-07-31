@@ -1,7 +1,6 @@
 package com.example.bookstore.DTOs.Publisher;
 
 import com.example.bookstore.DTOs.Book.BookResponseDto;
-import com.example.bookstore.DTOs.Book.BookUpdateResponseDto;
 import com.example.bookstore.entities.Publisher;
 import lombok.*;
 
@@ -12,12 +11,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class PublisherUpdateDto {
+
+public class PublisherRequestDto {
     private long id;
 
     private String name;
 
-    private List<BookUpdateResponseDto> publishedBooks;
+    private List<BookResponseDto> publishedBooks;
 
 
 

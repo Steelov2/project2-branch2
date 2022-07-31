@@ -1,7 +1,8 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Author.AuthorDTO;
-import com.example.bookstore.DTOs.Author.AuthorGetDto;
+import com.example.bookstore.DTOs.Author.AuthorRequestDto;
+import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import com.example.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,23 +24,23 @@ public class AuthorController {
     }
 
     @GetMapping("/author")
-    public List<AuthorDTO> getAll(){
+    public List<AuthorRequestDto> getAll(){
         return authorService.getAll();
     }
     @GetMapping("/author/{authorID}")
-    private Optional<AuthorDTO> getAuthorById(@PathVariable("authorID") Long id)
+    private Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id)
     {
         return authorService.getByID(id);
     }
     @GetMapping("/author/genre/{genreName}")
-    private List<AuthorGetDto> getAuthorByGenreName(@PathVariable("genreName") String genreName)
+    private List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String genreName)
     {
         return authorService.getAuthorsByGenreName(genreName);
 
     }
 
     @GetMapping("/author/name/{name}")
-    private List<AuthorDTO> getAuthorByName( @PathVariable ("name") String name){
+    private List<AuthorRequestDto> getAuthorByName(@PathVariable ("name") String name){
         return authorService.getByName(name);
     }
 
@@ -49,15 +50,15 @@ public class AuthorController {
         authorService.deleteByID(id);
     }
     @PostMapping("/author")
-    private AuthorGetDto saveBook(@RequestBody AuthorGetDto authorGetDto){
-        return authorService.create(authorGetDto);
+    private AuthorResponseDto saveBook(@RequestBody AuthorResponseDto authorResponseDto){
+        return authorService.create(authorResponseDto);
     }
     @PutMapping("/author/{authorID}")
-    private void updateBook(@RequestBody AuthorDTO authorDTO,@PathVariable("authorID") Long id) throws Throwable {
-        if(!Objects.equals(id, authorDTO.getId())){
+    private void updateBook(@RequestBody AuthorUpdateDto authorUpdateDto, @PathVariable("authorID") Long id) throws Throwable {
+        if(!Objects.equals(id, authorUpdateDto.getId())){
             throw new IllegalArgumentException("IDs don't match");
         }
-        authorService.update(authorDTO,id);
+        authorService.update(authorUpdateDto,id);
     }
 
 

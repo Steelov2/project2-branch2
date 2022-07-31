@@ -10,13 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 
-public class GenreDTO {
+public class GenreDto {
     private long id;
     private String name;
-    public Genre convertGenreDtoToEntity( ) {
-        Genre genre = new Genre();
-        genre.setName(this.getName());
-        genre.setId(this.getId());
-        return genre;
-    }
+
 }

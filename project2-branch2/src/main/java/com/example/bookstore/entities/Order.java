@@ -40,26 +40,5 @@ public class Order {
 
     private Status status;
 
-    public Order(User user,
-                 List<Book> orderedBooks,
-                 Status status,
-                 LocalDate createdAt) {
-        this.user = user;
-        this.orderedBooks = orderedBooks;
-        this.status=status;
-        this.createdAt=createdAt;
-    }
-    public OrderDto convertOrderToDto(){
-        OrderDto orderDto= new OrderDto();
-        orderDto.setId(this.getId());
-        orderDto.setUser(this.getUser().convertUserToDto());
-        orderDto.setStatus(this.getStatus());
-        orderDto.setOrderedBooks(this.getOrderedBooks()
-                .stream()
-                .map(Book::convertBookToBookGetDto)
-                .toList());
-        orderDto.setCreatedAt(this.getCreatedAt());
-        return orderDto;
-    }
 
 }

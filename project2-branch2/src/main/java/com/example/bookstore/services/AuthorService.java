@@ -1,25 +1,26 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Author.AuthorDTO;
-import com.example.bookstore.DTOs.Author.AuthorGetDto;
+import com.example.bookstore.DTOs.Author.AuthorRequestDto;
+import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AuthorService {
-    List<AuthorDTO> getAll();
+    List<AuthorRequestDto> getAll();
 
-    Optional<AuthorDTO> getByID(Long id);
+    Optional<AuthorRequestDto> getByID(Long id);
 
     void deleteByID(Long id);
 
-    AuthorGetDto create(AuthorGetDto authorGetDto);
+    AuthorResponseDto create(AuthorResponseDto authorResponseDto);
 
-    void update(AuthorDTO authorDTO, Long id) throws Throwable;
+    void update(AuthorUpdateDto authorUpdateDto, Long id) throws Throwable;
 
-    List<AuthorDTO> getByName(String name);
+    List<AuthorRequestDto> getByName(String name);
 
-    List<AuthorGetDto> getAuthorsByGenreName(String genreName);
+    List<AuthorResponseDto> getAuthorsByGenreName(String genreName);
 
 
 }

@@ -10,17 +10,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserDto {
+public class UserResponseDto {
     private Long id;
     private String username;
     private String password;
     private Role role;
     private Boolean isBlocked;
 
-    public UserDto(String username,
-                   String password,
-                   Role role,
-                   Boolean isBlocked) {
+    public UserResponseDto(String username,
+                           String password,
+                           Role role,
+                           Boolean isBlocked) {
         this.username = username;
         this.password = password;
         this.role = role;

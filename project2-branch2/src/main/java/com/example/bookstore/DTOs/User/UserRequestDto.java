@@ -11,15 +11,15 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 
-public class UserGetDto {
+public class UserRequestDto {
     private Long id;
     private String username;
     private Role role;
     private Boolean isBlocked;
 
-    public UserGetDto(String username,
-                      Role role,
-                      Boolean isBlocked) {
+    public UserRequestDto(String username,
+                          Role role,
+                          Boolean isBlocked) {
         this.username = username;
         this.role = role;
         this.isBlocked = isBlocked;

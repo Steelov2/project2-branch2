@@ -1,7 +1,8 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Publisher.PublisherDTO;
-import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
+import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
+import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
+import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
 import com.example.bookstore.services.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +21,16 @@ public class PublisherController {
     }
 
     @GetMapping("/publisher")
-    public List<PublisherDTO> getAll(){
+    public List<PublisherRequestDto> getAll(){
         return  publisherService.getAll();
     }
     @GetMapping("/publisher/{publisherID}")
-    private Optional<PublisherDTO> getPublisherById(@PathVariable("publisherID") Long id)
+    private Optional<PublisherRequestDto> getPublisherById(@PathVariable("publisherID") Long id)
     {
         return publisherService.getByID(id);
     }
     @GetMapping("/publisher/bookName/{bookName}")
-    private List<PublisherDTO> getAuthorByName(@PathVariable("bookName") String name){
+    private List<PublisherRequestDto> getAuthorByName(@PathVariable("bookName") String name){
         return publisherService.getByNameContaining(name);
     }
     @DeleteMapping("/publisher/{publisherID}")
@@ -38,16 +39,16 @@ public class PublisherController {
         publisherService.deleteByID(id);
     }
     @PostMapping("/publisher")
-    private PublisherGetDto savePublisher(@RequestBody PublisherGetDto publisherGetDTO)
+    private PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
     {
-        return  publisherService.create(publisherGetDTO);
+        return  publisherService.create(publisherResponseDTO);
     }
     @PutMapping("/publisher/{publisherID}")
-    private void updatePublisher(@RequestBody PublisherDTO publisherDTO,@PathVariable("publisherID") Long id)    {
-        if(!Objects.equals(id, publisherDTO.getId())){
+    private void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto, @PathVariable("publisherID") Long id)    {
+        if(!Objects.equals(id, publisherUpdateDto.getId())){
             throw new IllegalArgumentException("IDs don't match");
         }
-        publisherService.update(publisherDTO,id);
+        publisherService.update(publisherUpdateDto,id);
     }
 
 

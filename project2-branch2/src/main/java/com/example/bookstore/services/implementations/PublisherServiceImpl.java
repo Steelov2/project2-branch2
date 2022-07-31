@@ -1,8 +1,10 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Publisher.PublisherDTO;
-import com.example.bookstore.DTOs.Publisher.PublisherGetDto;
+import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
+import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
+import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
 import com.example.bookstore.Repos.PublisherRepo;
+import com.example.bookstore.converters.PublisherConverter;
 import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.PublisherService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -19,13 +21,13 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<PublisherDTO> getAll() {
-        return publisherRepo.findAll().stream().map(Publisher::convertPublisherToDto).toList();
+    public List<PublisherRequestDto> getAll() {
+        return publisherRepo.findAll().stream().map(PublisherConverter::convertPublisherToRequestDto).toList();
     }
 
     @Override
-    public Optional<PublisherDTO> getByID(Long id) {
-        return publisherRepo.findById(id).map(Publisher::convertPublisherToDto);
+    public Optional<PublisherRequestDto> getByID(Long id) {
+        return publisherRepo.findById(id).map(PublisherConverter::convertPublisherToRequestDto);
     }
 
     @Override
@@ -34,14 +36,15 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherGetDto create(PublisherGetDto publisherGetDto) {
-        Publisher publisher=publisherGetDto.convertPublisherGetDtoToEntity();
-        return publisherRepo.save(publisher).convertPublisherToGetDto();
+    public PublisherResponseDto create(PublisherResponseDto publisherResponseDto) {
+        Publisher publisher= PublisherConverter.convertPublisherResponseDtoToEntity(publisherResponseDto);
+        publisher=publisherRepo.save(publisher);
+        return PublisherConverter.convertPublisherToResponseDto(publisher);
     }
     @Override
-    public void update(PublisherDTO publisherDTO, Long id) {
+    public void update(PublisherUpdateDto publisherUpdateDto, Long id) {
         Publisher existingPublisher;
-        Publisher publisher=publisherDTO.convertPublisherDtoToEntity();
+        Publisher publisher= PublisherConverter.convertAuthorUpdateDtoToEntity(publisherUpdateDto);
 
         try {
             existingPublisher = publisherRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
@@ -56,10 +59,10 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public List<PublisherDTO> getByNameContaining(String name) {
+    public List<PublisherRequestDto> getByNameContaining(String name) {
         return publisherRepo
                 .findByNameIsContainingIgnoreCase(name)
-                .stream().map(Publisher::convertPublisherToDto)
+                .stream().map(PublisherConverter::convertPublisherToRequestDto)
                 .toList();
     }
 }

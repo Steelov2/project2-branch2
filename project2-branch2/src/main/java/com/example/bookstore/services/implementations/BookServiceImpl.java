@@ -1,8 +1,10 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Book.BookDTO;
-import com.example.bookstore.DTOs.Book.BookGetDto;
+import com.example.bookstore.DTOs.Book.BookRequestDto;
+import com.example.bookstore.DTOs.Book.BookResponseDto;
+import com.example.bookstore.DTOs.Book.BookUpdateDto;
 import com.example.bookstore.Repos.BookRepo;
+import com.example.bookstore.converters.BookConverter;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -15,18 +17,19 @@ import java.util.Optional;
 public class BookServiceImpl implements BookService {
     private final BookRepo bookRepo;
 
+
     public BookServiceImpl(BookRepo bookRepo) {
         this.bookRepo = bookRepo;
     }
 
     @Override
-    public List<BookDTO> getAll() {
-        return bookRepo.findAll().stream().map(Book::convertBookToDto).toList();
+    public List<BookRequestDto> getAll() {
+        return bookRepo.findAll().stream().map(BookConverter::convertBookToRequestDto).toList();
     }
 
     @Override
-    public Optional<BookDTO> getByID(Long id) {
-        return bookRepo.findById(id).map(Book::convertBookToDto);
+    public Optional<BookRequestDto> getByID(Long id) {
+        return bookRepo.findById(id).map(BookConverter::convertBookToRequestDto);
     }
 
     @Override
@@ -34,16 +37,19 @@ public class BookServiceImpl implements BookService {
         bookRepo.deleteById(id);
     }
 
+    //TODO исправить на тот у которого есть список авторов
     @Override
-    public BookGetDto create(BookGetDto bookGetDto) {
-        Book book=bookGetDto.convertGetDtoToEntity();
-        return bookRepo.save(book).convertBookToBookGetDto();
+    public BookResponseDto create(BookResponseDto bookResponseDto) {
+        Book book= BookConverter.convertBookResponseDtoToEntity(bookResponseDto);
+        book=bookRepo.save(book);
+        return BookConverter.convertBookToResponseDto(book);
     }
 
+
     @Override
-    public void update(BookDTO bookDTO, Long id) {
+    public void update(BookUpdateDto bookUpdateDto, Long id) {
         Book existingBook;
-        Book book=bookDTO.convertBookDtoToEntity();
+        Book book=BookConverter.convertAuthorUpdateDtoToEntity(bookUpdateDto);
         try {
             existingBook = bookRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingBook.setName(book.getName());
@@ -62,17 +68,17 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookDTO> getByNameContaining(String name) {
+    public List<BookRequestDto> getByNameContaining(String name) {
         return bookRepo.findByNameIsContainingIgnoreCase(name)
                 .stream()
-                .map(Book::convertBookToDto).toList();
+                .map(BookConverter::convertBookToRequestDto).toList();
     }
 
     @Override
-    public List<BookGetDto> getByGenreName(String genreName) {
+    public List<BookResponseDto> getByGenreName(String genreName) {
         return bookRepo.findAllByGenre(genreName)
                 .stream()
-                .map(Book::convertBookToBookGetDto).toList();
+                .map(BookConverter::convertBookToResponseDto).toList();
     }
 
 

@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Book.BookDTO;
-import com.example.bookstore.DTOs.Book.BookGetDto;
+import com.example.bookstore.DTOs.Book.BookRequestDto;
+import com.example.bookstore.DTOs.Book.BookResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,27 +50,5 @@ public class Book {
     private LocalDate yearOfIssue;
 
 
-    public BookDTO convertBookToDto() {
-        BookDTO bookDto = new BookDTO();
-        bookDto.setName(this.getName());
-        bookDto.setAuthorList(this.getAuthorList().stream().map(Author::convertAuthorToGetDto).toList());
-        bookDto.setId(this.getId());
-        bookDto.setPrice(this.getPrice());
-        bookDto.setPublisher(this.getPublisher().convertPublisherToGetDto());
-        bookDto.setNumberOfPages(this.getNumberOfPages());
-        bookDto.setYearOfIssue(this.getYearOfIssue());
-        bookDto.setGenreList(this.getBooksGenreList().stream().map(Genre::convertGenreToDto).toList());
-        return bookDto;
-    }
 
-    public BookGetDto convertBookToBookGetDto() {
-        BookGetDto bookGetDto = new BookGetDto();
-        bookGetDto.setName(this.getName());
-        bookGetDto.setId(this.getId());
-        bookGetDto.setPrice(this.getPrice());
-        bookGetDto.setPublisher(this.getPublisher().convertPublisherToGetDto());
-        bookGetDto.setNumberOfPages(this.getNumberOfPages());
-        bookGetDto.setYearOfIssue(this.getYearOfIssue());
-        return bookGetDto;
-    }
 }

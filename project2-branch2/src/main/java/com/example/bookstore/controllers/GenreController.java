@@ -1,6 +1,6 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Genre.GenreDTO;
+import com.example.bookstore.DTOs.Genre.GenreDto;
 import com.example.bookstore.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,16 +22,16 @@ public class GenreController {
 
     }
     @GetMapping("/genre")
-    public List<GenreDTO> getAll(){
+    public List<GenreDto> getAll(){
         return  genreService.getAll();
     }
     @GetMapping("/genre/{genreID}")
-    private Optional<GenreDTO> getBookById(@PathVariable("genreID") Long id)
+    private Optional<GenreDto> getBookById(@PathVariable("genreID") Long id)
     {
         return genreService.getByID(id);
     }
     @GetMapping("/genre/name/{genreName}")
-    private List<GenreDTO> getGenreByName(@PathVariable("genreName") String name){
+    private List<GenreDto> getGenreByName(@PathVariable("genreName") String name){
         return genreService.getByNameContaining(name);
     }
 
@@ -41,11 +41,11 @@ public class GenreController {
         genreService.deleteByID(id);
     }
     @PostMapping("/genre")
-    private GenreDTO saveBook(@RequestBody GenreDTO genreDTO){
+    private GenreDto saveBook(@RequestBody GenreDto genreDTO){
        return genreService.create(genreDTO);
     }
     @PutMapping("/genre/{genreID}")
-    private void updateBook(@RequestBody GenreDTO genreDTO,@PathVariable("genreID") long id)    {
+    private void updateBook(@RequestBody GenreDto genreDTO, @PathVariable("genreID") long id)    {
         if(!Objects.equals(id, genreDTO.getId())){
             throw new IllegalArgumentException("IDs don't match");
         }

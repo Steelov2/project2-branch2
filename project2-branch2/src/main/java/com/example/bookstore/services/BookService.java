@@ -1,19 +1,20 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Book.BookDTO;
-import com.example.bookstore.DTOs.Book.BookGetDto;
+import com.example.bookstore.DTOs.Book.BookRequestDto;
+import com.example.bookstore.DTOs.Book.BookResponseDto;
+import com.example.bookstore.DTOs.Book.BookUpdateDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-     List<BookDTO> getAll();
-     Optional<BookDTO> getByID(Long id);
+     List<BookRequestDto> getAll();
+     Optional<BookRequestDto> getByID(Long id);
      void deleteByID(Long id);
-     BookGetDto create(BookGetDto bookGetDto);
-     void update(BookDTO bookDTO, Long id);
-     List<BookDTO> getByNameContaining(String name);
-     List<BookGetDto> getByGenreName(String genreName);
+     BookResponseDto create(BookResponseDto bookResponseDto);
+     void update(BookUpdateDto bookUpdateDto, Long id);
+     List<BookRequestDto> getByNameContaining(String name);
+     List<BookResponseDto> getByGenreName(String genreName);
 
 
 

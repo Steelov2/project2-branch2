@@ -1,8 +1,10 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Author.AuthorDTO;
-import com.example.bookstore.DTOs.Author.AuthorGetDto;
+import com.example.bookstore.DTOs.Author.AuthorRequestDto;
+import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import com.example.bookstore.Repos.AuthorRepo;
+import com.example.bookstore.converters.AuthorConverter;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import java.util.Optional;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
+
     private final AuthorRepo authorRepo;
         public AuthorServiceImpl(AuthorRepo authorRepo) {
         this.authorRepo = authorRepo;
@@ -22,21 +25,21 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorDTO> getAll() {
-        return authorRepo.findAll().stream().map(Author::convertAuthorToDto).toList();
+    public List<AuthorRequestDto> getAll() {
+        return authorRepo.findAll().stream().map(AuthorConverter::convertAuthorToRequestDto).toList();
     }
 
     @Override
-    public Optional<AuthorDTO> getByID(Long id) {
-        return authorRepo.findById(id).map(Author::convertAuthorToDto);
+    public Optional<AuthorRequestDto> getByID(Long id) {
+        return authorRepo.findById(id).map(AuthorConverter::convertAuthorToRequestDto);
     }
     @Override
-    public List<AuthorDTO> getByName(String name) {
-       return authorRepo.findByName(name).stream().map(Author::convertAuthorToDto).toList();   }
+    public List<AuthorRequestDto> getByName(String name) {
+       return authorRepo.findByName(name).stream().map(AuthorConverter::convertAuthorToRequestDto).toList();   }
 
     @Override
-    public List<AuthorGetDto> getAuthorsByGenreName(String name) {
-        return authorRepo.findAllByGenre(name).stream().map(Author::convertAuthorToGetDto).toList();
+    public List<AuthorResponseDto> getAuthorsByGenreName(String name) {
+        return authorRepo.findAllByGenre(name).stream().map(AuthorConverter::convertAuthorToResponseDto).toList();
     }
     @Override
     public void deleteByID(Long id) {
@@ -44,22 +47,23 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorGetDto create(AuthorGetDto authorGetDto) {
-        Author author=authorGetDto.convertAuthorGetDtoToEntity();
-        return authorRepo.save(author).convertAuthorToGetDto();
+    public AuthorResponseDto create(AuthorResponseDto authorResponseDto) {
+        Author author= AuthorConverter.convertAuthorResponseDtoToEntity(authorResponseDto);
+        author=authorRepo.save(author);
+        return AuthorConverter.convertAuthorToResponseDto(author);
     }
     @Override
-    public void update(AuthorDTO authorDTO,Long id) throws Throwable {
+    public void update(AuthorUpdateDto authorUpdateDto, Long id) throws Throwable {
             Author existingAuthor;
-            Author author=authorDTO.convertAuthorDtoToEntity();
+            Author author=AuthorConverter.convertAuthorUpdateDtoToEntity(authorUpdateDto);
             existingAuthor = authorRepo.findById(id).orElseThrow();
             existingAuthor.setName(author.getName());
             existingAuthor.setSurname(author.getSurname());
             existingAuthor.setPatronymic(author.getPatronymic());
             existingAuthor.setDateOfBirth(author.getDateOfBirth());
             existingAuthor.setId(author.getId());
-//            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
-//            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
+            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
+            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
             authorRepo.save(author);
     }
 

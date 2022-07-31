@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Author.AuthorDTO;
-import com.example.bookstore.DTOs.Author.AuthorGetDto;
+import com.example.bookstore.DTOs.Author.AuthorRequestDto;
+import com.example.bookstore.DTOs.Author.AuthorResponseDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,26 +50,6 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> authorsGenresList;
 
-        public AuthorDTO convertAuthorToDto() {
-        AuthorDTO authorDTO = new AuthorDTO();
-        authorDTO.setName(this.getName());
-        authorDTO.setSurname(this.getSurname());
-        authorDTO.setId(this.getId());
-        authorDTO.setPatronymic(this.getPatronymic());
-        authorDTO.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreToDto).toList());
-        authorDTO.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToBookGetDto).toList());
-        authorDTO.setDateOfBirth(this.getDateOfBirth());
-        return authorDTO;
-    }
 
-    public AuthorGetDto convertAuthorToGetDto() {
-        AuthorGetDto authorGetDto = new AuthorGetDto();
-        authorGetDto.setName(this.getName());
-        authorGetDto.setSurname(this.getSurname());
-        authorGetDto.setId(this.getId());
-        authorGetDto.setPatronymic(this.getPatronymic());
-        authorGetDto.setDateOfBirth(this.getDateOfBirth());
-        return authorGetDto;
-    }
 
 }
