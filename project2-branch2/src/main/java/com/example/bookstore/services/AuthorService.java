@@ -16,7 +16,7 @@ public interface AuthorService {
 
     AuthorResponseDto create(AuthorResponseDto authorResponseDto);
 
-    void update(AuthorUpdateDto authorUpdateDto, Long id) throws Throwable;
+    void update(AuthorUpdateDto authorUpdateDto) throws Throwable;
 
     List<AuthorRequestDto> getByName(String name);
 

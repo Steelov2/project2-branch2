@@ -1,11 +1,10 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
-
 import javax.persistence.*;
 import java.util.List;
 
 import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
+import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
 import lombok.*;
 
 @Entity
@@ -30,6 +29,21 @@ public class Publisher {
     private String name;
     @OneToMany(mappedBy = "publisher")
     private List<Book> publishedBooksList;
+
+    public PublisherRequestDto convertPublisherToRequestDto() {
+        PublisherRequestDto publisherRequestDTO = new PublisherRequestDto();
+        publisherRequestDTO.setName(this.getName());
+        publisherRequestDTO.setId(this.getId());
+        publisherRequestDTO.setPublishedBooks(this.getPublishedBooksList().stream().map(Book::convertBookToResponseDto).toList());
+        return publisherRequestDTO;
+    }
+
+    public PublisherResponseDto convertPublisherToResponseDto() {
+        PublisherResponseDto publisherResponseDto = new PublisherResponseDto();
+        publisherResponseDto.setName(this.getName());
+        publisherResponseDto.setId(this.getId());
+        return publisherResponseDto;
+    }
 
 
 

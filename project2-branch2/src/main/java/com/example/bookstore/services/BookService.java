@@ -12,7 +12,7 @@ public interface BookService {
      Optional<BookRequestDto> getByID(Long id);
      void deleteByID(Long id);
      BookResponseDto create(BookResponseDto bookResponseDto);
-     void update(BookUpdateDto bookUpdateDto, Long id);
+     void update(BookUpdateDto bookUpdateDto);
      List<BookRequestDto> getByNameContaining(String name);
      List<BookResponseDto> getByGenreName(String genreName);
 

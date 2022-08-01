@@ -2,7 +2,7 @@ package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.DTOs.order.OrderDto;
 import com.example.bookstore.Repos.OrderRepo;
-import com.example.bookstore.converters.OrderConverter;
+import com.example.bookstore.entities.Genre;
 import com.example.bookstore.entities.Order;
 import com.example.bookstore.services.OrderService;
 import lombok.AllArgsConstructor;
@@ -19,14 +19,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderDto create(OrderDto orderDTO) {
-        Order order= OrderConverter.convertOrderDtoToEntity(orderDTO);
-        order=orderRepo.save(order);
-        return OrderConverter.convertOrderToDto(order);
+        Order order = orderDTO.convertOrderDtoToEntity();
+        Order orderCreated = orderRepo.save(order);
+        return orderCreated.convertOrderToDto();
     }
 
     @Override
-    public void update(OrderDto orderDTO, Long id) {
-        Order order=OrderConverter.convertOrderDtoToEntity(orderDTO);
+    public void update(OrderDto orderDTO) {
+        Order order=orderDTO.convertOrderDtoToEntity();
         Order existingOrder;
         try {
             existingOrder = orderRepo.findById(order.getId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
@@ -51,13 +51,13 @@ public class OrderServiceImpl implements OrderService {
     public List<OrderDto> getAll() {
         return orderRepo.findAll()
                 .stream()
-                .map(OrderConverter::convertOrderToDto)
+                .map(Order::convertOrderToDto)
                 .toList();
     }
 
     @Override
     public Optional<OrderDto> getByID(Long id) {
         return orderRepo.findById(id)
-                .map(OrderConverter::convertOrderToDto);
+                .map(Order::convertOrderToDto);
     }
 }

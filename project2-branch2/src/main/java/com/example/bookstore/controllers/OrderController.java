@@ -20,12 +20,10 @@ public class OrderController {
     private OrderDto create(@RequestBody OrderDto orderDTO){
         return orderService.create(orderDTO);
     }
-    @PutMapping("order/{orderID}")
-    private void update(@RequestBody OrderDto orderDTO,@PathVariable("orderID") long id){
-        if(!Objects.equals(id, orderDTO.getId())){
-            throw new IllegalArgumentException("IDs don't match");
-        }
-        orderService.update(orderDTO, id);
+    @PutMapping("/order")
+    private void update(@RequestBody OrderDto orderDTO){
+
+        orderService.update(orderDTO);
     }
     @DeleteMapping("/order/{orderID}")
     private void delete(@PathVariable("orderID") long id){

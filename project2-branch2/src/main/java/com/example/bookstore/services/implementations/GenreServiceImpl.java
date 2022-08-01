@@ -1,8 +1,8 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Genre.GenreDto;
+import com.example.bookstore.DTOs.Genre.GenreRequestDto;
 import com.example.bookstore.Repos.GenreRepo;
-import com.example.bookstore.converters.GenreConverter;
+import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.services.GenreService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -21,17 +21,17 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<GenreDto> getAll() {
+    public List<GenreRequestDto> getAll() {
         return genreRepo.findAll()
                 .stream()
-                .map(GenreConverter::convertGenreToDto)
+                .map(Genre::convertGenreRequestToDto)
                 .toList();
     }
 
     @Override
-    public Optional<GenreDto> getByID(Long id) {
+    public Optional<GenreRequestDto> getByID(Long id) {
         return genreRepo.findById(id)
-                .map(GenreConverter::convertGenreToDto);
+                .map(Genre::convertGenreRequestToDto);
     }
 
     @Override
@@ -40,18 +40,18 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreDto create(GenreDto genreDTO) {
-        Genre genre = GenreConverter.convertGenreDtoToEntity(genreDTO);
-        genre=genreRepo.save(genre);
-        return GenreConverter.convertGenreToDto(genre);
+    public GenreRequestDto create(GenreRequestDto genreRequestDTO) {
+        Genre genre = genreRequestDTO.convertGenreRequestDtoToEntity();
+        Genre genreCreated = genreRepo.save(genre);
+        return genreCreated.convertGenreRequestToDto();
     }
 
     @Override
-    public void update(GenreDto genreDTO, Long id) {
+    public void update(GenreRequestDto genreRequestDTO) {
         Genre existingGenre;
-        Genre genre = GenreConverter.convertGenreDtoToEntity(genreDTO);
+        Genre genre = genreRequestDTO.convertGenreRequestDtoToEntity();
         try {
-            existingGenre = genreRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+            existingGenre = genreRepo.findById(genre.getId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingGenre.setName(genre.getName());
             existingGenre.setId(genre.getId());
             genreRepo.save(genre);
@@ -63,10 +63,10 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public List<GenreDto> getByNameContaining(String name) {
+    public List<GenreRequestDto> getByNameContaining(String name) {
         return genreRepo.findByNameIsContainingIgnoreCase(name)
                 .stream()
-                .map(GenreConverter::convertGenreToDto)
+                .map(Genre::convertGenreRequestToDto)
                 .toList();
     }
 }

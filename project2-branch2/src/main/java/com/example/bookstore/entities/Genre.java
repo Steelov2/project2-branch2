@@ -1,6 +1,6 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Genre.GenreDto;
+import com.example.bookstore.DTOs.Genre.GenreRequestDto;
 
 import javax.persistence.*;
 import lombok.*;
@@ -26,6 +26,14 @@ public class Genre {
     private Long id;
     @Column(name = "name")
     private String name;
+
+    public GenreRequestDto convertGenreRequestToDto() {
+        GenreRequestDto genreRequestDto =new GenreRequestDto();
+        genreRequestDto.setName(this.getName());
+        genreRequestDto.setId(this.getId());
+
+        return genreRequestDto;
+    }
 
 
 

@@ -1,7 +1,8 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Author.AuthorRequestDto;
 import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.DTOs.Author.AuthorRequestDto;
+import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -49,6 +50,56 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> authorsGenresList;
+
+    public AuthorResponseDto convertAuthorToResponseDto() {
+        AuthorResponseDto authorResponseDto = new AuthorResponseDto();
+        authorResponseDto.setName(this.getName());
+        authorResponseDto.setSurname(this.getSurname());
+        authorResponseDto.setId(this.getId());
+        authorResponseDto.setPatronymic(this.getPatronymic());
+        authorResponseDto.setDateOfBirth(this.getDateOfBirth());
+        return authorResponseDto;
+    }
+
+    public AuthorRequestDto convertAuthorToRequestDto() {
+        AuthorRequestDto authorRequestDto = new AuthorRequestDto();
+        authorRequestDto.setName(this.getName());
+        authorRequestDto.setSurname(this.getSurname());
+        authorRequestDto.setId(this.getId());
+        authorRequestDto.setPatronymic(this.getPatronymic());
+        authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
+        authorRequestDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
+        authorRequestDto.setDateOfBirth(this.getDateOfBirth());
+        return authorRequestDto;
+    }
+
+
+    public AuthorUpdateDto convertAuthorToUpdateDto() {
+        AuthorUpdateDto authorUpdateDto = new AuthorUpdateDto();
+        authorUpdateDto.setName(this.getName());
+        authorUpdateDto.setSurname(this.getSurname());
+        authorUpdateDto.setId(this.getId());
+        authorUpdateDto.setPatronymic(this.getPatronymic());
+        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
+        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
+        authorUpdateDto.setDateOfBirth(this.getDateOfBirth());
+        return authorUpdateDto;
+    }
+
+//    public AuthorIdDto convertAuthorToIdDto() {
+//        AuthorUpdateDto authorUpdateDto = new AuthorUpdateDto();
+//        authorUpdateDto.setName(this.getName());
+//        authorUpdateDto.setSurname(this.getSurname());
+//        authorUpdateDto.setId(this.getId());
+//        authorUpdateDto.setPatronymic(this.getPatronymic());
+//        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreToDto).toList());
+//        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToBookGetDto).toList());
+//        authorUpdateDto.setDateOfBirth(this.getDateOfBirth());
+//        return authorUpdateDto;
+//    }
+
+
+
 
 
 

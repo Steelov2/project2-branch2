@@ -19,6 +19,17 @@ public class PublisherRequestDto {
 
     private List<BookResponseDto> publishedBooks;
 
+    public  Publisher convertPublisherResponseDtoToEntity( ) {
+        Publisher publisher = new Publisher();
+        publisher.setName(this.getName());
+        publisher.setId(this.getId());
+        publisher.setPublishedBooksList(this.getPublishedBooks()
+                .stream()
+                .map(BookResponseDto::convertBookRequestDtoDtoToEntity)
+                .toList());
+        return publisher;
+    }
+
 
 
 }

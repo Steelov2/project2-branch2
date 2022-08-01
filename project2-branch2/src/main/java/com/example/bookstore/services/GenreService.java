@@ -1,15 +1,15 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Genre.GenreDto;
+import com.example.bookstore.DTOs.Genre.GenreRequestDto;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface GenreService {
-    List<GenreDto> getAll();
-    Optional<GenreDto> getByID(Long id);
+    List<GenreRequestDto> getAll();
+    Optional<GenreRequestDto> getByID(Long id);
     void deleteByID(Long id);
-    GenreDto create(GenreDto genre);
-    void update(GenreDto genre, Long id);
-    List<GenreDto> getByNameContaining(String name);
+    GenreRequestDto create(GenreRequestDto genre);
+    void update(GenreRequestDto genre);
+    List<GenreRequestDto> getByNameContaining(String name);
 }

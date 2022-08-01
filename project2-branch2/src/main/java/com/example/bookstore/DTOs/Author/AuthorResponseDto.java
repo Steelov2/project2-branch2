@@ -29,5 +29,17 @@ public class AuthorResponseDto {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public Author convertAuthorRequestDtoToEntity() {
+        Author author = new Author();
+        author.setName(this.getName());
+        if (this.getId() != null)
+            author.setId(this.getId());
+        author.setPatronymic(this.getPatronymic());
+        author.setSurname(this.getSurname());
+        author.setDateOfBirth(this.getDateOfBirth());
+
+        return author;
+    }
+
 
 }

@@ -36,9 +36,20 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> orderedBooks;
     private LocalDate createdAt;
-
-
     private Status status;
+
+    public OrderDto convertOrderToDto(){
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(this.getId());
+        orderDto.setUser(this.getUser().convertUserToRequestDto());
+        orderDto.setStatus(this.getStatus());
+        orderDto.setOrderedBooks(this.getOrderedBooks()
+                .stream()
+                .map(Book::convertBookToResponseDto)
+                .toList());
+        orderDto.setCreatedAt(this.getCreatedAt());
+        return orderDto;
+    }
 
 
 }

@@ -1,9 +1,8 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.User.UserResponseDto;
 import com.example.bookstore.DTOs.User.UserRequestDto;
+import com.example.bookstore.DTOs.User.UserResponseDto;
 import com.example.bookstore.Repos.UserRepo;
-import com.example.bookstore.converters.UserConverter;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
@@ -20,17 +19,17 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public List<UserRequestDto> getAll() {
+    public List<UserResponseDto> getAll() {
         return userRepo.findAll()
                 .stream()
-                .map(UserConverter::convertUserToRequestDto)
+                .map(User::convertUserToDtoResponseDto)
                 .toList();
     }
 
     @Override
-    public Optional<UserRequestDto> getByID(Long id) {
+    public Optional<UserResponseDto> getByID(Long id) {
         return userRepo.findById(id)
-                .map(UserConverter::convertUserToRequestDto);
+                .map(User::convertUserToDtoResponseDto);
     }
 
     @Override
@@ -39,18 +38,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponseDto create(UserResponseDto userResponseDto) {
-        User user = UserConverter.convertUserResponseDtoToEntity(userResponseDto);
-        user= userRepo.save(user);
-        return UserConverter.convertUserToResponseDto(user) ;
+    public UserRequestDto create(UserRequestDto userRequestDto) {
+        User user = userRequestDto.convertUserRequestDtoToEntity();
+        User userCreated= userRepo.save(user);
+        return userCreated.convertUserToRequestDto() ;
     }
 
     @Override
-    public void update(UserResponseDto userResponseDto, Long id) {
+    public void update(UserRequestDto userRequestDto) {
         User existingUser;
-        User user = UserConverter.convertUserResponseDtoToEntity(userResponseDto);
+        User user = userRequestDto.convertUserRequestDtoToEntity();
         try {
-            existingUser = userRepo.findById(id)
+            existingUser = userRepo.findById(user.getId())
                     .orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingUser.setId(user.getId());
             existingUser.setUsername(user.getUsername());
@@ -60,15 +59,15 @@ public class UserServiceImpl implements UserService {
         } catch (ChangeSetPersister.NotFoundException e) {
             throw new RuntimeException(e);
         }
-        ;
+
 
     }
 
     @Override
-    public List<UserRequestDto> getByUsernameContaining(String name) {
+    public List<UserResponseDto> getByUsernameContaining(String name) {
         return userRepo.findByUsernameIsContainingIgnoreCase(name)
                 .stream()
-                .map(UserConverter::convertUserToRequestDto)
+                .map(User::convertUserToDtoResponseDto)
                 .toList();
     }
 }

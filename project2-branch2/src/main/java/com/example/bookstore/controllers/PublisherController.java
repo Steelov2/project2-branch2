@@ -43,12 +43,10 @@ public class PublisherController {
     {
         return  publisherService.create(publisherResponseDTO);
     }
-    @PutMapping("/publisher/{publisherID}")
-    private void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto, @PathVariable("publisherID") Long id)    {
-        if(!Objects.equals(id, publisherUpdateDto.getId())){
-            throw new IllegalArgumentException("IDs don't match");
-        }
-        publisherService.update(publisherUpdateDto,id);
+    @PutMapping("/publisher")
+    private void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
+
+        publisherService.update(publisherUpdateDto);
     }
 
 

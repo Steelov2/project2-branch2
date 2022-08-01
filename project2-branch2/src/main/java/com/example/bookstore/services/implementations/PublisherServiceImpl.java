@@ -4,7 +4,7 @@ import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
 import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
 import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
 import com.example.bookstore.Repos.PublisherRepo;
-import com.example.bookstore.converters.PublisherConverter;
+
 import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.PublisherService;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -22,12 +22,12 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public List<PublisherRequestDto> getAll() {
-        return publisherRepo.findAll().stream().map(PublisherConverter::convertPublisherToRequestDto).toList();
+        return publisherRepo.findAll().stream().map(Publisher::convertPublisherToRequestDto).toList();
     }
 
     @Override
     public Optional<PublisherRequestDto> getByID(Long id) {
-        return publisherRepo.findById(id).map(PublisherConverter::convertPublisherToRequestDto);
+        return publisherRepo.findById(id).map(Publisher::convertPublisherToRequestDto);
     }
 
     @Override
@@ -37,17 +37,17 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public PublisherResponseDto create(PublisherResponseDto publisherResponseDto) {
-        Publisher publisher= PublisherConverter.convertPublisherResponseDtoToEntity(publisherResponseDto);
-        publisher=publisherRepo.save(publisher);
-        return PublisherConverter.convertPublisherToResponseDto(publisher);
+        Publisher publisher= publisherResponseDto.convertPublisherRequestDtoToEntity();
+        Publisher publisherCreated=publisherRepo.save(publisher);
+        return publisherCreated.convertPublisherToResponseDto();
     }
     @Override
-    public void update(PublisherUpdateDto publisherUpdateDto, Long id) {
+    public void update(PublisherUpdateDto publisherUpdateDto) {
         Publisher existingPublisher;
-        Publisher publisher= PublisherConverter.convertAuthorUpdateDtoToEntity(publisherUpdateDto);
+        Publisher publisher= publisherUpdateDto.convertPublisherUpdateDtoToEntity();
 
         try {
-            existingPublisher = publisherRepo.findById(id).orElseThrow(ChangeSetPersister.NotFoundException::new);
+            existingPublisher = publisherRepo.findById(publisher.getId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
             existingPublisher.setName(publisher.getName());
             existingPublisher.setId(publisher.getId());
             existingPublisher.setPublishedBooksList(publisher.getPublishedBooksList());
@@ -62,7 +62,7 @@ public class PublisherServiceImpl implements PublisherService {
     public List<PublisherRequestDto> getByNameContaining(String name) {
         return publisherRepo
                 .findByNameIsContainingIgnoreCase(name)
-                .stream().map(PublisherConverter::convertPublisherToRequestDto)
+                .stream().map(Publisher::convertPublisherToRequestDto)
                 .toList();
     }
 }

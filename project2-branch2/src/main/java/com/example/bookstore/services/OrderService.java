@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface OrderService {
     OrderDto create(OrderDto orderDTO);
-    void update(OrderDto orderDTO, Long id);
+    void update(OrderDto orderDTO);
     void deleteById(Long id);
     List<OrderDto> getAll();
     Optional<OrderDto> getByID(Long id);

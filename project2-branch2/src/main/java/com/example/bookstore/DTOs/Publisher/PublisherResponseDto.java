@@ -19,7 +19,7 @@ public class PublisherResponseDto {
         this.name = name;
     }
 
-    public Publisher convertPublisherGetDtoToEntity( ) {
+    public Publisher convertPublisherRequestDtoToEntity( ) {
         Publisher publisher = new Publisher();
         publisher.setName(this.getName());
         publisher.setId(this.getId());

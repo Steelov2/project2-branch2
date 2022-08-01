@@ -1,7 +1,8 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Book.BookRequestDto;
 import com.example.bookstore.DTOs.Book.BookResponseDto;
+import com.example.bookstore.DTOs.Book.BookRequestDto;
+import com.example.bookstore.DTOs.Book.BookUpdateDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -27,7 +28,11 @@ public class Book {
     )
     private Long id;
     private int price;
-    @ManyToMany(mappedBy = "authorsBooksList")
+    @ManyToMany
+    @JoinTable(
+            name = "author_books",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorList;
 
     @ManyToMany
@@ -48,6 +53,43 @@ public class Book {
     private String name;
     private int numberOfPages;
     private LocalDate yearOfIssue;
+    public BookRequestDto convertBookToBookRequestDto() {
+        BookRequestDto bookRequestDto = new BookRequestDto();
+        bookRequestDto.setName(this.getName());
+        bookRequestDto.setAuthorList(this.getAuthorList().stream().map(Author::convertAuthorToResponseDto).toList());
+        bookRequestDto.setId(this.getId());
+        bookRequestDto.setPrice(this.getPrice());
+        if (this.getPublisher() != null)
+            bookRequestDto.setPublisher(this.getPublisher().convertPublisherToResponseDto());
+        bookRequestDto.setNumberOfPages(this.getNumberOfPages());
+        bookRequestDto.setYearOfIssue(this.getYearOfIssue());
+        bookRequestDto.setGenreList(this.getBooksGenreList().stream().map(Genre::convertGenreRequestToDto).toList());
+        return bookRequestDto;
+    }
+
+    public BookResponseDto convertBookToResponseDto() {
+        BookResponseDto bookResponseDto = new BookResponseDto();
+        bookResponseDto.setName(this.getName());
+        bookResponseDto.setId(this.getId());
+        bookResponseDto.setPrice(this.getPrice());
+        if (this.getPublisher() != null)
+            bookResponseDto.setPublisher(this.getPublisher().convertPublisherToResponseDto());
+        bookResponseDto.setNumberOfPages(this.getNumberOfPages());
+        bookResponseDto.setYearOfIssue(this.getYearOfIssue());
+        return bookResponseDto;
+    }
+
+    public BookUpdateDto convertBookToBookUpdateDto() {
+        BookUpdateDto bookUpdateDto = new BookUpdateDto();
+        bookUpdateDto.setName(this.getName());
+        bookUpdateDto.setId(this.getId());
+        bookUpdateDto.setPrice(this.getPrice());
+        if (this.getPublisher() != null)
+            bookUpdateDto.setPublisher(this.getPublisher().convertPublisherToResponseDto());
+        bookUpdateDto.setNumberOfPages(this.getNumberOfPages());
+        bookUpdateDto.setYearOfIssue(this.getYearOfIssue());
+        return bookUpdateDto;
+    }
 
 
 

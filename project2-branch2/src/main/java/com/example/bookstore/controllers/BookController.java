@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -50,12 +49,10 @@ public class BookController {
     private BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto){
         return bookService.create(bookResponseDto);
     }
-    @PutMapping("/book/{bookID}")
-    private void updateBook(@RequestBody BookUpdateDto bookUpdateDto, @PathVariable("bookID") long id)    {
-        if(!Objects.equals(id, bookUpdateDto.getId())){
-            throw new IllegalArgumentException("IDs don't match");
-        }
-        bookService.update(bookUpdateDto, id);
+    @PutMapping("/book")
+    private void updateBook(@RequestBody BookUpdateDto bookUpdateDto)    {
+
+        bookService.update(bookUpdateDto);
     }
 
 
