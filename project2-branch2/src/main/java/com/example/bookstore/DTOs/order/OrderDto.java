@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 public class OrderDto {
-    private long id;
+    private Long id;
     private UserRequestDto user;
     private List<BookResponseDto> orderedBooks;
     private Status status;

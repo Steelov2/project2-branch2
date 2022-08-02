@@ -1,5 +1,6 @@
 package com.example.bookstore.controllers;
 import com.example.bookstore.DTOs.order.OrderDto;
+import com.example.bookstore.DTOs.order.OrderUpdateDto;
 import com.example.bookstore.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +22,9 @@ public class OrderController {
         return orderService.create(orderDTO);
     }
     @PutMapping("/order")
-    private void update(@RequestBody OrderDto orderDTO){
+    private void update(@RequestBody OrderUpdateDto orderUpdateDto){
 
-        orderService.update(orderDTO);
+        orderService.update(orderUpdateDto);
     }
     @DeleteMapping("/order/{orderID}")
     private void delete(@PathVariable("orderID") long id){

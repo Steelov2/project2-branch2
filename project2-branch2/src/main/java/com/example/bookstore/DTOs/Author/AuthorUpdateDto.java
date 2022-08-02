@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@Component
 public class AuthorUpdateDto {
     private Long id;
     private String surname;

@@ -51,5 +51,18 @@ public class Order {
         return orderDto;
     }
 
+    public OrderDto convertOrderToUpdateDto(){
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(this.getId());
+        orderDto.setUser(this.getUser().convertUserToRequestDto());
+        orderDto.setStatus(this.getStatus());
+        orderDto.setOrderedBooks(this.getOrderedBooks()
+                .stream()
+                .map(Book::convertBookToResponseDto)
+                .toList());
+        orderDto.setCreatedAt(this.getCreatedAt());
+        return orderDto;
+    }
+
 
 }

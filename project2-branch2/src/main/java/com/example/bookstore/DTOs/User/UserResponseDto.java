@@ -15,8 +15,8 @@ public class UserResponseDto {
     private Long id;
     private String username;
     private Role role;
-    private Boolean locked;
-    private Boolean enabled;
+    private Boolean isBlocked;
+
 
 
     public User convertUserResponseDtoToEntity(){
@@ -24,8 +24,7 @@ public class UserResponseDto {
         user.setId(this.getId());
         user.setUsername(this.getUsername());
         user.setRole(this.getRole());
-        user.setLocked(this.getLocked());
-        user.setEnabled(this.getEnabled());
+        user.setIsBlocked(this.getIsBlocked());
         return user;
     }
 }
