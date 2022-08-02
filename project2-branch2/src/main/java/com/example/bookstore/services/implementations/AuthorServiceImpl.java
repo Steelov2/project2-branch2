@@ -61,8 +61,8 @@ public class AuthorServiceImpl implements AuthorService {
             existingAuthor.setPatronymic(author.getPatronymic());
             existingAuthor.setDateOfBirth(author.getDateOfBirth());
             existingAuthor.setId(author.getId());
-            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
-            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
+//            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
+//            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
             authorRepo.save(author);
     }
 

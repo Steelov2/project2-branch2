@@ -15,22 +15,17 @@ public class UserResponseDto {
     private Long id;
     private String username;
     private Role role;
-    private Boolean isBlocked;
+    private Boolean locked;
+    private Boolean enabled;
 
-    public UserResponseDto(String username,
-                           Role role,
-                           Boolean isBlocked) {
-        this.username = username;
-        this.role = role;
-        this.isBlocked = isBlocked;
-    }
 
     public User convertUserResponseDtoToEntity(){
         User user = new User();
         user.setId(this.getId());
         user.setUsername(this.getUsername());
         user.setRole(this.getRole());
-        user.setIsBlocked(this.getIsBlocked());
+        user.setLocked(this.getLocked());
+        user.setEnabled(this.getEnabled());
         return user;
     }
 }

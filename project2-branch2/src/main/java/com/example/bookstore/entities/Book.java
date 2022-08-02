@@ -45,10 +45,8 @@ public class Book {
 
 
     @ManyToOne
-    @JoinColumn(
-            name = "publisher_id")
-//            joinColumns = @JoinColumn(name = "book_id"),
-//            inverseJoinColumns = @JoinColumn(name = "publisher_id"))
+    @JoinColumn(name = "publisher_id")
+
     private Publisher publisher;
     private String name;
     private int numberOfPages;
@@ -85,7 +83,7 @@ public class Book {
         bookUpdateDto.setId(this.getId());
         bookUpdateDto.setPrice(this.getPrice());
         if (this.getPublisher() != null)
-            bookUpdateDto.setPublisher(this.getPublisher().convertPublisherToResponseDto());
+            bookUpdateDto.setPublisherIds(bookUpdateDto.getId());
         bookUpdateDto.setNumberOfPages(this.getNumberOfPages());
         bookUpdateDto.setYearOfIssue(this.getYearOfIssue());
         return bookUpdateDto;

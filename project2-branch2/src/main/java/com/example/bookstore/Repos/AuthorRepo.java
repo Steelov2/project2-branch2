@@ -24,6 +24,8 @@ public interface AuthorRepo extends JpaRepository<Author,Long> {
 """,nativeQuery = true)
     List<Author> findAllByGenre(String genreName);
 
+    List<Author> findAllByIdIn(List<Long> ids);
+
 
 
 

@@ -3,10 +3,13 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.DTOs.Book.BookRequestDto;
 import com.example.bookstore.DTOs.Book.BookResponseDto;
 import com.example.bookstore.DTOs.Book.BookUpdateDto;
+import com.example.bookstore.Repos.AuthorRepo;
 import com.example.bookstore.Repos.BookRepo;
+import com.example.bookstore.Repos.GenreRepo;
+import com.example.bookstore.Repos.PublisherRepo;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
-import org.springframework.data.crossstore.ChangeSetPersister;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +18,17 @@ import java.util.Optional;
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepo bookRepo;
+    private final AuthorRepo authorRepo;
+    private final GenreRepo genreRepo;
+
+    private final PublisherRepo publisherRepo;
 
 
-    public BookServiceImpl(BookRepo bookRepo) {
+    public BookServiceImpl(BookRepo bookRepo, AuthorRepo authorRepo, GenreRepo genreRepo, PublisherRepo publisherRepo) {
         this.bookRepo = bookRepo;
+        this.authorRepo = authorRepo;
+        this.genreRepo = genreRepo;
+        this.publisherRepo = publisherRepo;
     }
 
     @Override
@@ -48,9 +58,13 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(BookUpdateDto bookUpdateDto) {
         Book existingBook;
-        Book book=bookUpdateDto.convertAuthorUpdateDtoToEntity();
-        try {
-            existingBook = bookRepo.findById(bookUpdateDto.getId()).orElseThrow(ChangeSetPersister.NotFoundException::new);
+        val authors =authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
+        val genres =genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
+        val publishers =publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
+
+        Book book=bookUpdateDto.convertAuthorUpdateDtoToEntity(genres, authors, publishers);
+
+            existingBook = bookRepo.findById(bookUpdateDto.getId()).orElseThrow();
             existingBook.setName(book.getName());
             existingBook.setNumberOfPages(book.getNumberOfPages());
             existingBook.setPrice(book.getPrice());
@@ -60,9 +74,7 @@ public class BookServiceImpl implements BookService {
             existingBook.setAuthorList(book.getAuthorList());
             existingBook.setBooksGenreList(book.getBooksGenreList());
             bookRepo.save(book);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            e.printStackTrace();
-        }
+
 
     }
 

@@ -3,8 +3,13 @@ package com.example.bookstore.entities;
 import com.example.bookstore.DTOs.User.UserRequestDto;
 import com.example.bookstore.DTOs.User.UserResponseDto;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
 @Table(name = "users")
@@ -13,7 +18,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -32,24 +37,18 @@ public class User {
 
     //@Enumerated(EnumType.STRING)
     private Role role;
-    private Boolean isBlocked;
+    private Boolean locked;
+    private Boolean enabled;
 
 
-    public User(String username,
-                String password,
-                Role role,
-                Boolean isBlocked) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.isBlocked = isBlocked;
-    }
+
 
     public UserResponseDto convertUserToDtoResponseDto(){
         UserResponseDto userResponseDto =new UserResponseDto();
         userResponseDto.setId(this.getId());
         userResponseDto.setUsername(this.getUsername());
-        userResponseDto.setIsBlocked(this.getIsBlocked());
+        userResponseDto.setLocked(this.getLocked());
+        userResponseDto.setEnabled(this.getEnabled());
         userResponseDto.setRole(this.getRole());
         return userResponseDto;
     }
@@ -58,12 +57,36 @@ public class User {
         userRequestDto.setId(this.getId());
         userRequestDto.setUsername(this.getUsername());
         userRequestDto.setPassword(this.getPassword());
-        userRequestDto.setIsBlocked(this.getIsBlocked());
+        userRequestDto.setIsBlocked(this.getEnabled());
         userRequestDto.setRole(this.getRole());
         return userRequestDto;
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
+    @Override
+    public boolean isAccountNonLocked() {
+        return !locked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

@@ -44,12 +44,12 @@ public class Author {
     private List<Book> authorsBooksList;
 
 
-    @ManyToMany
-    @JoinTable(
-            name = "author_genre",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> authorsGenresList;
+//    @ManyToMany
+//    @JoinTable(
+//            name = "author_genre",
+//            joinColumns = @JoinColumn(name = "author_id"),
+//            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+//    private List<Genre> authorsGenresList;
 
     public AuthorResponseDto convertAuthorToResponseDto() {
         AuthorResponseDto authorResponseDto = new AuthorResponseDto();
@@ -67,7 +67,7 @@ public class Author {
         authorRequestDto.setSurname(this.getSurname());
         authorRequestDto.setId(this.getId());
         authorRequestDto.setPatronymic(this.getPatronymic());
-        authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
+        //authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
         authorRequestDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
         authorRequestDto.setDateOfBirth(this.getDateOfBirth());
         return authorRequestDto;
@@ -80,8 +80,8 @@ public class Author {
         authorUpdateDto.setSurname(this.getSurname());
         authorUpdateDto.setId(this.getId());
         authorUpdateDto.setPatronymic(this.getPatronymic());
-        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
-        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
+//        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
+//        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
         authorUpdateDto.setDateOfBirth(this.getDateOfBirth());
         return authorUpdateDto;
     }

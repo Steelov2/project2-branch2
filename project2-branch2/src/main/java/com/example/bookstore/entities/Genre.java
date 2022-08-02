@@ -31,7 +31,6 @@ public class Genre {
         GenreRequestDto genreRequestDto =new GenreRequestDto();
         genreRequestDto.setName(this.getName());
         genreRequestDto.setId(this.getId());
-
         return genreRequestDto;
     }
 

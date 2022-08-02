@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             existingUser.setUsername(user.getUsername());
             existingUser.setPassword(user.getPassword());
             existingUser.setRole(user.getRole());
-            existingUser.setIsBlocked(user.getIsBlocked());
+         //   existingUser.setIsBlocked(user.getIsBlocked());
         } catch (ChangeSetPersister.NotFoundException e) {
             throw new RuntimeException(e);
         }

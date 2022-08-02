@@ -34,11 +34,11 @@ public class AuthorRequestDto {
                     .stream()
                     .map(BookResponseDto::convertBookRequestDtoDtoToEntity)
                     .toList());
-        if (this.getAuthorsBooksList() != null)
-            author.setAuthorsGenresList(this.getAuthorsGenresList()
-                    .stream()
-                    .map(GenreRequestDto::convertGenreRequestDtoToEntity)
-                    .toList());
+//        if (this.getAuthorsBooksList() != null)
+//            author.setAuthorsGenresList(this.getAuthorsGenresList()
+//                    .stream()
+//                    .map(GenreRequestDto::convertGenreRequestDtoToEntity)
+//                    .toList());
         author.setPatronymic(this.getPatronymic());
         author.setSurname(this.getSurname());
         author.setDateOfBirth(this.getDateOfBirth());

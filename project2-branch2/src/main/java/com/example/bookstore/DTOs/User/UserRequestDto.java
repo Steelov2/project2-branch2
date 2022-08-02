@@ -32,7 +32,7 @@ public class UserRequestDto {
         user.setId(this.getId());
         user.setUsername(this.getUsername());
         user.setRole(this.getRole());
-        user.setIsBlocked(this.getIsBlocked());
+        //user.setIsBlocked(this.getIsBlocked());
         user.setPassword(this.getPassword());
         return user;
     }
