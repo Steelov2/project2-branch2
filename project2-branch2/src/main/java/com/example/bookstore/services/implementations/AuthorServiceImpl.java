@@ -6,8 +6,10 @@ import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import com.example.bookstore.Repos.AuthorRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
+import com.example.bookstore.services.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,9 +17,11 @@ import java.util.Optional;
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepo authorRepo;
-        public AuthorServiceImpl(AuthorRepo authorRepo) {
+    private final BookService bookService;
+        public AuthorServiceImpl(AuthorRepo authorRepo, BookService bookService) {
         this.authorRepo = authorRepo;
-    }
+            this.bookService = bookService;
+        }
 
     private static Throwable get() {
         return new IllegalArgumentException("Author with id not found");
@@ -37,8 +41,13 @@ public class AuthorServiceImpl implements AuthorService {
        return authorRepo.findByName(name).stream().map(Author::convertAuthorToRequestDto).toList();   }
 
     @Override
-    public List<AuthorResponseDto> getAuthorsByGenreName(String name) {
-        return authorRepo.findAllByGenre(name).stream().map(Author::convertAuthorToResponseDto).toList();
+    public List<AuthorRequestDto> getAuthorsByGenreName(String name) {
+        List<Author> authorList=new ArrayList<>();
+        bookService.getAuthorByGenreName1(name)
+                .stream()
+                .forEach(book -> authorList.addAll(book.getAuthorList().stream().toList()));
+        return authorList.stream().map(Author::convertAuthorToRequestDto).toList();
+
     }
     @Override
     public void deleteByID(Long id) {

@@ -20,7 +20,7 @@ public interface AuthorService {
 
     List<AuthorRequestDto> getByName(String name);
 
-    List<AuthorResponseDto> getAuthorsByGenreName(String genreName);
+    List<AuthorRequestDto> getAuthorsByGenreName(String genreName);
 
 
 }

@@ -92,5 +92,11 @@ public class BookServiceImpl implements BookService {
                 .map(Book::convertBookToResponseDto).toList();
     }
 
+    @Override
+    public List<Book> getAuthorByGenreName1(String genreName) {
+                return bookRepo.findAllByGenre(genreName);
+
+    }
+
 
 }

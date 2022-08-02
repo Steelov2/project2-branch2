@@ -3,10 +3,13 @@ package com.example.bookstore.controllers;
 import com.example.bookstore.DTOs.Author.AuthorRequestDto;
 import com.example.bookstore.DTOs.Author.AuthorResponseDto;
 import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
+import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
+import com.example.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +19,7 @@ import java.util.Optional;
 public class AuthorController {
     @Autowired
     private final AuthorService authorService;
+
 
     @Autowired
     public AuthorController(AuthorService authorService) {
@@ -33,9 +37,9 @@ public class AuthorController {
         return authorService.getByID(id);
     }
     @GetMapping("/author/genre/{genreName}")
-    private List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String genreName)
+    private List<AuthorRequestDto> getAuthorByGenreName(@PathVariable("genreName") String name)
     {
-        return authorService.getAuthorsByGenreName(genreName);
+       return authorService.getAuthorsByGenreName(name);
 
     }
 

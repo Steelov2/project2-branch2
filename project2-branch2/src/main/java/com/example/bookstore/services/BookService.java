@@ -3,6 +3,7 @@ package com.example.bookstore.services;
 import com.example.bookstore.DTOs.Book.BookRequestDto;
 import com.example.bookstore.DTOs.Book.BookResponseDto;
 import com.example.bookstore.DTOs.Book.BookUpdateDto;
+import com.example.bookstore.entities.Book;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public interface BookService {
      void update(BookUpdateDto bookUpdateDto);
      List<BookRequestDto> getByNameContaining(String name);
      List<BookResponseDto> getByGenreName(String genreName);
+     List<Book> getAuthorByGenreName1(String genreName);
 
 
 

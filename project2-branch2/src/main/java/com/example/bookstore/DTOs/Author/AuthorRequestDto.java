@@ -23,7 +23,7 @@ public class AuthorRequestDto {
     private String patronymic;
     private LocalDate dateOfBirth;
     private List<BookResponseDto> authorsBooksList;
-    private List<GenreRequestDto> authorsGenresList;
+//    private List<GenreRequestDto> authorsGenresList;
 
     public Author convertAuthorResponseDtoToEntity() {
         Author author = new Author();
