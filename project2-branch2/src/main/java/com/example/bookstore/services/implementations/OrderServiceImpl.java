@@ -10,6 +10,7 @@ import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Order;
 import com.example.bookstore.services.OrderService;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.val;
 import org.springframework.stereotype.Service;
 
@@ -42,14 +43,13 @@ public class OrderServiceImpl implements OrderService {
         else
             throw new Exception("The user is blocked");
     }
-
-
+    @SneakyThrows
     @Override
-    public void update(OrderUpdateDto orderUpdateDto) throws Exception {
+    public void update(OrderUpdateDto orderUpdateDto)  {
         int priceOfBooks = 0;
-        val books = bookRepo.findAllByIdIn(orderUpdateDto.getOrderedBooksIds());
+        val books = bookRepo.findAllByIdIn(orderUpdateDto.getOrderedBookIds());
         val user = userRepo.findById(orderUpdateDto.getUserId()).orElseThrow();
-        Order order = orderUpdateDto.convertOrderDtoToEntity(books, user);
+        Order order = orderUpdateDto.convertOrderCreateDtoToEntity(books, user);
 
         if (!order.getUser().getIsBlocked()) {
             for (Book book : order.getOrderedBooks()) {
@@ -68,6 +68,27 @@ public class OrderServiceImpl implements OrderService {
                 throw new Exception("You have reached your purchase limit of 10000 ");
         } else throw new Exception("The user " + user.getUsername() + "is blocked");
     }
+
+//
+//    @Override
+//    public void update(OrderUpdateDto orderUpdateDto) {
+//        Order existingOrder;
+//        val books =bookRepo.findAllByIdIn(orderUpdateDto.getOrderedBookIds());
+//        val user =userRepo.findById(orderUpdateDto.getUserId()).orElseThrow();
+//
+//        Order order=orderUpdateDto.convertOrderCreateDtoToEntity(books,user);
+//
+//        existingOrder = orderRepo.findById(order.getId()).orElseThrow();
+//        existingOrder.setOrderedBooks(order.getOrderedBooks());
+//        existingOrder.setCreatedAt(order.getCreatedAt());
+//        existingOrder.setStatus(order.getStatus());
+//        existingOrder.setId(order.getId());
+//        existingOrder.setUser(order.getUser());
+//
+//        orderRepo.save(order);
+//
+//
+//    }
 
 
 

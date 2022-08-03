@@ -9,7 +9,10 @@ import java.util.Optional;
 
 public interface OrderService {
     OrderCreateDto create(OrderCreateDto orderCreateDto) throws Exception;
-    void update(OrderUpdateDto orderUpdateDto) throws Exception;
+    //void update(OrderUpdateDto orderUpdateDto) throws Exception;
+
+    void update(OrderUpdateDto orderUpdateDto);
+
     void deleteById(Long id);
     List<OrderRequestDto> getAll();
     Optional<OrderRequestDto> getByID(Long id);
