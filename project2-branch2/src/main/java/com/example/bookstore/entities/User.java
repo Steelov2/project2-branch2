@@ -17,8 +17,9 @@ import java.util.Collections;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 @ToString
-public class User  {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -35,16 +36,14 @@ public class User  {
     @Column(nullable = false)
     private String password;
 
-    //@Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
     private Role role;
     private Boolean isBlocked;
+    private Boolean enabled;
 
 
-
-
-
-    public UserResponseDto convertUserToDtoResponseDto(){
-        UserResponseDto userResponseDto =new UserResponseDto();
+    public UserResponseDto convertUserToDtoResponseDto() {
+        UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(this.getId());
         userResponseDto.setUsername(this.getUsername());
         userResponseDto.setIsBlocked(this.getIsBlocked());
@@ -52,8 +51,9 @@ public class User  {
         userResponseDto.setRole(this.getRole());
         return userResponseDto;
     }
-    public UserRequestDto convertUserToRequestDto(){
-        UserRequestDto userRequestDto =new UserRequestDto();
+
+    public UserRequestDto convertUserToRequestDto() {
+        UserRequestDto userRequestDto = new UserRequestDto();
         userRequestDto.setId(this.getId());
         userRequestDto.setUsername(this.getUsername());
         userRequestDto.setPassword(this.getPassword());
@@ -63,5 +63,30 @@ public class User  {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority simpleGrantedAuthority =
+                new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(simpleGrantedAuthority);
+    }
 
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return !isBlocked;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
 }

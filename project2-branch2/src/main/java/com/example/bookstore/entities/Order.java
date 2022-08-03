@@ -1,6 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.order.OrderDto;
+import com.example.bookstore.DTOs.order.OrderCreateDto;
+import com.example.bookstore.DTOs.order.OrderRequestDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,14 +23,13 @@ public class Order {
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "genre_sequence"
-    )
+            generator = "order_sequence")
+
     private Long id;
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_sequence")
     private User user;
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "order_book",
             joinColumns = @JoinColumn(name = "order_id"),
@@ -38,30 +38,30 @@ public class Order {
     private LocalDate createdAt;
     private Status status;
 
-    public OrderDto convertOrderToDto(){
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(this.getId());
-        orderDto.setUser(this.getUser().convertUserToRequestDto());
-        orderDto.setStatus(this.getStatus());
-        orderDto.setOrderedBooks(this.getOrderedBooks()
+    public OrderRequestDto convertOrderToDto(){
+        OrderRequestDto orderRequestDto = new OrderRequestDto();
+        orderRequestDto.setId(this.getId());
+        orderRequestDto.setUserId(this.getUser().getId());
+        orderRequestDto.setStatus(this.getStatus());
+        orderRequestDto.setOrderedBooks(this.getOrderedBooks()
                 .stream()
                 .map(Book::convertBookToResponseDto)
                 .toList());
-        orderDto.setCreatedAt(this.getCreatedAt());
-        return orderDto;
+        orderRequestDto.setCreatedAt(this.getCreatedAt());
+        return orderRequestDto;
     }
 
-    public OrderDto convertOrderToUpdateDto(){
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(this.getId());
-        orderDto.setUser(this.getUser().convertUserToRequestDto());
-        orderDto.setStatus(this.getStatus());
-        orderDto.setOrderedBooks(this.getOrderedBooks()
+    public OrderCreateDto convertOrderToCrateDto(){
+        OrderCreateDto orderCreateDto = new OrderCreateDto();
+        orderCreateDto.setId(this.getId());
+        orderCreateDto.setUserId(this.getUser().getId());
+        orderCreateDto.setStatus(this.getStatus());
+        orderCreateDto.setOrderedBooksIds(this.getOrderedBooks()
                 .stream()
-                .map(Book::convertBookToResponseDto)
+                .map(Book::getId)
                 .toList());
-        orderDto.setCreatedAt(this.getCreatedAt());
-        return orderDto;
+        orderCreateDto.setCreatedAt(this.getCreatedAt());
+        return orderCreateDto;
     }
 
 

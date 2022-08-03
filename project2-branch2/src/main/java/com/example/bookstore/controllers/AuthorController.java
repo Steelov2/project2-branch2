@@ -37,7 +37,7 @@ public class AuthorController {
         return authorService.getByID(id);
     }
     @GetMapping("/author/genre/{genreName}")
-    private List<AuthorRequestDto> getAuthorByGenreName(@PathVariable("genreName") String name)
+    private List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name)
     {
        return authorService.getAuthorsByGenreName(name);
 

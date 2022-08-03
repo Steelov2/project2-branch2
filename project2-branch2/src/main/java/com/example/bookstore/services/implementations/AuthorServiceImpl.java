@@ -41,12 +41,11 @@ public class AuthorServiceImpl implements AuthorService {
        return authorRepo.findByName(name).stream().map(Author::convertAuthorToRequestDto).toList();   }
 
     @Override
-    public List<AuthorRequestDto> getAuthorsByGenreName(String name) {
+    public List<AuthorResponseDto> getAuthorsByGenreName(String name) {
         List<Author> authorList=new ArrayList<>();
         bookService.getAuthorByGenreName1(name)
-                .stream()
                 .forEach(book -> authorList.addAll(book.getAuthorList().stream().toList()));
-        return authorList.stream().map(Author::convertAuthorToRequestDto).toList();
+        return authorList.stream().map(Author::convertAuthorToResponseDto).toList();
 
     }
     @Override

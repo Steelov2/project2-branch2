@@ -1,12 +1,12 @@
 package com.example.bookstore.controllers;
-import com.example.bookstore.DTOs.order.OrderDto;
+import com.example.bookstore.DTOs.order.OrderCreateDto;
+import com.example.bookstore.DTOs.order.OrderRequestDto;
 import com.example.bookstore.DTOs.order.OrderUpdateDto;
 import com.example.bookstore.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +18,11 @@ public class OrderController {
         this.orderService = orderService;
     }
     @PostMapping("/order")
-    private OrderDto create(@RequestBody OrderDto orderDTO){
-        return orderService.create(orderDTO);
+    private OrderCreateDto create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
+        return orderService.create(orderCreateDto);
     }
     @PutMapping("/order")
-    private void update(@RequestBody OrderUpdateDto orderUpdateDto){
+    private void update(@RequestBody OrderUpdateDto orderUpdateDto) throws Exception {
 
         orderService.update(orderUpdateDto);
     }
@@ -31,11 +31,11 @@ public class OrderController {
         orderService.deleteById(id);
     }
     @GetMapping("/order")
-    private List<OrderDto> getAll(){
+    private List<OrderRequestDto> getAll(){
         return orderService.getAll();
     }
     @GetMapping("/order/{orderID}")
-    private Optional<OrderDto> getByID(@PathVariable("orderID") long id){
+    private Optional<OrderRequestDto> getByID(@PathVariable("orderID") long id){
         return orderService.getByID(id);
     }
 }

@@ -26,8 +26,6 @@ public class AuthorUpdateDto {
         com.example.bookstore.entities.Author author = new Author();
         author.setName(this.getName());
         author.setId(this.getId());
-//        author.setAuthorsBooksList(this.getAuthorsBooksListIds());
-//        author.setAuthorsGenresList(this.getAuthorsGenresListIds().stream().map(GenreRequestDto::convertGenreRequestDtoToEntity).toList());
         author.setPatronymic(this.getPatronymic());
         author.setSurname(this.getSurname());
         author.setDateOfBirth(this.getDateOfBirth());
