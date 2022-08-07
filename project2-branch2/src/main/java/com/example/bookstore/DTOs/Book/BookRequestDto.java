@@ -21,12 +21,14 @@ import java.util.List;
 public class BookRequestDto {
     private Long id;
     private Integer price;
-    private List<AuthorResponseDto> authorList;
     private PublisherResponseDto publisher;
     private String name;
     private Integer numberOfPages;
     private LocalDate yearOfIssue;
+
+
     private List<GenreRequestDto> genreList;
+    private List<AuthorResponseDto> authorList;
 
     public Book convertBookResponseDtoToEntity() {
         Book book = new Book();

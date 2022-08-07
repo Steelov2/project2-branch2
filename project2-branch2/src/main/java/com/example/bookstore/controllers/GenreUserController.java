@@ -26,12 +26,12 @@ public class GenreUserController {
         return  genreService.getAll();
     }
     @GetMapping("/genre/{genreID}")
-    private Optional<GenreRequestDto> getBookById(@PathVariable("genreID") Long id)
+    public Optional<GenreRequestDto> getBookById(@PathVariable("genreID") Long id)
     {
         return genreService.getByID(id);
     }
     @GetMapping("/genre/genreName/{genreName}")
-    private List<GenreRequestDto> getGenreByName(@PathVariable("genreName") String name){
+    public List<GenreRequestDto> getGenreByName(@PathVariable("genreName") String name){
         return genreService.getByNameContaining(name);
     }
 

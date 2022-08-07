@@ -1,15 +1,10 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.User.UserRequestDto;
+import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.DTOs.User.UserResponseDto;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Collections;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +13,6 @@ import java.util.Collections;
 @AllArgsConstructor
 //@RequiredArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @ToString
 public class User {
     @Id
@@ -41,7 +35,6 @@ public class User {
     private Role role;
 
     private Boolean isBlocked;
-    private Boolean enabled;
 
     public User(Long id, String username, String password) {
         this.id = id;
@@ -66,14 +59,14 @@ public class User {
         return userResponseDto;
     }
 
-    public UserRequestDto convertUserToRequestDto() {
-        UserRequestDto userRequestDto = new UserRequestDto();
-        userRequestDto.setId(this.getId());
-        userRequestDto.setUsername(this.getUsername());
-        userRequestDto.setPassword(this.getPassword());
+    public UserUpdateAndSaveUserDto convertUserToRequestDto() {
+        UserUpdateAndSaveUserDto userUpdateAndSaveUserDto = new UserUpdateAndSaveUserDto();
+        userUpdateAndSaveUserDto.setId(this.getId());
+        userUpdateAndSaveUserDto.setUsername(this.getUsername());
+        userUpdateAndSaveUserDto.setPassword(this.getPassword());
 //        userRequestDto.setIsBlocked(this.getIsBlocked());
 //        userRequestDto.setRole(this.getRole());
-        return userRequestDto;
+        return userUpdateAndSaveUserDto;
     }
 
 

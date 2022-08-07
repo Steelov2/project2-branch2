@@ -1,8 +1,6 @@
 package com.example.bookstore.DTOs.Book;
 
-import com.example.bookstore.DTOs.Author.AuthorResponseDto;
-import com.example.bookstore.DTOs.Genre.GenreRequestDto;
-import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
+
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Genre;

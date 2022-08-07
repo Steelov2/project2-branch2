@@ -1,6 +1,7 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.User.UserRequestDto;
+import com.example.bookstore.DTOs.User.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.DTOs.User.UserResponseDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
@@ -22,35 +23,31 @@ public class UserAdminController {
     }
 
     @GetMapping("/user/{userID}")
-    private Optional<UserResponseDto> getByID (@PathVariable("userID") Long id)
+    public Optional<UserResponseDto> getByID (@PathVariable("userID") Long id)
     {
         return userService.getByID(id);
     }
     @GetMapping("/user/username/{username}")
-    private List<UserResponseDto> getAuthorByUserName(@PathVariable("username") String username){
+    public List<UserResponseDto> getAuthorByUserName(@PathVariable("username") String username){
         return userService.getByUsernameContaining(username);
     }
     @DeleteMapping("/user/{userID}")
-    private void deleteUserById(@PathVariable("userID") Long id)
+    public void deleteUserById(@PathVariable("userID") Long id)
     {
         userService.deleteByID(id);
     }
 
-    @PostMapping("/user")
-    private void saveUser(@RequestBody UserRequestDto userRequestDto)
+   @PostMapping("/user")
+   public void saveUser(@RequestBody AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto)
     {
-        userService.create(userRequestDto);
+        userService.createForAdmin(adminUpdateAndSaveUserDto);
     }
     @PutMapping("/user")
-    private void updateUser(@RequestBody UserRequestDto userRequestDto)    {
+    public void updateUser(@RequestBody AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto)    {
 
-        userService.update(userRequestDto);
+        userService.updateForAdmin(adminUpdateAndSaveUserDto);
     }
-//    @PostMapping
-//    public ResponseEntity<Void> createUser(@RequestBody CreateUserRequest userRequest) {
-//        userServiceimpl.createUser(userRequest);
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
+
 }
 
 

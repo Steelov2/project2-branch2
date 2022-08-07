@@ -21,12 +21,12 @@ public class PublisherUserController {
         return  publisherService.getAll();
     }
     @GetMapping("/publisher/{publisherID}")
-    private Optional<PublisherRequestDto> getPublisherById(@PathVariable("publisherID") Long id)
+    public Optional<PublisherRequestDto> getPublisherById(@PathVariable("publisherID") Long id)
     {
         return publisherService.getByID(id);
     }
     @GetMapping("/publisher/bookName/{bookName}")
-    private List<PublisherRequestDto> getAuthorByName(@PathVariable("bookName") String name){
+    public List<PublisherRequestDto> getAuthorByName(@PathVariable("bookName") String name){
         return publisherService.getByNameContaining(name);
     }
 }

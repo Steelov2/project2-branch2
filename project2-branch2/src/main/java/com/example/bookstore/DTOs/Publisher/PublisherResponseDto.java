@@ -15,9 +15,6 @@ public class PublisherResponseDto {
 
     private String name;
 
-    public PublisherResponseDto(String name) {
-        this.name = name;
-    }
 
     public Publisher convertPublisherRequestDtoToEntity( ) {
         Publisher publisher = new Publisher();

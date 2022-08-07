@@ -7,24 +7,26 @@ import com.example.bookstore.entities.Status;
 import com.example.bookstore.entities.User;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.List;
+
 @Data
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderUpdateDto {
+public class OrderUpdateForAdmin {
     private Long id;
     private Long userId;
     private List<Long> orderedBookIds;
     private Status status;
 
-    public Order convertOrderCreateDtoToEntity(List<Book> bbb, User uuu) {
+    public Order convertOrderUpdateForAdminToEntity(List<Book> bbb, User uuu) {
         Order order = new Order();
+
         order.setId(this.getId());
         order.setStatus(this.getStatus());
-
 
         order.setUser(uuu);
         order.setOrderedBooks(bbb);

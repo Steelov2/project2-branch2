@@ -36,7 +36,7 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> orderedBooks;
     private LocalDate createdAt;
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public OrderRequestDto convertOrderToDto(){
@@ -56,7 +56,6 @@ public class Order {
         OrderCreateDto orderCreateDto = new OrderCreateDto();
         orderCreateDto.setId(this.getId());
         orderCreateDto.setUserId(this.getUser().getId());
-        orderCreateDto.setStatus(this.getStatus());
         orderCreateDto.setOrderedBooksIds(this.getOrderedBooks()
                 .stream()
                 .map(Book::getId)

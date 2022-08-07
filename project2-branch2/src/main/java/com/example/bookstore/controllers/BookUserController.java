@@ -24,17 +24,17 @@ public class BookUserController {
         return bookService.getAll();
     }
     @GetMapping("/book/{bookID}")
-    private Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id)
+    public Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id)
     {
         return bookService.getByID(id);
     }
     @GetMapping("/book/bookName/{bookName}")
-    private List<BookRequestDto> getBookByName(@PathVariable("bookName") String name){
+    public List<BookRequestDto> getBookByName(@PathVariable("bookName") String name){
         return bookService.getByNameContaining(name);
     }
 
     @GetMapping("/book/genreName/{genreName}")
-    private List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name){
+    public List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name){
         return bookService.getByGenreName(name);
     }
 

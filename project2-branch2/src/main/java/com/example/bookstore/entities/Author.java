@@ -2,7 +2,6 @@ package com.example.bookstore.entities;
 
 import com.example.bookstore.DTOs.Author.AuthorResponseDto;
 import com.example.bookstore.DTOs.Author.AuthorRequestDto;
-import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import lombok.*;
 
 import javax.persistence.*;
@@ -81,29 +80,9 @@ public class Author {
     }
 
 
-    public AuthorUpdateDto convertAuthorToUpdateDto() {
-        AuthorUpdateDto authorUpdateDto = new AuthorUpdateDto();
-        authorUpdateDto.setName(this.getName());
-        authorUpdateDto.setSurname(this.getSurname());
-        authorUpdateDto.setId(this.getId());
-        authorUpdateDto.setPatronymic(this.getPatronymic());
-//        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
-//        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
-        authorUpdateDto.setDateOfBirth(this.getDateOfBirth());
-        return authorUpdateDto;
-    }
 
-//    public AuthorIdDto convertAuthorToIdDto() {
-//        AuthorUpdateDto authorUpdateDto = new AuthorUpdateDto();
-//        authorUpdateDto.setName(this.getName());
-//        authorUpdateDto.setSurname(this.getSurname());
-//        authorUpdateDto.setId(this.getId());
-//        authorUpdateDto.setPatronymic(this.getPatronymic());
-//        authorUpdateDto.setAuthorsGenresList(this.getAuthorsGenresList().stream().map(Genre::convertGenreToDto).toList());
-//        authorUpdateDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToBookGetDto).toList());
-//        authorUpdateDto.setDateOfBirth(this.getDateOfBirth());
-//        return authorUpdateDto;
-//    }
+
+
 
 
 

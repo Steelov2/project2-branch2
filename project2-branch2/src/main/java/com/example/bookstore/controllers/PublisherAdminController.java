@@ -24,23 +24,23 @@ public class PublisherAdminController {
         return  publisherService.getAll();
     }
     @GetMapping("/publisher/{publisherID}")
-    private Optional<PublisherRequestDto> getPublisherById(@PathVariable("publisherID") Long id)
+    public Optional<PublisherRequestDto> getPublisherById(@PathVariable("publisherID") Long id)
     {
         return publisherService.getByID(id);
     }
 
     @DeleteMapping("/publisher/{publisherID}")
-    private void deletePublisherById(@PathVariable("publisherID") Long id)
+    public void deletePublisherById(@PathVariable("publisherID") Long id)
     {
         publisherService.deleteByID(id);
     }
     @PostMapping("/publisher")
-    private PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
+    public PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
     {
         return  publisherService.create(publisherResponseDTO);
     }
     @PutMapping("/publisher")
-    private void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
+    public void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
 
         publisherService.update(publisherUpdateDto);
     }

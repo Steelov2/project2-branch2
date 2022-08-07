@@ -27,27 +27,27 @@ public class BookAdminController {
     }
 
     @GetMapping("/book/{bookID}")
-    private Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id) {
+    public Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id) {
         return bookService.getByID(id);
     }
 
     @GetMapping("/book/bookName/{bookName}")
-    private List<BookRequestDto> getBookByName(@PathVariable("bookName") String name) {
+    public List<BookRequestDto> getBookByName(@PathVariable("bookName") String name) {
         return bookService.getByNameContaining(name);
     }
 
     @GetMapping("/book/genreName/{genreName}")
-    private List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name) {
+    public List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name) {
         return bookService.getByGenreName(name);
     }
 
     @DeleteMapping("/deleteBook/{bookID}")
-    private void deleteBookById(@PathVariable("bookID") Long id) {
+    public void deleteBookById(@PathVariable("bookID") Long id) {
         bookService.deleteByID(id);
     }
 
     @PostMapping("/saveBook")
-    private BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto) {
+    public BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto) {
         return bookService.create(bookResponseDto);
     }
 

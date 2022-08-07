@@ -1,6 +1,7 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.User.UserRequestDto;
+import com.example.bookstore.DTOs.User.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.DTOs.User.UserResponseDto;
 import com.example.bookstore.Repos.UserRepo;
 import com.example.bookstore.entities.User;
@@ -40,39 +41,56 @@ public class UserServiceImpl implements UserService {
         userRepo.deleteById(id);
     }
 
-//    public UserRequestDto create(UserRequestDto userRequestDto) {
+    //    public UserRequestDto create(UserRequestDto userRequestDto) {
 //        User user = userRequestDto.convertUserRequestDtoToEntity();
 //        User userCreated= userRepo.save(user);
 //        return userCreated.convertUserToRequestDto() ;
 //    }
-      @Override
-      public void create (UserRequestDto userRequestDto) {
+    @Override
+    public void createForUser(UserUpdateAndSaveUserDto userUpdateAndSaveUserDto) {
         userRepo.saveAndFlush(
                 new User(
                         null,
-                        userRequestDto.getUsername(),
-                        passwordEncoder.encode(userRequestDto.getPassword())
+                        userUpdateAndSaveUserDto.getUsername(),
+                        passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword())
                 )
+        );
+    }
+    @Override
+    public void updateForUser(UserUpdateAndSaveUserDto userUpdateAndSaveUserDto) {
+        userRepo.saveAndFlush(
+                new User(
+                        null,
+                        userUpdateAndSaveUserDto.getUsername(),
+                        passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword())
+                )
+        );
+
+    }
+
+    @Override
+    public void createForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
+        userRepo.saveAndFlush(new User(
+                null,
+                adminUpdateAndSaveUserDto.getUsername(),
+                passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
+                adminUpdateAndSaveUserDto.getRole(),
+                adminUpdateAndSaveUserDto.getIsBlocked())
         );
     }
 
 
 
+
     @Override
-    public void update(UserRequestDto userRequestDto) {
-        User existingUser;
-        User user = userRequestDto.convertUserRequestDtoToEntity();
-        try {
-            existingUser = userRepo.findById(user.getId())
-                    .orElseThrow(ChangeSetPersister.NotFoundException::new);
-            existingUser.setId(user.getId());
-            existingUser.setUsername(user.getUsername());
-            existingUser.setPassword(user.getPassword());
-            existingUser.setRole(user.getRole());
-            //   existingUser.setIsBlocked(user.getIsBlocked());
-        } catch (ChangeSetPersister.NotFoundException e) {
-            throw new RuntimeException(e);
-        }
+    public void updateForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
+        userRepo.saveAndFlush(new User(
+                null,
+                adminUpdateAndSaveUserDto.getUsername(),
+                passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
+                adminUpdateAndSaveUserDto.getRole(),
+                adminUpdateAndSaveUserDto.getIsBlocked())
+        );
 
 
     }

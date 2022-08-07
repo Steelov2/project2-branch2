@@ -2,7 +2,6 @@ package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.DTOs.Author.AuthorRequestDto;
 import com.example.bookstore.DTOs.Author.AuthorResponseDto;
-import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import com.example.bookstore.Repos.AuthorRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.services.AuthorService;
@@ -65,22 +64,19 @@ public class AuthorServiceImpl implements AuthorService {
 
                 )
        );
-//        Author author = authorResponseDto.convertAuthorRequestDtoToEntity();
-//        Author authorCreated = authorRepo.save(author);
-//        return authorCreated.convertAuthorToResponseDto();
+
     }
     @Override
-    public void update(AuthorUpdateDto authorUpdateDto) throws Throwable {
+    public void update(AuthorResponseDto authorResponseDto) throws Throwable {
             Author existingAuthor;
-            Author author=authorUpdateDto.convertAuthorUpdateDtoToEntity();
+            Author author=authorResponseDto.convertAuthorRequestDtoToEntity();
             existingAuthor = authorRepo.findById(author.getId()).orElseThrow();
             existingAuthor.setName(author.getName());
             existingAuthor.setSurname(author.getSurname());
             existingAuthor.setPatronymic(author.getPatronymic());
             existingAuthor.setDateOfBirth(author.getDateOfBirth());
             existingAuthor.setId(author.getId());
-//            existingAuthor.setAuthorsGenresList(author.getAuthorsGenresList());
-//            existingAuthor.setAuthorsBooksList(author.getAuthorsBooksList());
+
             authorRepo.save(author);
     }
 

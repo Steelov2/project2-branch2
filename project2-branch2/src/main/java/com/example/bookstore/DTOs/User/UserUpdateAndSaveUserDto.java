@@ -1,6 +1,5 @@
 package com.example.bookstore.DTOs.User;
 
-import com.example.bookstore.entities.Role;
 import com.example.bookstore.entities.User;
 import lombok.*;
 
@@ -10,22 +9,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class UserRequestDto {
+public class UserUpdateAndSaveUserDto {
     private Long id;
     private String username;
     private String password;
-//    private Role role;
-    //private Boolean isBlocked;
 
 
 
-    public User convertUserRequestDtoToEntity(){
+
+    public User convertUserUpdateAndSaveUserDtoToEntity(){
         User user = new User();
         user.setId(this.getId());
         user.setUsername(this.getUsername());
-       // user.setRole(this.getRole());
-        //user.setIsBlocked(this.getIsBlocked());
-        user.setPassword(this.getPassword());
         return user;
     }
 }

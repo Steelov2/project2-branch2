@@ -2,9 +2,9 @@ package com.example.bookstore.controllers;
 
 import com.example.bookstore.DTOs.Author.AuthorRequestDto;
 import com.example.bookstore.DTOs.Author.AuthorResponseDto;
-import com.example.bookstore.DTOs.Author.AuthorUpdateDto;
 import com.example.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +20,7 @@ public class AuthorAdminController {
         this.authorService = authorService;
 
     }
+    //@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 
     @GetMapping("/authorsList")
     public List<AuthorRequestDto> getAll() {
@@ -27,34 +28,34 @@ public class AuthorAdminController {
     }
 
     @GetMapping("/author/{authorID}")
-    private Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id) {
+    public Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id) {
         return authorService.getByID(id);
     }
 
     @GetMapping("/author/genre/{genreName}")
-    private List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name) {
+    public List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name) {
         return authorService.getAuthorsByGenreName(name);
 
     }
 
     @GetMapping("/author/authorName/{name}")
-    private List<AuthorRequestDto> getAuthorByName(@PathVariable("name") String name) {
+    public List<AuthorRequestDto> getAuthorByName(@PathVariable("name") String name) {
         return authorService.getByName(name);
     }
 
     @DeleteMapping("/deleteAuthor/{authorID}")
-    private void deleteAuthorById(@PathVariable("authorID") Long id) {
+    public void deleteAuthorById(@PathVariable("authorID") Long id) {
         authorService.deleteByID(id);
     }
 
     @PostMapping("/saveAuthor")
-    private void saveAuthor(@RequestBody AuthorResponseDto authorResponseDto) {
+    public void saveAuthor(@RequestBody AuthorResponseDto authorResponseDto) {
         authorService.create(authorResponseDto);
     }
 
     @PutMapping("/updateAuthor")
-    private void updateAuthor(@RequestBody AuthorUpdateDto authorUpdateDto) throws Throwable {
+    public void updateAuthor(@RequestBody AuthorResponseDto authorResponseDto) throws Throwable {
 
-        authorService.update(authorUpdateDto);
+        authorService.update(authorResponseDto);
     }
 }

@@ -26,19 +26,19 @@ public class AuthorUserController {
         return authorService.getAll();
     }
     @GetMapping("/author/{authorID}")
-    private Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id)
+    public Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id)
     {
         return authorService.getByID(id);
     }
     @GetMapping("/author/genre/{genreName}")
-    private List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name)
+    public List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name)
     {
         return authorService.getAuthorsByGenreName(name);
 
     }
 
     @GetMapping("/author/authorName/{name}")
-    private List<AuthorRequestDto> getAuthorByName(@PathVariable ("name") String name){
+    public List<AuthorRequestDto> getAuthorByName(@PathVariable ("name") String name){
         return authorService.getByName(name);
     }
 }
