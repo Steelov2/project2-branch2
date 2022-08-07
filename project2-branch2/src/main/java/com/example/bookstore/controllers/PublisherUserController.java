@@ -1,22 +1,18 @@
 package com.example.bookstore.controllers;
 
 import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
-import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
-import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
 import com.example.bookstore.services.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-@RestController
-@RequestMapping("/api/v1/publishers")
-public class PublisherController {
+public class PublisherUserController {
     private final PublisherService publisherService;
     @Autowired
-    public PublisherController(PublisherService publisherService){
+    public PublisherUserController(PublisherService publisherService){
         this.publisherService= publisherService;
     }
 
@@ -33,26 +29,4 @@ public class PublisherController {
     private List<PublisherRequestDto> getAuthorByName(@PathVariable("bookName") String name){
         return publisherService.getByNameContaining(name);
     }
-    @DeleteMapping("/publisher/{publisherID}")
-    private void deletePublisherById(@PathVariable("publisherID") Long id)
-    {
-        publisherService.deleteByID(id);
-    }
-    @PostMapping("/publisher")
-    private PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
-    {
-        return  publisherService.create(publisherResponseDTO);
-    }
-    @PutMapping("/publisher")
-    private void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
-
-        publisherService.update(publisherUpdateDto);
-    }
-
-
-
-
-
-
-
 }

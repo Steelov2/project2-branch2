@@ -12,52 +12,50 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/books")
-public class BookController {
-    @Autowired
+@RequestMapping("/api/v1/admin/books")
+public class BookAdminController {
     private final BookService bookService;
 
     @Autowired
-    public BookController(BookService bookService) {
+    public BookAdminController(BookService bookService) {
         this.bookService = bookService;
     }
+
     @GetMapping("/booksList")
-    public List<BookRequestDto> getAll(){
-       return bookService.getAll();
+    public List<BookRequestDto> getAll() {
+        return bookService.getAll();
     }
+
     @GetMapping("/book/{bookID}")
-    private Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id)
-    {
+    private Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id) {
         return bookService.getByID(id);
     }
+
     @GetMapping("/book/bookName/{bookName}")
-    private List<BookRequestDto> getBookByName(@PathVariable("bookName") String name){
-       return bookService.getByNameContaining(name);
+    private List<BookRequestDto> getBookByName(@PathVariable("bookName") String name) {
+        return bookService.getByNameContaining(name);
     }
 
     @GetMapping("/book/genreName/{genreName}")
-    private List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name){
+    private List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name) {
         return bookService.getByGenreName(name);
     }
 
     @DeleteMapping("/deleteBook/{bookID}")
-    private void deleteBookById(@PathVariable("bookID") Long id)
-    {
+    private void deleteBookById(@PathVariable("bookID") Long id) {
         bookService.deleteByID(id);
     }
+
     @PostMapping("/saveBook")
-    private BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto){
+    private BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto) {
         return bookService.create(bookResponseDto);
     }
+
     @PutMapping("/updateBook")
-    private void updateBook(@RequestBody BookUpdateDto bookUpdateDto)    {
+    private void updateBook(@RequestBody BookUpdateDto bookUpdateDto) {
 
         bookService.update(bookUpdateDto);
     }
 
 
-
 }
-
-//@PathVariable("bookid") long id
-//book.getId()

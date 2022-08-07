@@ -31,8 +31,8 @@ public class WebSecurityConfig {
         http.
                 csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/authors/saveAuthor").hasAuthority(Role.ADMIN.name())
-                .antMatchers("/api/v1/users/user").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/api/v1/admin/**").hasAuthority(Role.ADMIN.name())
+                .antMatchers("/api/v1/user/**").hasAuthority(Role.USER.name())
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated().and().formLogin().and().httpBasic();
 

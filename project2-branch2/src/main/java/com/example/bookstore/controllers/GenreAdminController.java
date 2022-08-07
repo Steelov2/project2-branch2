@@ -10,13 +10,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/genres")
-public class GenreController {
-     private final GenreService genreService;
+@RequestMapping("/api/v1/admin/genres")
+public class GenreAdminController {
+    private final GenreService genreService;
 
 
     @Autowired
-    public GenreController( GenreService genreService) {
+    public GenreAdminController( GenreService genreService) {
         this.genreService = genreService;
 
     }
@@ -43,14 +43,11 @@ public class GenreController {
     }
     @PostMapping("/saveGenre")
     private GenreRequestDto saveBook(@RequestBody GenreRequestDto genreRequestDTO){
-       return genreService.create(genreRequestDTO);
+        return genreService.create(genreRequestDTO);
     }
     @PutMapping("/updateGenre")
     private void updateBook(@RequestBody GenreRequestDto genreRequestDTO)    {
 
         genreService.update(genreRequestDTO);
     }
-
-
-
 }
