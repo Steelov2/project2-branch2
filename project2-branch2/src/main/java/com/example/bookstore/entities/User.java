@@ -37,8 +37,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-//    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
+
     private Boolean isBlocked;
     private Boolean enabled;
 

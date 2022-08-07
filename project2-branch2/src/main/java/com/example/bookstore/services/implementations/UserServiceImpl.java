@@ -45,18 +45,18 @@ public class UserServiceImpl implements UserService {
         userRepo.deleteById(id);
     }
 
-    @Override
-    public UserRequestDto create(UserRequestDto userRequestDto) {
-        User user = userRequestDto.convertUserRequestDtoToEntity();
-        User userCreated= userRepo.save(user);
-        return userCreated.convertUserToRequestDto() ;
-    }
-    public void createUser(CreateUserRequest userRequest) {
+//    public UserRequestDto create(UserRequestDto userRequestDto) {
+//        User user = userRequestDto.convertUserRequestDtoToEntity();
+//        User userCreated= userRepo.save(user);
+//        return userCreated.convertUserToRequestDto() ;
+//    }
+      @Override
+      public void create (UserRequestDto userRequestDto) {
         userRepo.saveAndFlush(
                 new User(
                         null,
-                        userRequest.getLogin(),
-                        passwordEncoder.encode(userRequest.getPassword())
+                        userRequestDto.getUsername(),
+                        passwordEncoder.encode(userRequestDto.getPassword())
                 )
         );
     }

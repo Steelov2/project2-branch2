@@ -54,10 +54,20 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorResponseDto create(AuthorResponseDto authorResponseDto) {
-        Author author = authorResponseDto.convertAuthorRequestDtoToEntity();
-        Author authorCreated = authorRepo.save(author);
-        return authorCreated.convertAuthorToResponseDto();
+    public void create(AuthorResponseDto authorResponseDto) {
+
+        authorRepo.save(
+               new Author(
+                       authorResponseDto.getName(),
+                       authorResponseDto.getSurname(),
+                       authorResponseDto.getPatronymic(),
+                       authorResponseDto.getDateOfBirth()
+
+                )
+       );
+//        Author author = authorResponseDto.convertAuthorRequestDtoToEntity();
+//        Author authorCreated = authorRepo.save(author);
+//        return authorCreated.convertAuthorToResponseDto();
     }
     @Override
     public void update(AuthorUpdateDto authorUpdateDto) throws Throwable {

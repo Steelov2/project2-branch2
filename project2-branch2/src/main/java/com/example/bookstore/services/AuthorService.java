@@ -14,7 +14,7 @@ public interface AuthorService {
 
     void deleteByID(Long id);
 
-    AuthorResponseDto create(AuthorResponseDto authorResponseDto);
+    void create(AuthorResponseDto authorResponseDto);
 
     void update(AuthorUpdateDto authorUpdateDto) throws Throwable;
 

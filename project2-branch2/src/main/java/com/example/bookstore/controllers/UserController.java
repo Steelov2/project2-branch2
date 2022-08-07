@@ -42,9 +42,9 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private UserRequestDto saveUser(@RequestBody UserRequestDto userRequestDto)
+    private void saveUser(@RequestBody UserRequestDto userRequestDto)
     {
-        return  userService.create(userRequestDto);
+        userService.create(userRequestDto);
     }
     @PutMapping("/user")
     private void updatePublisher(@RequestBody UserRequestDto userRequestDto)    {

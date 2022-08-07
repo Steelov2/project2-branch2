@@ -61,6 +61,13 @@ public class Author {
         return authorResponseDto;
     }
 
+    public Author(String surname, String name, String patronymic, LocalDate dateOfBirth) {
+        this.surname = surname;
+        this.name = name;
+        this.patronymic = patronymic;
+        this.dateOfBirth = dateOfBirth;
+    }
+
     public AuthorRequestDto convertAuthorToRequestDto() {
         AuthorRequestDto authorRequestDto = new AuthorRequestDto();
         authorRequestDto.setName(this.getName());

@@ -10,7 +10,7 @@ public interface UserService  {
     List<UserResponseDto> getAll();
     Optional<UserResponseDto> getByID(Long id);
     void deleteByID(Long id);
-    UserRequestDto create(UserRequestDto userRequestDto);
+    void create(UserRequestDto userRequestDto);
     void update(UserRequestDto userRequestDto);
     List<UserResponseDto> getByUsernameContaining(String name);
 }

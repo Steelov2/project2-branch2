@@ -52,8 +52,8 @@ public class AuthorController {
         authorService.deleteByID(id);
     }
     @PostMapping("/saveAuthor")
-    private AuthorResponseDto saveAuthor(@RequestBody AuthorResponseDto authorResponseDto){
-        return authorService.create(authorResponseDto);
+    private void saveAuthor(@RequestBody AuthorResponseDto authorResponseDto){
+         authorService.create(authorResponseDto);
     }
     @PutMapping("/updateAuthor")
     private void updateAuthor(@RequestBody AuthorUpdateDto authorUpdateDto) throws Throwable {
