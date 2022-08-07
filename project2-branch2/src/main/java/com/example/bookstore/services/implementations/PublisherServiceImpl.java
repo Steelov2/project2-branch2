@@ -7,6 +7,7 @@ import com.example.bookstore.Repos.BookRepo;
 import com.example.bookstore.Repos.PublisherRepo;
 
 import com.example.bookstore.entities.Publisher;
+import com.example.bookstore.entities.User;
 import com.example.bookstore.services.PublisherService;
 import lombok.val;
 import org.springframework.stereotype.Service;

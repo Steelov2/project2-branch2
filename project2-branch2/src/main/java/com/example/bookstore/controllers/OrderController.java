@@ -10,32 +10,35 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
     private OrderService orderService;
     @Autowired
     public OrderController(OrderService orderService) {
         this.orderService = orderService;
     }
-    @PostMapping("/order")
-    private OrderCreateDto create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
-        return orderService.create(orderCreateDto);
-    }
-    @PutMapping("/order")
-    private void update(@RequestBody OrderUpdateDto orderUpdateDto) throws Exception {
 
-        orderService.update(orderUpdateDto);
-    }
-    @DeleteMapping("/order/{orderID}")
-    private void delete(@PathVariable("orderID") long id){
-        orderService.deleteById(id);
-    }
-    @GetMapping("/order")
+    @GetMapping("/ordersList")
     private List<OrderRequestDto> getAll(){
         return orderService.getAll();
     }
     @GetMapping("/order/{orderID}")
     private Optional<OrderRequestDto> getByID(@PathVariable("orderID") long id){
-        return orderService.getByID(id);
+        return orderService.getByID(id);}
+
+
+    @PutMapping("/order")
+    private void update(@RequestBody OrderUpdateDto orderUpdateDto) throws Exception {
+
+        orderService.update(orderUpdateDto);
     }
-}
+    @PostMapping("/order")
+    private OrderCreateDto create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
+        return orderService.create(orderCreateDto);
+    }
+    @DeleteMapping("/order/{orderID}")
+    private void delete(@PathVariable("orderID") long id){
+        orderService.deleteById(id);
+    }
+
+    }

@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping()
+@RequestMapping("/api/v1/publishers")
 public class PublisherController {
     private final PublisherService publisherService;
     @Autowired
@@ -20,7 +20,7 @@ public class PublisherController {
         this.publisherService= publisherService;
     }
 
-    @GetMapping("/publisher")
+    @GetMapping("/publishersList")
     public List<PublisherRequestDto> getAll(){
         return  publisherService.getAll();
     }

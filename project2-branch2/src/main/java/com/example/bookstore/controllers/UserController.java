@@ -4,6 +4,9 @@ import com.example.bookstore.DTOs.User.UserRequestDto;
 import com.example.bookstore.DTOs.User.UserResponseDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,12 +14,14 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/users")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+//    private final UserServiceimpl userServiceimpl;
 
-    @GetMapping("/users")
+
+    @GetMapping("/usersList")
     public List<UserResponseDto> getAll(){
         return  userService.getAll();
     }
@@ -37,7 +42,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    private UserRequestDto savePublisher(@RequestBody UserRequestDto userRequestDto)
+    private UserRequestDto saveUser(@RequestBody UserRequestDto userRequestDto)
     {
         return  userService.create(userRequestDto);
     }
@@ -46,5 +51,11 @@ public class UserController {
 
         userService.update(userRequestDto);
     }
-
+//    @PostMapping
+//    public ResponseEntity<Void> createUser(@RequestBody CreateUserRequest userRequest) {
+//        userServiceimpl.createUser(userRequest);
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
 }
+
+

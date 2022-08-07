@@ -14,24 +14,16 @@ public class UserRequestDto {
     private Long id;
     private String username;
     private String password;
-    private Role role;
-    private Boolean isBlocked;
+//    private Role role;
+    //private Boolean isBlocked;
 
-    public UserRequestDto(String username,
-                          String password,
-                          Role role,
-                          Boolean isBlocked) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.isBlocked = isBlocked;
-    }
+
 
     public User convertUserRequestDtoToEntity(){
         User user = new User();
         user.setId(this.getId());
         user.setUsername(this.getUsername());
-        user.setRole(this.getRole());
+       // user.setRole(this.getRole());
         //user.setIsBlocked(this.getIsBlocked());
         user.setPassword(this.getPassword());
         return user;

@@ -15,11 +15,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/authors")
 public class AuthorController {
-    @Autowired
     private final AuthorService authorService;
-
 
     @Autowired
     public AuthorController(AuthorService authorService) {
@@ -27,7 +25,7 @@ public class AuthorController {
 
     }
 
-    @GetMapping("/author")
+    @GetMapping("/authorsList")
     public List<AuthorRequestDto> getAll(){
         return authorService.getAll();
     }
@@ -43,22 +41,22 @@ public class AuthorController {
 
     }
 
-    @GetMapping("/author/name/{name}")
+    @GetMapping("/author/authorName/{name}")
     private List<AuthorRequestDto> getAuthorByName(@PathVariable ("name") String name){
         return authorService.getByName(name);
     }
 
-    @DeleteMapping("/author/{authorID}")
+    @DeleteMapping("/deleteAuthor/{authorID}")
     private void deleteAuthorById(@PathVariable("authorID") Long id)
     {
         authorService.deleteByID(id);
     }
-    @PostMapping("/author")
-    private AuthorResponseDto saveBook(@RequestBody AuthorResponseDto authorResponseDto){
+    @PostMapping("/saveAuthor")
+    private AuthorResponseDto saveAuthor(@RequestBody AuthorResponseDto authorResponseDto){
         return authorService.create(authorResponseDto);
     }
-    @PutMapping("/author")
-    private void updateBook(@RequestBody AuthorUpdateDto authorUpdateDto) throws Throwable {
+    @PutMapping("/updateAuthor")
+    private void updateAuthor(@RequestBody AuthorUpdateDto authorUpdateDto) throws Throwable {
 
         authorService.update(authorUpdateDto);
     }

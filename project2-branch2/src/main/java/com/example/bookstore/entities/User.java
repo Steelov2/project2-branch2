@@ -16,10 +16,11 @@ import java.util.Collections;
 @Getter
 @Setter
 @AllArgsConstructor
+//@RequiredArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class User implements UserDetails {
+public class User {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -41,6 +42,18 @@ public class User implements UserDetails {
     private Boolean isBlocked;
     private Boolean enabled;
 
+    public User(Long id, String username, String password) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+    }
+
+    public User(Long id, String username, String password, Role role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
+    }
 
     public UserResponseDto convertUserToDtoResponseDto() {
         UserResponseDto userResponseDto = new UserResponseDto();
@@ -57,36 +70,10 @@ public class User implements UserDetails {
         userRequestDto.setId(this.getId());
         userRequestDto.setUsername(this.getUsername());
         userRequestDto.setPassword(this.getPassword());
-        userRequestDto.setIsBlocked(this.getIsBlocked());
-        userRequestDto.setRole(this.getRole());
+//        userRequestDto.setIsBlocked(this.getIsBlocked());
+//        userRequestDto.setRole(this.getRole());
         return userRequestDto;
     }
 
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority simpleGrantedAuthority =
-                new SimpleGrantedAuthority(role.name());
-        return Collections.singletonList(simpleGrantedAuthority);
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return !isBlocked;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return enabled;
-    }
 }

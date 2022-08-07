@@ -8,6 +8,9 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import static com.example.bookstore.entities.Status.CREATED;
+
 @Data
 @Getter
 @Setter
@@ -18,7 +21,7 @@ public class OrderCreateDto {
     private Long id;
     private Long userId;
     private List<Long> orderedBooksIds;
-    private Status status;
+    private Status status=CREATED;
     private LocalDate createdAt = LocalDate.now();
 
 

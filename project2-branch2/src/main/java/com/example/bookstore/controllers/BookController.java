@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/books")
 public class BookController {
     @Autowired
     private final BookService bookService;
@@ -21,7 +21,7 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-    @GetMapping("/book")
+    @GetMapping("/booksList")
     public List<BookRequestDto> getAll(){
        return bookService.getAll();
     }
@@ -40,16 +40,16 @@ public class BookController {
         return bookService.getByGenreName(name);
     }
 
-    @DeleteMapping("/book/{bookID}")
+    @DeleteMapping("/deleteBook/{bookID}")
     private void deleteBookById(@PathVariable("bookID") Long id)
     {
         bookService.deleteByID(id);
     }
-    @PostMapping("/book")
+    @PostMapping("/saveBook")
     private BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto){
         return bookService.create(bookResponseDto);
     }
-    @PutMapping("/book")
+    @PutMapping("/updateBook")
     private void updateBook(@RequestBody BookUpdateDto bookUpdateDto)    {
 
         bookService.update(bookUpdateDto);

@@ -36,6 +36,7 @@ public class Order {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> orderedBooks;
     private LocalDate createdAt;
+//    @Enumerated(EnumType.STRING)
     private Status status;
 
     public OrderRequestDto convertOrderToDto(){

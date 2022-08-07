@@ -10,10 +10,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1/genres")
 public class GenreController {
-    @Autowired
-    private final GenreService genreService;
+     private final GenreService genreService;
 
 
     @Autowired
@@ -21,7 +20,7 @@ public class GenreController {
         this.genreService = genreService;
 
     }
-    @GetMapping("/genre")
+    @GetMapping("/genresList")
     public List<GenreRequestDto> getAll(){
         return  genreService.getAll();
     }
@@ -30,21 +29,23 @@ public class GenreController {
     {
         return genreService.getByID(id);
     }
-    @GetMapping("/genre/name/{genreName}")
+    @GetMapping("/genre/genreName/{genreName}")
     private List<GenreRequestDto> getGenreByName(@PathVariable("genreName") String name){
         return genreService.getByNameContaining(name);
     }
 
-    @DeleteMapping("/genre/{genreID}")
+
+
+    @DeleteMapping("/deleteGenre/{genreID}")
     private void deleteBookById(@PathVariable("genreID") Long id)
     {
         genreService.deleteByID(id);
     }
-    @PostMapping("/genre")
+    @PostMapping("/saveGenre")
     private GenreRequestDto saveBook(@RequestBody GenreRequestDto genreRequestDTO){
        return genreService.create(genreRequestDTO);
     }
-    @PutMapping("/genre")
+    @PutMapping("/updateGenre")
     private void updateBook(@RequestBody GenreRequestDto genreRequestDTO)    {
 
         genreService.update(genreRequestDTO);
