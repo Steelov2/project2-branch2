@@ -21,15 +21,17 @@ tags:
     description: "Everything about your publishers"
   - name: "author"
     description: "Everything about your authors"
-
-
+  - name: "genre"
+    description: "Everything about your genres"
+  - name: "order"
+    description: "Everything about your orders"
     # externalDocs:
     #   description: "Everything about your authors"
     #   url: "http://swagger.io"
 schemes:
   - "https"
 paths:
-  /book:
+  /api/v1/books/saveBook:
     post:
       tags:
         - "book"
@@ -48,11 +50,60 @@ paths:
           schema:
             $ref: "#/definitions/Book"
       responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
         "405":
           description: "Invalid input"
 
 
-  /book/{bookID}:
+  /api/v1/books/updateBook:
+
+    put:
+      tags:
+        - "book"
+      summary: "Updates a book in the store with form data"
+      description: ""
+      operationId: "updateBook"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Books object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Book"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/books/booksList:
+    get:
+      tags:
+        - "book"
+      summary: "Get all books"
+      description: ""
+      operationId: "getAllBooks"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+
+
+  /api/v1/books/book/{bookID}:
     get:
       tags:
         - "book"
@@ -76,50 +127,6 @@ paths:
         "404":
           description: "Book not found"
 
-    put:
-      tags:
-        - "book"
-      summary: "Updates a book in the store with form data"
-      description: ""
-      operationId: "updateBook"
-      consumes:
-        - "application/x-www-form-urlencoded"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "bookID"
-          in: "path"
-          description: "ID of book that needs to be updated"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: "title"
-          in: "formData"
-          description: "Updated title of the book"
-          required: false
-          type: "string"
-        - name: "publisher"
-          in: "formData"
-          description: "Updated publisher of the book"
-          required: false
-          type: "integer"
-        - name: "numOfPages"
-          in: "formData"
-          description: "Updated number of pages of the book"
-          required: false
-          type: "integer"
-        - name: "year"
-          in: "formData"
-          description: "Updated year of the book"
-          required: false
-          type: "integer"
-      responses:
-        "200":
-          description: "successful operation"
-          schema:
-            $ref: "#/definitions/Book"
-        "405":
-          description: "Invalid input"
 
     delete:
       tags:
@@ -144,13 +151,13 @@ paths:
         "404":
           description: "Book not found"
 
-  /book/findByName/{bookName}:
+  /api/v1/books/book/bookName/{bookName}:
     get:
       tags:
         - "book"
-      summary: "Get book by name"
+      summary: "Get book by genre name"
       description: ""
-      operationId: "getBookByName"
+      operationId: "bookName"
       produces:
         - "application/xml"
         - "application/json"
@@ -166,18 +173,45 @@ paths:
           schema:
             $ref: "#/definitions/Book"
         "400":
-          description: "Invalid username supplied"
+          description: "Invalid bookName supplied"
         "404":
-          description: "User not found"
+          description: "Book not found"
+
+  /api/v1/books/book/genreName/{genreName}:
+    get:
+      tags:
+        - "book"
+      summary: "Get book by name"
+      description: ""
+      operationId: "genreName"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "genreName"
+          in: "path"
+          description: "Books by genre are returned "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+        "400":
+          description: "Invalid genreName supplied"
+        "404":
+          description: "Book not found"
 
 
-  /publisher:
+
+  /api/v1/publishers/savePublisher:
     post:
       tags:
         - "publisher"
       summary: "Add a new publisher to the store"
       description: ""
-      operationId: "addPublisher"
+      operationId: "savePublisher"
       consumes:
         - "application/json"
       produces:
@@ -185,15 +219,65 @@ paths:
       parameters:
         - in: "body"
           name: "body"
-          description: "Publisher object that needs to be added to the store"
+          description: "Author object that needs to be added to the store"
           required: true
           schema:
             $ref: "#/definitions/Publisher"
       responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Publisher"
         "405":
           description: "Invalid input"
 
-  /publisher/{publisherID}:
+
+  /api/v1/publishers/updatePublisher:
+
+    put:
+      tags:
+        - "publisher"
+      summary: "Updates a publisher in the store with form data"
+      description: ""
+      operationId: "updatePublisher"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Publishers object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Publisher"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Publisher"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/publishers/publishersList:
+    get:
+      tags:
+        - "publisher"
+      summary: "Get all publishers"
+      description: ""
+      operationId: "getAllPublisher"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Publisher"
+
+
+  /api/v1/publishers/publisher/{publisherID}:
     get:
       tags:
         - "publisher"
@@ -214,50 +298,16 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Publisher"
-        "400":
-          description: "Invalid ID supplied"
         "404":
-          description: "Author not found"
+          description: "Publisher not found"
 
 
-    put:
-      tags:
-        - "publisher"
-      summary: "Updates a publisher in the bookstorestore with form data"
-      description: ""
-      operationId: "updatePublisherWithForm"
-      consumes:
-        - "application/x-www-form-urlencoded"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "publisherID"
-          in: "path"
-          description: "ID of publisher that needs to be updated"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: "name"
-          in: "formData"
-          description: "Updated name of the publisher"
-          required: false
-          type: "string"
-        - name: "publishedBooksList"
-          in: "formData"
-          description: "Updated booklist of the publisher"
-          required: false
-          type: array
-          items:
-            type: "integer"
-      responses:
-        "405":
-          description: "Invalid input"
     delete:
       tags:
         - "publisher"
       summary: "Deletes a publisher"
       description: ""
-      operationId: "deletePublisher"
+      operationId: "deletePublisherById"
       produces:
         - "application/json"
       parameters:
@@ -273,19 +323,20 @@ paths:
           format: "int64"
       responses:
         "404":
-          description: "publisher not found"
-  /publisher/findByName/{PublisherName}:
+          description: "Publisher not found"
+
+  /api/v1/publishers/publisher/publisherName/{publisherName}:
     get:
       tags:
         - "publisher"
       summary: "Get publisher by name"
       description: ""
-      operationId: "getPublisherByName"
+      operationId: "publisherName"
       produces:
         - "application/xml"
         - "application/json"
       parameters:
-        - name: "PublisherName"
+        - name: "publisherName"
           in: "path"
           description: "Publisher is returned "
           required: true
@@ -296,18 +347,20 @@ paths:
           schema:
             $ref: "#/definitions/Publisher"
         "400":
-          description: "Invalid username supplied"
+          description: "Invalid publisherName supplied"
         "404":
-          description: "User not found"
+          description: "Publisher not found"
 
 
-  /author:
+
+
+  /api/v1/authors/saveAuthor:
     post:
       tags:
         - "author"
       summary: "Add a new author to the store"
       description: ""
-      operationId: "addAuthor"
+      operationId: "saveAuthor"
       consumes:
         - "application/json"
       produces:
@@ -320,12 +373,60 @@ paths:
           schema:
             $ref: "#/definitions/Author"
       responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Author"
         "405":
           description: "Invalid input"
 
 
+  /api/v1/authors/updateAuthor:
 
-  /author/{authorID}:
+    put:
+      tags:
+        - "author"
+      summary: "Updates a author in the store with form data"
+      description: ""
+      operationId: "updateAuthor"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Authors object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Author"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Author"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/authors/authorsList:
+    get:
+      tags:
+        - "author"
+      summary: "Get all authors"
+      description: ""
+      operationId: "getAllAuthors"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Author"
+
+
+  /api/v1/authors/author/{authorID}:
     get:
       tags:
         - "author"
@@ -346,62 +447,16 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Author"
-        "400":
-          description: "Invalid ID supplied"
         "404":
           description: "Author not found"
 
 
-    put:
-      tags:
-        - "author"
-      summary: "Updates an author in the store with form data"
-      description: ""
-      operationId: "updateAuthorWithForm"
-      consumes:
-        - "application/x-www-form-urlencoded"
-      produces:
-        - "application/json"
-      parameters:
-        - name: "authorID"
-          in: "path"
-          description: "ID of author that needs to be updated"
-          required: true
-          type: "integer"
-          format: "int64"
-        - name: "name"
-          in: "formData"
-          description: "Updated name of the author"
-          required: false
-          type: "string"
-        - name: "surname"
-          in: "formData"
-          description: "Updated surname of the author"
-          required: false
-          type: "string"
-        - name: "dateOfBirth"
-          in: "formData"
-          description: "Updated date of birth of the author"
-          required: false
-          type: "string"
-          format: "date"
-        - name: "bookList"
-          in: "formData"
-          description: "Updated booklist of the author"
-          required: false
-          type: array
-          items:
-            type: "integer"
-      responses:
-        "405":
-          description: "Invalid input"
-
     delete:
       tags:
         - "author"
-      summary: "Deletes an author"
+      summary: "Deletes a author"
       description: ""
-      operationId: "deleteAuthor"
+      operationId: "deleteAuthorById"
       produces:
         - "application/json"
       parameters:
@@ -419,19 +474,18 @@ paths:
         "404":
           description: "Author not found"
 
-
-  /author/findByName/{AuthorName}:
+  /api/v1/authors/author/authorName/{authorName}:
     get:
       tags:
         - "author"
-      summary: "Get author by name"
+      summary: "Get author by genre name"
       description: ""
-      operationId: "getAuthorByName"
+      operationId: "authorName"
       produces:
         - "application/xml"
         - "application/json"
       parameters:
-        - name: "AuthorName"
+        - name: "authorName"
           in: "path"
           description: "Author is returned "
           required: true
@@ -442,9 +496,555 @@ paths:
           schema:
             $ref: "#/definitions/Author"
         "400":
+          description: "Invalid authorName supplied"
+        "404":
+          description: "Author not found"
+
+  /api/v1/authors/author/genreName/{genreName}:
+    get:
+      tags:
+        - "author"
+      summary: "Get author by name"
+      description: ""
+      operationId: "authorGenreName"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "genreName"
+          in: "path"
+          description: "Authors by genre are returned "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Author"
+        "400":
+          description: "Invalid genreName supplied"
+        "404":
+          description: "Author not found"
+
+
+
+  /api/v1/genres/saveGenre:
+    post:
+      tags:
+        - "genre"
+      summary: "Add a new genre to the store"
+      description: ""
+      operationId: "saveGenre"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Genre object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Genre"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Genre"
+        "405":
+          description: "Invalid input"
+
+
+  /api/v1/genres/updateGenre:
+
+    put:
+      tags:
+        - "genre"
+      summary: "Updates a genre in the store with form data"
+      description: ""
+      operationId: "updateGenre"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Genres object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Genre"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Genre"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/genres/genresList:
+    get:
+      tags:
+        - "genre"
+      summary: "Get all genres"
+      description: ""
+      operationId: "getAllGenres"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Genre"
+
+
+  /api/v1/genres/genre/{genreID}:
+    get:
+      tags:
+        - "genre"
+      summary: "Find genre by ID"
+      description: "Returns a single genre"
+      operationId: "getGenreById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "genreID"
+          in: "path"
+          description: "ID of genre to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Genre"
+        "404":
+          description: "Genre not found"
+
+
+    delete:
+      tags:
+        - "genre"
+      summary: "Deletes a genre"
+      description: ""
+      operationId: "deleteGenreById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "genreID"
+          in: "path"
+          description: "Genre id to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "404":
+          description: "Genre not found"
+
+  /api/v1/genres/genre/genreName/{genreName}:
+    get:
+      tags:
+        - "genre"
+      summary: "Get genre by genre name"
+      description: ""
+      operationId: "genresName"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "genreName"
+          in: "path"
+          description: "Genre is returned "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Genre"
+        "400":
+          description: "Invalid genreName supplied"
+        "404":
+          description: "Genre not found"
+
+
+  /api/v1/orders/saveOrder:
+    post:
+      tags:
+        - "order"
+      summary: "Add a new order to the store"
+      description: ""
+      operationId: "saveOrder"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Order object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "405":
+          description: "Invalid input"
+
+
+  /api/v1/orders/updateOrder:
+
+    put:
+      tags:
+        - "order"
+      summary: "Updates a order in the store with form data"
+      description: ""
+      operationId: "updateOrder"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Orders object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/orders/ordersList:
+    get:
+      tags:
+        - "order"
+      summary: "Get all orders"
+      description: ""
+      operationId: "getAllOrders"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+
+
+  /api/v1/orders/order/{orderID}:
+    get:
+      tags:
+        - "order"
+      summary: "Find order by ID"
+      description: "Returns a single order"
+      operationId: "getOrderById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "orderID"
+          in: "path"
+          description: "ID of order to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "404":
+          description: "Order not found"
+
+
+    delete:
+      tags:
+        - "order"
+      summary: "Deletes a order"
+      description: ""
+      operationId: "deleteOrderById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "orderID"
+          in: "path"
+          description: "Order id to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "404":
+          description: "Order not found"
+
+  /api/v1/user/orders/updateOrder:
+
+    put:
+      tags:
+        - "order"
+      summary: "Updates a order in the store with form data for user"
+      description: ""
+      operationId: "updateOrderForUser"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Orders object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/user/orders/saveOrder:
+    post:
+      tags:
+        - "order"
+      summary: "Add a new order to the store"
+      description: ""
+      operationId: "saveOrderForUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Order object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Order"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Order"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/users/saveUser:
+    post:
+      tags:
+        - "user"
+      summary: "Add a new user to the store"
+      description: ""
+      operationId: "saveUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "405":
+          description: "Invalid input"
+
+
+  /api/v1/users/updateUser:
+
+    put:
+      tags:
+        - "user"
+      summary: "Updates a user in the store with form data"
+      description: ""
+      operationId: "updateUser"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "405":
+          description: "Invalid input"
+
+  /api/v1/users/usersList:
+    get:
+      tags:
+        - "user"
+      summary: "Get all users"
+      description: ""
+      operationId: "getAllUsers"
+      produces:
+        - "application/xml"
+        - "application/json"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+
+
+  /api/v1/users/user/{userID}:
+    get:
+      tags:
+        - "user"
+      summary: "Find user by ID"
+      description: "Returns a single user"
+      operationId: "getUserById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "userID"
+          in: "path"
+          description: "ID of user to return"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "404":
+          description: "User not found"
+
+
+    delete:
+      tags:
+        - "user"
+      summary: "Deletes a user"
+      description: ""
+      operationId: "deleteUserById"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "api_key"
+          in: "header"
+          required: false
+          type: "string"
+        - name: "userID"
+          in: "path"
+          description: "User id to delete"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        "404":
+          description: "User not found"
+
+  /api/v1/users/user/userName/{userName}:
+    get:
+      tags:
+        - "user"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "userName"
+      produces:
+        - "application/xml"
+        - "application/json"
+      parameters:
+        - name: "userName"
+          in: "path"
+          description: "User is returned "
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
           description: "Invalid username supplied"
         "404":
           description: "User not found"
+  /api/v1/user/users/saveUser:
+    post:
+      tags:
+        - "user"
+      summary: "Add a new user to the store"
+      description: ""
+      operationId: "saveUserForUser"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "User object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "405":
+          description: "Invalid input"
+  /api/v1/user/users/updateUser:
+
+    put:
+      tags:
+        - "user"
+      summary: "Updates a user in the store with form data"
+      description: ""
+      operationId: "updateUserForUser"
+      consumes:
+        - "application/x-www-form-urlencoded"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Users object that needs to be added to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/User"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "405":
+          description: "Invalid input"
+
 
 definitions:
   Author:
@@ -497,20 +1097,73 @@ definitions:
         type: "array"
         items:
           $ref: "#/definitions/Author"
+      genreList:
+        type: "array"
+        items:
+          $ref: "#/definitions/Genre"
       publisher:
         $ref: "#/definitions/Publisher"
-      title:
-        type: "integer"
-        format: "int64"
+      name:
+        type: "string"
+        format: "byte"
       numOfPages:
         type: "integer"
         format: "int64"
       year:
+        type: "string"
+        format: "date"
+  Genre:
+    type: "object"
+    properties:
+      id:
         type: "integer"
         format: "int64"
+      name:
+        type: "string"
+        format: "byte"
 
 
+  Order:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      user:
+        $ref: "#/definitions/User"
+      orderedBooks:
+        type: "array"
+        items:
+          $ref: "#/definitions/Book"
+
+      status:
+        type: "string"
+        format: "enum"
+      createdAt:
+        type: "string"
+        format: "date"
+
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+        format: "byte"
+      password:
+        type: "string"
+        format: "byte"
+
+      isBlocked:
+        type: "boolean"
+        format: "byte"
+
+      role:
+        type: "string"
+        format: "enum"
 
 externalDocs:
   description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  url: "https://swagger.io"

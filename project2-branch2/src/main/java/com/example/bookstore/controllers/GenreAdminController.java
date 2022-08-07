@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/admin/genres")
+@RequestMapping("/api/v1/genres")
 public class GenreAdminController {
     private final GenreService genreService;
 

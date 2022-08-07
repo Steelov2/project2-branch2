@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1//admin/publishers")
+@RequestMapping("/api/v1/publishers")
 public class PublisherAdminController {
     private final PublisherService publisherService;
     @Autowired
@@ -28,18 +28,23 @@ public class PublisherAdminController {
     {
         return publisherService.getByID(id);
     }
+    @GetMapping("/publisher/publisherName/{publisherName}")
+    public List<PublisherRequestDto> getPublisherById(@PathVariable("publisherName") String name)
+    {
+        return publisherService.getByNameContaining(name);
+    }
 
     @DeleteMapping("/publisher/{publisherID}")
     public void deletePublisherById(@PathVariable("publisherID") Long id)
     {
         publisherService.deleteByID(id);
     }
-    @PostMapping("/publisher")
+    @PostMapping("/savePublisher")
     public PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
     {
         return  publisherService.create(publisherResponseDTO);
     }
-    @PutMapping("/publisher")
+    @PutMapping("/updatePublisher")
     public void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
 
         publisherService.update(publisherUpdateDto);

@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/admin/books")
+@RequestMapping("/api/v1/books")
 public class BookAdminController {
     private final BookService bookService;
 
@@ -41,7 +41,7 @@ public class BookAdminController {
         return bookService.getByGenreName(name);
     }
 
-    @DeleteMapping("/deleteBook/{bookID}")
+    @DeleteMapping("/book/{bookID}")
     public void deleteBookById(@PathVariable("bookID") Long id) {
         bookService.deleteByID(id);
     }

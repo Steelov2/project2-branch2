@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/admin/orders")
+@RequestMapping("/api/v1/orders")
 public class OrderController {
     private OrderService orderService;
     @Autowired
@@ -28,12 +28,12 @@ public class OrderController {
         return orderService.getByID(id);}
 
 
-    @PutMapping("/order")
+    @PutMapping("/updateOrder")
     public void update(@RequestBody OrderUpdateForAdmin orderUpdateForAdmin) throws Exception {
 
         orderService.updateForAdmin(orderUpdateForAdmin);
     }
-    @PostMapping("/order")
+    @PostMapping("/saveOrder")
     public OrderCreateDto create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
         return orderService.create(orderCreateDto);
     }

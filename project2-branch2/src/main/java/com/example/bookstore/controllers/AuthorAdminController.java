@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/admin/authors")
+@RequestMapping("/api/v1/authors")
 public class AuthorAdminController {
     private final AuthorService authorService;
 

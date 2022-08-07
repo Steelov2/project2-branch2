@@ -1,4 +1,4 @@
-package com.example.bookstore.controllers;
+package com.example.bookstore.controllers.controller1;
 
 import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
 import com.example.bookstore.services.PublisherService;
