@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface OrderService {
-    OrderCreateDto create(OrderCreateDto orderCreateDto) throws Exception;
+    void create(OrderCreateDto orderCreateDto) throws Exception;
 
     void updateForUser(OrderUpdateForUserDto orderUpdateForUserDto);
     void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin);

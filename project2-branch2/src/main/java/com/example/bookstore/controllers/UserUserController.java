@@ -17,7 +17,7 @@ public class UserUserController {
         userService.createForUser(userUpdateAndSaveUserDto);
     }
 
-    @PutMapping("/user")
+    @PutMapping("/updateUser")
     public void updateUser(@RequestBody UserUpdateAndSaveUserDto userUpdateAndSaveUserDto)    {
 
         userService.updateForUser(userUpdateAndSaveUserDto);

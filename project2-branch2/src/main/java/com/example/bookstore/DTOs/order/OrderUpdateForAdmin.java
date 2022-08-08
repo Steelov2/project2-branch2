@@ -19,17 +19,15 @@ import java.util.List;
 public class OrderUpdateForAdmin {
     private Long id;
     private Long userId;
-    private List<Long> orderedBookIds;
     private Status status;
 
-    public Order convertOrderUpdateForAdminToEntity(List<Book> bbb, User uuu) {
+    public Order convertOrderUpdateForAdminToEntity( User uuu) {
         Order order = new Order();
 
         order.setId(this.getId());
         order.setStatus(this.getStatus());
 
         order.setUser(uuu);
-        order.setOrderedBooks(bbb);
         return order;
     }
 }
