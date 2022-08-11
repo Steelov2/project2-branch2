@@ -1,26 +1,26 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Author.AuthorRequestDto;
-import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.dto.author.AuthorRequestDto;
+import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/authors")
 public class AuthorAdminController {
     private final AuthorService authorService;
 
+
     @Autowired
     public AuthorAdminController(AuthorService authorService) {
         this.authorService = authorService;
 
     }
-    //@PreAuthorize("hasAnyAuthority('USER', 'ADMIN')")
 
     @GetMapping("/authorsList")
     public List<AuthorRequestDto> getAll() {
@@ -33,7 +33,7 @@ public class AuthorAdminController {
     }
 
     @GetMapping("/author/genre/{genreName}")
-    public List<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name) {
+    public Set<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") String name) {
         return authorService.getAuthorsByGenreName(name);
 
     }

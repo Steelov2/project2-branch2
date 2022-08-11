@@ -1,6 +1,6 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Genre.GenreRequestDto;
+import com.example.bookstore.dto.genre.GenreRequestDto;
 
 import java.util.List;
 import java.util.Optional;

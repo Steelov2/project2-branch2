@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserResponseDto;
+import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserResponseDto;
 import lombok.*;
 
 import javax.persistence.*;

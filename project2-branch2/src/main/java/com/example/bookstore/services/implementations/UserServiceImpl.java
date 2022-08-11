@@ -1,9 +1,9 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.User.AdminUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserResponseDto;
-import com.example.bookstore.Repos.UserRepo;
+import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserResponseDto;
+import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,6 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Genre.GenreRequestDto;
+import com.example.bookstore.dto.genre.GenreRequestDto;
 
 import javax.persistence.*;
 import lombok.*;
@@ -24,12 +24,13 @@ public class Genre {
             generator = "genre_sequence"
     )
     private Long id;
+
     @Column(name = "name")
-    private String name;
+    private String genreName;
 
     public GenreRequestDto convertGenreRequestToDto() {
         GenreRequestDto genreRequestDto =new GenreRequestDto();
-        genreRequestDto.setName(this.getName());
+        genreRequestDto.setName(this.getGenreName());
         genreRequestDto.setId(this.getId());
         return genreRequestDto;
     }

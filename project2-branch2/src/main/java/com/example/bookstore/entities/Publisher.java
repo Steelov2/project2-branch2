@@ -3,8 +3,8 @@ package com.example.bookstore.entities;
 import javax.persistence.*;
 import java.util.List;
 
-import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
-import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
+import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import com.example.bookstore.dto.Publisher.PublisherRequestDto;
 import lombok.*;
 
 @Entity

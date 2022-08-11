@@ -1,9 +1,9 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.order.OrderCreateDto;
-import com.example.bookstore.DTOs.order.OrderRequestDto;
-import com.example.bookstore.DTOs.order.OrderUpdateForAdmin;
-import com.example.bookstore.DTOs.order.OrderUpdateForUserDto;
+import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderRequestDto;
+import com.example.bookstore.dto.order.OrderUpdateForAdmin;
+import com.example.bookstore.dto.order.OrderUpdateForUserDto;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.User.AdminUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserResponseDto;
+import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserResponseDto;
 
 import java.util.List;
 import java.util.Optional;

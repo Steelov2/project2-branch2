@@ -1,8 +1,7 @@
 package com.example.bookstore.controllers;
-import com.example.bookstore.DTOs.order.OrderCreateDto;
-import com.example.bookstore.DTOs.order.OrderRequestDto;
-import com.example.bookstore.DTOs.order.OrderUpdateForAdmin;
-import com.example.bookstore.DTOs.order.OrderUpdateForUserDto;
+import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderRequestDto;
+import com.example.bookstore.dto.order.OrderUpdateForAdmin;
 import com.example.bookstore.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +33,8 @@ public class OrderController {
         orderService.updateForAdmin(orderUpdateForAdmin);
     }
     @PostMapping("/saveOrder")
-    public OrderCreateDto create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
-        return orderService.create(orderCreateDto);
+    public void create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
+         orderService.create(orderCreateDto);
     }
     @DeleteMapping("/order/{orderID}")
     public void delete(@PathVariable("orderID") long id){

@@ -1,15 +1,15 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
-import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
-import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
-import com.example.bookstore.Repos.BookRepo;
-import com.example.bookstore.Repos.PublisherRepo;
+import com.example.bookstore.dto.Publisher.PublisherRequestDto;
+import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import com.example.bookstore.dto.Publisher.PublisherUpdateDto;
+import com.example.bookstore.repository.BookRepo;
+import com.example.bookstore.repository.PublisherRepo;
 
 import com.example.bookstore.entities.Publisher;
-import com.example.bookstore.entities.User;
 import com.example.bookstore.services.PublisherService;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

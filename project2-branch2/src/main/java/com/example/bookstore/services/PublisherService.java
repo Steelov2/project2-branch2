@@ -1,8 +1,8 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Publisher.PublisherRequestDto;
-import com.example.bookstore.DTOs.Publisher.PublisherResponseDto;
-import com.example.bookstore.DTOs.Publisher.PublisherUpdateDto;
+import com.example.bookstore.dto.Publisher.PublisherRequestDto;
+import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import com.example.bookstore.dto.Publisher.PublisherUpdateDto;
 
 import java.util.List;
 import java.util.Optional;

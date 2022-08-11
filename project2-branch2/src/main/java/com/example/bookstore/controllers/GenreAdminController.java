@@ -1,12 +1,11 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Genre.GenreRequestDto;
+import com.example.bookstore.dto.genre.GenreRequestDto;
 import com.example.bookstore.services.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @RestController

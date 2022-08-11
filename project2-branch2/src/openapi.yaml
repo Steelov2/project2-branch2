@@ -478,7 +478,7 @@ paths:
     get:
       tags:
         - "author"
-      summary: "Get author by genre name"
+      summary: "Get author by  name"
       description: ""
       operationId: "authorName"
       produces:
@@ -504,7 +504,7 @@ paths:
     get:
       tags:
         - "author"
-      summary: "Get author by name"
+      summary: "Get author by genre name"
       description: ""
       operationId: "authorGenreName"
       produces:

@@ -1,8 +1,8 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.Book.BookResponseDto;
-import com.example.bookstore.DTOs.Book.BookRequestDto;
-import com.example.bookstore.DTOs.Book.BookUpdateDto;
+import com.example.bookstore.dto.book.BookResponseDto;
+import com.example.bookstore.dto.book.BookRequestDto;
+import com.example.bookstore.dto.book.BookUpdateDto;
 import lombok.*;
 
 import javax.persistence.*;

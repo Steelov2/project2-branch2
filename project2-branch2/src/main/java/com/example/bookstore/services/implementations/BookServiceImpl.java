@@ -1,12 +1,12 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Book.BookRequestDto;
-import com.example.bookstore.DTOs.Book.BookResponseDto;
-import com.example.bookstore.DTOs.Book.BookUpdateDto;
-import com.example.bookstore.Repos.AuthorRepo;
-import com.example.bookstore.Repos.BookRepo;
-import com.example.bookstore.Repos.GenreRepo;
-import com.example.bookstore.Repos.PublisherRepo;
+import com.example.bookstore.dto.book.BookRequestDto;
+import com.example.bookstore.dto.book.BookResponseDto;
+import com.example.bookstore.dto.book.BookUpdateDto;
+import com.example.bookstore.repository.AuthorRepo;
+import com.example.bookstore.repository.BookRepo;
+import com.example.bookstore.repository.GenreRepo;
+import com.example.bookstore.repository.PublisherRepo;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
 import lombok.val;
@@ -46,7 +46,6 @@ public class BookServiceImpl implements BookService {
         bookRepo.deleteById(id);
     }
 
-    //TODO исправить на тот у которого есть список авторов
     @Override
     public BookResponseDto create(BookResponseDto bookResponseDto) {
         Book book = bookResponseDto.convertBookRequestDtoDtoToEntity();

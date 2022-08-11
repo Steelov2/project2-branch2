@@ -1,12 +1,12 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.order.OrderCreateDto;
-import com.example.bookstore.DTOs.order.OrderRequestDto;
-import com.example.bookstore.DTOs.order.OrderUpdateForAdmin;
-import com.example.bookstore.DTOs.order.OrderUpdateForUserDto;
-import com.example.bookstore.Repos.BookRepo;
-import com.example.bookstore.Repos.OrderRepo;
-import com.example.bookstore.Repos.UserRepo;
+import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderRequestDto;
+import com.example.bookstore.dto.order.OrderUpdateForAdmin;
+import com.example.bookstore.dto.order.OrderUpdateForUserDto;
+import com.example.bookstore.repository.BookRepo;
+import com.example.bookstore.repository.OrderRepo;
+import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Order;
 import com.example.bookstore.services.OrderService;

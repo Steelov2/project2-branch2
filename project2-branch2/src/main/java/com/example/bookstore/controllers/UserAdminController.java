@@ -1,8 +1,7 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.User.AdminUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.DTOs.User.UserResponseDto;
+import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserResponseDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

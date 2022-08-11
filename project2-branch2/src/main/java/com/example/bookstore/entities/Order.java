@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.DTOs.order.OrderCreateDto;
-import com.example.bookstore.DTOs.order.OrderRequestDto;
+import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderRequestDto;
 import lombok.*;
 
 import javax.persistence.*;

@@ -1,9 +1,8 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.User.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

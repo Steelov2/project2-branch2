@@ -1,11 +1,9 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.DTOs.Genre.GenreRequestDto;
-import com.example.bookstore.Repos.GenreRepo;
-import com.example.bookstore.entities.Book;
+import com.example.bookstore.dto.genre.GenreRequestDto;
+import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.services.GenreService;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,7 +50,7 @@ public class GenreServiceImpl implements GenreService {
         Genre genre = genreRequestDTO.convertGenreRequestDtoToEntity();
 
             existingGenre = genreRepo.findById(genre.getId()).orElseThrow();
-            existingGenre.setName(genre.getName());
+            existingGenre.setGenreName(genre.getGenreName());
             existingGenre.setId(genre.getId());
             genreRepo.save(genre);
 
@@ -60,7 +58,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreRequestDto> getByNameContaining(String name) {
-        return genreRepo.findByNameIsContainingIgnoreCase(name)
+        return genreRepo.findByGenreNameIsContainingIgnoreCase(name)
                 .stream()
                 .map(Genre::convertGenreRequestToDto)
                 .toList();

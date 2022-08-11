@@ -1,9 +1,9 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.DTOs.Book.BookRequestDto;
+import com.example.bookstore.dto.book.BookRequestDto;
 
-import com.example.bookstore.DTOs.Book.BookResponseDto;
-import com.example.bookstore.DTOs.Book.BookUpdateDto;
+import com.example.bookstore.dto.book.BookResponseDto;
+import com.example.bookstore.dto.book.BookUpdateDto;
 import com.example.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,10 +1,11 @@
 package com.example.bookstore.services;
 
-import com.example.bookstore.DTOs.Author.AuthorRequestDto;
-import com.example.bookstore.DTOs.Author.AuthorResponseDto;
+import com.example.bookstore.dto.author.AuthorRequestDto;
+import com.example.bookstore.dto.author.AuthorResponseDto;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface AuthorService {
     List<AuthorRequestDto> getAll();
@@ -19,7 +20,7 @@ public interface AuthorService {
 
     List<AuthorRequestDto> getByName(String name);
 
-    List<AuthorResponseDto> getAuthorsByGenreName(String genreName);
+    Set<AuthorResponseDto> getAuthorsByGenreName(String genreName);
 
 
 }
