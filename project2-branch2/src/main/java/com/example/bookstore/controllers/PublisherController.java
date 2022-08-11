@@ -12,10 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/publishers")
-public class PublisherAdminController {
+public class PublisherController {
     private final PublisherService publisherService;
     @Autowired
-    public PublisherAdminController(PublisherService publisherService){
+    public PublisherController(PublisherService publisherService){
         this.publisherService= publisherService;
     }
 

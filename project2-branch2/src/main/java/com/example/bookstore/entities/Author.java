@@ -56,20 +56,7 @@ public class Author {
     private Set<Genre> authorsGenresList;
 
 
-    @Query(value = """
-            SELECT *
-            FROM author a ,
-                 author_books ab,
-                 book_genre bg,
-                 genre g
-            WHERE a.id = ab.author_id
-              and bg.genre_id= g.id
-              and ab.book_id= bg.book_id
-                and a.name = :authorName
-""",nativeQuery = true)
-    Set<Genre> getAuthorsGenresList(String authorName) {
-        return this.authorsGenresList;
-    }
+
 
 
 
@@ -106,8 +93,7 @@ public class Author {
         authorRequestDto.setSurname(this.getSurname());
         authorRequestDto.setId(this.getId());
         authorRequestDto.setPatronymic(this.getPatronymic());
-        authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList(this.getName())
-                .stream().map(Genre::convertGenreRequestToDto).collect(Collectors.toSet()));
+        //authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList());
         authorRequestDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
         authorRequestDto.setDateOfBirth(this.getDateOfBirth());
         return authorRequestDto;

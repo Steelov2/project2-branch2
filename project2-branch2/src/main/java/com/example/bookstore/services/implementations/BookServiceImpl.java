@@ -3,6 +3,10 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.dto.book.BookResponseDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
+import com.example.bookstore.entities.Author;
+import com.example.bookstore.entities.Genre;
+import com.example.bookstore.entities.Publisher;
+import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.AuthorRepo;
 import com.example.bookstore.repository.BookRepo;
 import com.example.bookstore.repository.GenreRepo;
@@ -38,12 +42,17 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Optional<BookRequestDto> getByID(Long id) {
-        return bookRepo.findById(id).map(Book::convertBookToBookRequestDto);
+        if (bookRepo.existsById(id))
+            return bookRepo.findById(id).map(Book::convertBookToBookRequestDto);
+        else
+            throw new ResourceNotFoundException(String.format("The book with ID: %d is not found or doesn't exist", id));
     }
 
     @Override
     public void deleteByID(Long id) {
-        bookRepo.deleteById(id);
+        if (bookRepo.existsById(id))
+            bookRepo.deleteById(id);
+        else throw new ResourceNotFoundException(String.format("The book with ID: %d is not found or already deleted", id));
     }
 
     @Override
@@ -57,45 +66,52 @@ public class BookServiceImpl implements BookService {
     @Override
     public void update(BookUpdateDto bookUpdateDto) {
         Book existingBook;
-        val authors =authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
-        val genres =genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
-        val publishers =publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
+        List<Author> authors = authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
+        List<Genre> genres = genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
+        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
 
-        Book book=bookUpdateDto.convertAuthorUpdateDtoToEntity(genres, authors, publishers);
+        Book book = bookUpdateDto.convertAuthorUpdateDtoToEntity(genres, authors, publishers);
 
-            existingBook = bookRepo.findById(bookUpdateDto.getId()).orElseThrow();
-            existingBook.setName(book.getName());
-            existingBook.setNumberOfPages(book.getNumberOfPages());
-            existingBook.setPrice(book.getPrice());
-            existingBook.setId(book.getId());
-            existingBook.setPublisher(book.getPublisher());
-            existingBook.setYearOfIssue(book.getYearOfIssue());
-            existingBook.setAuthorList(book.getAuthorList());
-            existingBook.setBooksGenreList(book.getBooksGenreList());
-            bookRepo.save(book);
+        existingBook = bookRepo.findById(bookUpdateDto.getId()).orElseThrow(() ->
+                new ResourceNotFoundException(String.format("The book with ID %d is not found", bookUpdateDto.getId())));
+        existingBook.setName(book.getName());
+        existingBook.setNumberOfPages(book.getNumberOfPages());
+        existingBook.setPrice(book.getPrice());
+        existingBook.setId(book.getId());
+        existingBook.setPublisher(book.getPublisher());
+        existingBook.setYearOfIssue(book.getYearOfIssue());
+        existingBook.setAuthorList(book.getAuthorList());
+        existingBook.setBooksGenreList(book.getBooksGenreList());
+        bookRepo.save(book);
 
 
     }
 
     @Override
     public List<BookRequestDto> getByNameContaining(String name) {
-        return bookRepo.findByNameIsContainingIgnoreCase(name)
-                .stream()
-                .map(Book::convertBookToBookRequestDto).toList();
+        if (bookRepo.existsByNameIsContainingIgnoreCase(name))
+            return bookRepo.findByNameIsContainingIgnoreCase(name)
+                    .stream()
+                    .map(Book::convertBookToBookRequestDto).toList();
+        else
+            throw new ResourceNotFoundException(String.format("The book with name: \"%s\" is not found or doesnt exist", name));
     }
 
     @Override
     public List<BookResponseDto> getByGenreName(String genreName) {
-        return bookRepo.findAllByGenre(genreName)
-                .stream()
-                .map(Book::convertBookToResponseDto).toList();
+        if (genreRepo.existsByGenreName(genreName))
+            if (!bookRepo.findAllByGenre(genreName).isEmpty())
+                return bookRepo.findAllByGenre(genreName)
+                        .stream()
+                        .map(Book::convertBookToResponseDto).toList();
+            else
+                throw new ResourceNotFoundException("Nothing is found");
+
+        else
+            throw new ResourceNotFoundException(String.format("The genre with name \"%s\" doesn't exist"), genreName);
     }
 
-    @Override
-    public List<Book> getAuthorByGenreName1(String genreName) {
-                return bookRepo.findAllByGenre(genreName);
 
-    }
 
 
 }

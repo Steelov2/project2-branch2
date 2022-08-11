@@ -30,15 +30,7 @@ public class AuthorRequestDto {
     private String patronymic;
     private LocalDate dateOfBirth;
     private List<BookResponseDto> authorsBooksList;
-    private Set<GenreRequestDto> authorsGenresList;
 
-    public Set<GenreRequestDto> getAuthorsGenresList() {
-        return authorsGenresList;
-    }
 
-    public void setAuthorsGenresList(Set<GenreRequestDto> authorsGenresList) {
-        Book book = new Book();
-        if (book.getBooksGenreList() != null)
-            this.authorsGenresList = book.getBooksGenreList().stream().map(Genre::convertGenreRequestToDto).collect(Collectors.toSet());
-    }
+
 }

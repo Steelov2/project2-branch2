@@ -16,7 +16,6 @@ public interface BookService {
      void update(BookUpdateDto bookUpdateDto);
      List<BookRequestDto> getByNameContaining(String name);
      List<BookResponseDto> getByGenreName(String genreName);
-     List<Book> getAuthorByGenreName1(String genreName);
 
 
 

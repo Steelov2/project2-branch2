@@ -9,6 +9,8 @@ import java.util.List;
 public interface PublisherRepo extends JpaRepository<Publisher,Long> {
     List<Publisher> findByNameIsContainingIgnoreCase(String name);
 
+    Boolean existsByNameIsContainingIgnoreCase(String name);
+
 
 
 }

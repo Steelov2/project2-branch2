@@ -19,6 +19,9 @@ public interface BookRepo extends JpaRepository<Book,Long> {
               and g.name = :genreName
 """,nativeQuery = true)
     List<Book> findAllByGenre(String genreName);
+
+    Boolean existsByNameIsContainingIgnoreCase(String name);
+    List<Book> findAllByBooksGenreList(String genreName);
     List<Book> findAllByIdIn(List<Long> ids);
 
 

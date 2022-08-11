@@ -4,9 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.FORBIDDEN)
-
-public class UserIsBlockedException extends RuntimeException{
-    public UserIsBlockedException(String message) {
+public class LimitedRightsException extends RuntimeException{
+    public LimitedRightsException(String message) {
         super(message);
     }
 }

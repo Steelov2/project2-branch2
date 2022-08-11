@@ -4,6 +4,10 @@ import com.example.bookstore.dto.order.OrderCreateDto;
 import com.example.bookstore.dto.order.OrderRequestDto;
 import com.example.bookstore.dto.order.OrderUpdateForAdmin;
 import com.example.bookstore.dto.order.OrderUpdateForUserDto;
+import com.example.bookstore.entities.User;
+import com.example.bookstore.exceptions.LimitedRightsException;
+import com.example.bookstore.exceptions.ResourceNotFoundException;
+import com.example.bookstore.exceptions.UserIsBlockedException;
 import com.example.bookstore.repository.BookRepo;
 import com.example.bookstore.repository.OrderRepo;
 import com.example.bookstore.repository.UserRepo;
@@ -32,8 +36,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void create(OrderCreateDto orderCreateDto) throws Exception {
         int priceOfBooks = 0;
-        val books = bookRepo.findAllByIdIn(orderCreateDto.getOrderedBooksIds());
-        val user = userRepo.findById(orderCreateDto.getUserId()).orElseThrow();
+        List<Book> books = bookRepo.findAllByIdIn(orderCreateDto.getOrderedBooksIds());
+        User user = userRepo.findById(orderCreateDto.getUserId()).orElseThrow();
         Order order = orderCreateDto.convertOrderCreateDtoToEntity(books, user);
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             for (Book book : order.getOrderedBooks()) {
@@ -42,21 +46,23 @@ public class OrderServiceImpl implements OrderService {
             if (priceOfBooks <= 10000 && !order.getUser().getIsBlocked())
                 orderRepo.save(order).convertOrderToCrateDto();
             else if (priceOfBooks > 10000)
-                throw new Exception("You have reached your purchase limit of 10000 ");
+                throw
+                        new LimitedRightsException("You have reached your purchase limit of 10000 ");
             else
-                throw new Exception("The user is blocked");
+                throw
+                        new UserIsBlockedException(String.format("The user %s is blocked",user.getUsername()));
         } else
-            throw new Exception("You are not allowed to create order");
+            throw
+                    new LimitedRightsException("You are not allowed to create order");
     }
-
 
 
     @SneakyThrows
     @Override
     public void updateForUser(OrderUpdateForUserDto orderUpdateForUserDto) {
         int priceOfBooks = 0;
-        val books = bookRepo.findAllByIdIn(orderUpdateForUserDto.getOrderedBookIds());
-        val user = userRepo.findById(orderUpdateForUserDto.getUserId()).orElseThrow();
+        List<Book> books = bookRepo.findAllByIdIn(orderUpdateForUserDto.getOrderedBookIds());
+        User user = userRepo.findById(orderUpdateForUserDto.getUserId()).orElseThrow();
         Order order = orderUpdateForUserDto.convertOrderUpdateForUserDtoToEntity(books, user);
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             if (!order.getUser().getIsBlocked()) {
@@ -72,17 +78,19 @@ public class OrderServiceImpl implements OrderService {
                     existingOrder.setId(order.getId());
 
                     orderRepo.save(order);
-                } else
-                    throw new Exception("You have reached your purchase limit of 10000 ");
-            } else throw new Exception("The user " + user.getUsername() + "is blocked");
-        } else throw new Exception("You are not allowed to update this order");
+                } else throw
+                        new LimitedRightsException("You have reached your purchase limit of 10000 ");
+            } else throw
+                    new UserIsBlockedException("The user " + user.getUsername() + "is blocked");
+        } else throw
+                new LimitedRightsException("You are not allowed to update this order");
     }
 
     @SneakyThrows
     @Override
     public void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin) {
         int priceOfBooks = 0;
-        val user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow();
+        User user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow();
         Order order = orderUpdateForAdmin.convertOrderUpdateForAdminToEntity(user);
 
         if (!order.getUser().getIsBlocked()) {
@@ -100,14 +108,21 @@ public class OrderServiceImpl implements OrderService {
                 if (order.getCreatedAt() != null) existingOrder.setCreatedAt(order.getCreatedAt());
 
                 orderRepo.save(order);
-            } else throw new Exception("You have reached the purchase limit of 10000 ");
-        } else throw new Exception("The user " + user.getUsername() + "is blocked");
+            } else throw
+                    new LimitedRightsException("You have reached the purchase limit of 10000 ");
+
+        } else throw
+                new UserIsBlockedException("The user " + user.getUsername() + "is blocked");
     }
 
 
     @Override
     public void deleteById(Long id) {
-        orderRepo.deleteById(id);
+        if (orderRepo.existsById(id))
+            orderRepo.deleteById(id);
+        else
+            throw
+                    new ResourceNotFoundException(String.format("The genre with ID: %d is not found or already deleted", id));
     }
 
     @Override
@@ -120,7 +135,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Optional<OrderRequestDto> getByID(Long id) {
-        return orderRepo.findById(id)
-                .map(Order::convertOrderToDto);
+        if (orderRepo.existsById(id))
+            return orderRepo.findById(id)
+                    .map(Order::convertOrderToDto);
+        else throw
+                new ResourceNotFoundException(String.format("The genre with ID: %d is not found or doesn't exist", id));
     }
 }

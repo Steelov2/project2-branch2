@@ -13,11 +13,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/books")
-public class BookAdminController {
+public class BookController {
     private final BookService bookService;
 
     @Autowired
-    public BookAdminController(BookService bookService) {
+    public BookController(BookService bookService) {
         this.bookService = bookService;
     }
 

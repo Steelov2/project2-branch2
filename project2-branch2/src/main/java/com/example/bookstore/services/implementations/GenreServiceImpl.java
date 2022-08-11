@@ -1,6 +1,7 @@
 package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.dto.genre.GenreRequestDto;
+import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.services.GenreService;
@@ -28,13 +29,18 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Optional<GenreRequestDto> getByID(Long id) {
-        return genreRepo.findById(id)
-                .map(Genre::convertGenreRequestToDto);
+        if (genreRepo.existsById(id))
+            return genreRepo.findById(id)
+                    .map(Genre::convertGenreRequestToDto);
+        else throw
+                new ResourceNotFoundException(String.format("The genre with ID: %d is not found or doesn't exist", id));
     }
 
     @Override
     public void deleteByID(Long id) {
-        genreRepo.deleteById(id);
+        if (genreRepo.existsById(id))
+            genreRepo.deleteById(id);
+        else throw new ResourceNotFoundException(String.format("The genre with ID: %d is not found or already deleted", id));
     }
 
     @Override
@@ -49,10 +55,11 @@ public class GenreServiceImpl implements GenreService {
         Genre existingGenre;
         Genre genre = genreRequestDTO.convertGenreRequestDtoToEntity();
 
-            existingGenre = genreRepo.findById(genre.getId()).orElseThrow();
-            existingGenre.setGenreName(genre.getGenreName());
-            existingGenre.setId(genre.getId());
-            genreRepo.save(genre);
+        existingGenre = genreRepo.findById(genre.getId())
+                .orElseThrow(()->new ResourceNotFoundException(String.format("The genre with ID %d is not found", genreRequestDTO.getId())));
+        existingGenre.setGenreName(genre.getGenreName());
+        existingGenre.setId(genre.getId());
+        genreRepo.save(genre);
 
     }
 

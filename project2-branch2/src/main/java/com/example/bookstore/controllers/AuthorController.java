@@ -4,6 +4,8 @@ import com.example.bookstore.dto.author.AuthorRequestDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,12 +14,12 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/authors")
-public class AuthorAdminController {
+public class AuthorController {
     private final AuthorService authorService;
 
 
     @Autowired
-    public AuthorAdminController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
 
     }
@@ -49,8 +51,9 @@ public class AuthorAdminController {
     }
 
     @PostMapping("/saveAuthor")
-    public void saveAuthor(@RequestBody AuthorResponseDto authorResponseDto) {
+    ResponseEntity<Void>saveAuthor(@RequestBody AuthorResponseDto authorResponseDto) {
         authorService.create(authorResponseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/updateAuthor")

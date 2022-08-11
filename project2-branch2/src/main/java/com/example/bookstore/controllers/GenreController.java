@@ -10,12 +10,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/genres")
-public class GenreAdminController {
+public class GenreController {
     private final GenreService genreService;
 
 
     @Autowired
-    public GenreAdminController( GenreService genreService) {
+    public GenreController(GenreService genreService) {
         this.genreService = genreService;
 
     }

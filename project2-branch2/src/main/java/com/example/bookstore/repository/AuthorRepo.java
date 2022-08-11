@@ -24,6 +24,9 @@ public interface AuthorRepo extends JpaRepository<Author,Long> {
 """,nativeQuery = true)
     Set<Author> findAllByGenre(String genreName);
 
+
+
+
     Boolean existsBySurnameIsContainingIgnoreCase(String surname);
     Boolean existsByNameIsContainingIgnoreCase(String name);
     Boolean existsByPatronymicIsContainingIgnoreCase(String patronymic);
