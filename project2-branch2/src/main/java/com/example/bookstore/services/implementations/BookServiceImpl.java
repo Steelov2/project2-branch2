@@ -13,11 +13,12 @@ import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.repository.PublisherRepo;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -98,17 +99,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookResponseDto> getByGenreName(String genreName) {
-        if (genreRepo.existsByGenreName(genreName))
-            if (!bookRepo.findAllByGenre(genreName).isEmpty())
+    public Set<BookResponseDto> getByGenreName(List<String> genreName) {
+        if (genreRepo.existsByGenreNameIn(genreName))
+
                 return bookRepo.findAllByGenre(genreName)
                         .stream()
-                        .map(Book::convertBookToResponseDto).toList();
-            else
-                throw new ResourceNotFoundException("Nothing is found");
+                        .map(Book::convertBookToResponseDto).collect(Collectors.toSet());
+
 
         else
-            throw new ResourceNotFoundException(String.format("The genre with name \"%s\" doesn't exist"), genreName);
+            throw new ResourceNotFoundException(String.format("The genre with name \"%s\" doesn't exist"), String.valueOf(genreName));
     }
 
 

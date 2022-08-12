@@ -44,6 +44,7 @@ public class Order {
         orderRequestDto.setId(this.getId());
         orderRequestDto.setUserId(this.getUser().getId());
         orderRequestDto.setStatus(this.getStatus());
+
         orderRequestDto.setOrderedBooks(this.getOrderedBooks()
                 .stream()
                 .map(Book::convertBookToResponseDto)
@@ -56,10 +57,10 @@ public class Order {
         OrderCreateDto orderCreateDto = new OrderCreateDto();
         orderCreateDto.setId(this.getId());
         orderCreateDto.setUserId(this.getUser().getId());
-        //orderCreateDto.setOrderedBooksIds(this.getOrderedBooks()
-//                .stream()
-//                .map(Book::getId)
-//                .toList());
+        orderCreateDto.setOrderedBooksIds(this.getOrderedBooks()
+                .stream()
+                .map(Book::getId)
+                .toList());
         orderCreateDto.setCreatedAt(this.getCreatedAt());
         return orderCreateDto;
     }

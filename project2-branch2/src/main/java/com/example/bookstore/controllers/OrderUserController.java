@@ -14,7 +14,7 @@ public class OrderUserController {
     public OrderUserController(OrderService orderService) {
         this.orderService = orderService;
     }
-    @PutMapping("/userUpdateOrder")
+    @PutMapping("/updateOrder")
     public void update(@RequestBody OrderUpdateForUserDto orderUpdateForUserDto) throws Exception {
 
         orderService.updateForUser(orderUpdateForUserDto);

@@ -14,6 +14,7 @@ import lombok.*;
 public class OrderUpdateForAdmin {
     private Long id;
     private Long userId;
+
     private Status status;
 
     public Order convertOrderUpdateForAdminToEntity( User uuu) {

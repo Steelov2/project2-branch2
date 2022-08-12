@@ -35,7 +35,7 @@ public class GenreController {
 
 
 
-    @DeleteMapping("/deleteGenre/{genreID}")
+    @DeleteMapping("/genre/{genreID}")
     private void deleteBookById(@PathVariable("genreID") Long id)
     {
         genreService.deleteByID(id);

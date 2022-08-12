@@ -3,8 +3,11 @@ package com.example.bookstore.entities;
 import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.dto.User.UserResponseDto;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 @Entity
 @Table(name = "users")
@@ -14,7 +17,7 @@ import javax.persistence.*;
 //@RequiredArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User {
+public class User implements UserDetails {
     @Id
     @SequenceGenerator(
             name = "user_sequence",
@@ -70,4 +73,28 @@ public class User {
     }
 
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

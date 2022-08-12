@@ -155,7 +155,7 @@ paths:
     get:
       tags:
         - "book"
-      summary: "Get book by genre name"
+      summary: "Get book by name"
       description: ""
       operationId: "bookName"
       produces:
@@ -181,7 +181,7 @@ paths:
     get:
       tags:
         - "book"
-      summary: "Get book by name"
+      summary: "Get book by genre name"
       description: ""
       operationId: "genreName"
       produces:
@@ -826,7 +826,7 @@ paths:
     post:
       tags:
         - "order"
-      summary: "Add a new order to the store"
+      summary: "Add a new order to the store for user"
       description: ""
       operationId: "saveOrderForUser"
       consumes:
@@ -880,9 +880,9 @@ paths:
     put:
       tags:
         - "user"
-      summary: "Updates a user in the store with form data"
+      summary: "Updates a user for admin"
       description: ""
-      operationId: "updateUser"
+      operationId: "updateUseforadminr"
       consumes:
         - "application/x-www-form-urlencoded"
       produces:
@@ -1023,7 +1023,7 @@ paths:
     put:
       tags:
         - "user"
-      summary: "Updates a user in the store with form data"
+      summary: "Updates a user for usre"
       description: ""
       operationId: "updateUserForUser"
       consumes:
@@ -1066,6 +1066,10 @@ definitions:
         type: "string"
         format: "date"
       bookList:
+        type: "array"
+        items:
+          $ref: "#/definitions/Book"
+      genreList:
         type: "array"
         items:
           $ref: "#/definitions/Book"

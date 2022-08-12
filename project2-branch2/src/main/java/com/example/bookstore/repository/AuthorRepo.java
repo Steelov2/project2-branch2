@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -20,9 +21,9 @@ public interface AuthorRepo extends JpaRepository<Author,Long> {
             WHERE a.id = ab.author_id
               and bg.genre_id= g.id
               and ab.book_id= bg.book_id
-              and g.name = :genreName
+              and g.name in :genreName
 """,nativeQuery = true)
-    Set<Author> findAllByGenre(String genreName);
+    List<Author> findAllByGenre(List<String> genreName);
 
 
 

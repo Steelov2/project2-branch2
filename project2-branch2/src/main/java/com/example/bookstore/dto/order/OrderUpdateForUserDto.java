@@ -23,6 +23,7 @@ public class OrderUpdateForUserDto {
         order.setId(this.getId());
 
         order.setUser(uuu);
+
         order.setOrderedBooks(bbb);
         return order;
     }

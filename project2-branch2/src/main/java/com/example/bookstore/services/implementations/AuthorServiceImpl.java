@@ -8,10 +8,10 @@ import com.example.bookstore.repository.AuthorRepo;
 import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
+import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.services.AuthorService;
 import com.example.bookstore.services.BookService;
 import com.example.bookstore.services.GenreService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,13 +26,28 @@ public class AuthorServiceImpl implements AuthorService {
     private final GenreRepo genreRepo;
     private final BookService bookService;
     private final GenreService genreService;
+    private final UserRepo userRepo;
 
-    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo, BookService bookService, GenreService genreService) {
+
+    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo, BookService bookService, GenreService genreService, UserRepo userRepo) {
         this.authorRepo = authorRepo;
         this.genreRepo = genreRepo;
         this.bookService = bookService;
         this.genreService = genreService;
+
+        this.userRepo = userRepo;
     }
+//    private String username=SecurityContextHolder.getContext().getAuthentication().g;
+//    private Boolean ifExists;
+//    private Boolean  qwerty (){
+//        ifExists=userRepo.existsByUsername(username);
+//
+//        if()
+//            return true;
+//
+//
+//    }
+
 
     @Override
     public List<AuthorRequestDto> getAll() {
@@ -59,32 +74,21 @@ public class AuthorServiceImpl implements AuthorService {
         else throw new ResourceNotFoundException("Author is not found or doesn't exist");
     }
 
-    @Override
-    public Set<AuthorResponseDto> getAuthorsByGenreName(String name) {
-        if (!genreRepo.existsByGenreName(name))
-            throw new ResourceNotFoundException(String.format("The genre %s is not found or doesn't exist",name));
-        else if (!authorRepo.findAllByGenre(name).isEmpty()){
 
-            return authorRepo.findAllByGenre(name).stream().map(Author::convertAuthorToResponseDto).collect(Collectors.toSet());
+    @Override
+    public Set<AuthorResponseDto> getAuthorsByGenreName(List<String> name) {
+        if (!genreRepo.existsByGenreNameIn(name))
+            throw new ResourceNotFoundException(String.format("The genre %s is not found or doesn't exist", name));
+
+        return authorRepo.findAllByGenre(name).stream().map(Author::convertAuthorToResponseDto).collect(Collectors.toSet());
 //            Второй способ получить автора по жанру
 //            List<Author> authorList = new ArrayList<>();
 //            bookService.getAuthorByGenreName1(name)
 //                    .forEach(book -> authorList.addAll(book.getAuthorList().stream().toList()));
 //            return authorList.stream().map(Author::convertAuthorToResponseDto).collect(Collectors.toSet());
-        }
-        else throw new ResourceNotFoundException("Nothing is found");
+
     }
 
-    @Override
-    public Set<AuthorResponseDto> getAuthorsByGenresList(String genreName) {
-        GetByGenreDto getByGenreDto=new GetByGenreDto();
-        //genreName.split()
-        Set<Genre> genres = (Set<Genre>) getByGenreDto.getGenreList().stream().map(genreService::getByID);
-       // return genreService.getByNameContaining(genreName);
-
-
-        return null;
-    }
 
     @Override
     public void deleteByID(Long id) {
@@ -104,7 +108,7 @@ public class AuthorServiceImpl implements AuthorService {
                         authorResponseDto.getPatronymic(),
                         authorResponseDto.getDateOfBirth()
 
-                        )
+                )
         );
 
     }

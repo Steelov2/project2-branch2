@@ -26,8 +26,8 @@ public class UserController {
     {
         return userService.getByID(id);
     }
-    @GetMapping("/user/username/{username}")
-    public List<UserResponseDto> getAuthorByUserName(@PathVariable("username") String username){
+    @GetMapping("/user/userName/{userName}")
+    public List<UserResponseDto> getAuthorByUserName(@PathVariable("userName") String username){
         return userService.getByUsernameContaining(username);
     }
     @DeleteMapping("/user/{userID}")
@@ -36,12 +36,12 @@ public class UserController {
         userService.deleteByID(id);
     }
 
-   @PostMapping("/user")
+   @PostMapping("/saveUser")
    public void saveUser(@RequestBody AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto)
     {
         userService.createForAdmin(adminUpdateAndSaveUserDto);
     }
-    @PutMapping("/user")
+    @PutMapping("/updateUser")
     public void updateUser(@RequestBody AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto)    {
 
         userService.updateForAdmin(adminUpdateAndSaveUserDto);

@@ -15,9 +15,12 @@ public class GenreServiceImpl implements GenreService {
 
     private final GenreRepo genreRepo;
 
+    private Genre genre;
+
     public GenreServiceImpl(GenreRepo genreRepo) {
         this.genreRepo = genreRepo;
     }
+
 
     @Override
     public List<GenreRequestDto> getAll() {

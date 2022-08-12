@@ -27,7 +27,7 @@ public interface GenreRepo extends JpaRepository<Genre,Long> {
 """,nativeQuery = true)
     Set<Genre> findAllByAuthor(String authorName);
 
-    Boolean existsByGenreName(String genreName);
+    Boolean existsByGenreNameIn(List<String> genreName);
 
 }
 

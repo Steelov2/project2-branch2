@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 @Table(name = "author")
 @Getter
 @Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class Author {
     @Id
@@ -62,8 +62,6 @@ public class Author {
 
 
 
-    public Author() {
-    }
 
     public Author(String surname, String name, String patronymic, LocalDate dateOfBirth) {
         this.surname = surname;
@@ -71,7 +69,6 @@ public class Author {
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
     }
-
 
 
 

@@ -84,19 +84,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
         User user = adminUpdateAndSaveUserDto.convertAdminUpdatesUserDtoToEntity();
-        if (userRepo.existsByUsername(user.getUsername())) {
+        if (!userRepo.existsByUsername(user.getUsername())) {
+            userRepo.saveAndFlush(
+                    new User(
+                            null,
+                            adminUpdateAndSaveUserDto.getUsername(),
+                            passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
+                            adminUpdateAndSaveUserDto.getRole(),
+                            adminUpdateAndSaveUserDto.getIsBlocked())
+            );
+        } else {
             throw
                     new AlreadyRegisteredException(String.format("The username %s is already in use", user.getUsername()));
-        } else
-
-        userRepo.saveAndFlush(
-                new User(
-                        null,
-                        adminUpdateAndSaveUserDto.getUsername(),
-                        passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
-                        adminUpdateAndSaveUserDto.getRole(),
-                        adminUpdateAndSaveUserDto.getIsBlocked())
-        );
+        }
     }
 
 
@@ -112,7 +112,8 @@ public class UserServiceImpl implements UserService {
                         adminUpdateAndSaveUserDto.getUsername(),
                         passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
                         adminUpdateAndSaveUserDto.getRole(),
-                        adminUpdateAndSaveUserDto.getIsBlocked()));
+                        adminUpdateAndSaveUserDto.getIsBlocked()
+                ));
     }
 
     @Override

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/books")
@@ -37,7 +38,7 @@ public class BookController {
     }
 
     @GetMapping("/book/genreName/{genreName}")
-    public List<BookResponseDto> getBookByGenreName(@PathVariable("genreName") String name) {
+    public Set<BookResponseDto> getBookByGenreName(@PathVariable("genreName") List<String> name) {
         return bookService.getByGenreName(name);
     }
 

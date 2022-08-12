@@ -26,20 +26,22 @@ public class WebSecurityConfig {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
+
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/api/v1/authors/**").permitAll()
+
+                .antMatchers(HttpMethod.GET,"/api/v1/authors/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/api/v1/authors/**").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET,"/api/v1/books/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/books/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/api/v1/books/**").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET,"/api/v1/genres/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/genres/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/api/v1/genres/**").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET,"/api/v1/publishers/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/publishers/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/api/v1/publishers/**").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.GET,"/api/v1/orders/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/v1/orders/**").hasAnyAuthority("ADMIN","USER")
                 .antMatchers("/api/v1/orders/**").hasAuthority("ADMIN")
 
                 .antMatchers("/api/v1/users/**").hasAuthority("ADMIN")
