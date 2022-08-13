@@ -13,10 +13,10 @@ public interface BookService {
      List<BookRequestDto> getAll();
      Optional<BookRequestDto> getByID(Long id);
      void deleteByID(Long id);
-     BookResponseDto create(BookResponseDto bookResponseDto);
+     BookUpdateDto create(BookUpdateDto bookUpdateDto);
      void update(BookUpdateDto bookUpdateDto);
      List<BookRequestDto> getByNameContaining(String name);
-     Set<BookResponseDto> getByGenreName(List<String> genreName);
+     Set<BookRequestDto> getByGenreName(List<String> genreName);
 
 
 

@@ -12,6 +12,6 @@ public interface PublisherService {
      Optional<PublisherRequestDto> getByID(Long id);
      void deleteByID(Long id);
      PublisherResponseDto create(PublisherResponseDto publisherResponseDto);
-     void update(PublisherUpdateDto publisherUpdateDto);
+     void update(PublisherResponseDto publisherResponseDto);
     List<PublisherRequestDto> getByNameContaining(String name);
 }

@@ -45,9 +45,9 @@ public class PublisherController {
         return  publisherService.create(publisherResponseDTO);
     }
     @PutMapping("/updatePublisher")
-    public void updatePublisher(@RequestBody PublisherUpdateDto publisherUpdateDto)    {
+    public void updatePublisher(@RequestBody PublisherResponseDto publisherResponseDto)    {
 
-        publisherService.update(publisherUpdateDto);
+        publisherService.update(publisherResponseDto);
     }
 
 

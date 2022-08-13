@@ -32,6 +32,7 @@ public class BookUpdateDto {
         book.setName(this.getName());
         book.setPrice(this.getPrice());
         book.setYearOfIssue(this.getYearOfIssue());
+        book.setNumberOfPages(this.getNumberOfPages());
         book.setId(this.getId());
 
 

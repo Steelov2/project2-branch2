@@ -1,27 +1,21 @@
 package com.example.bookstore.dto.book;
 
-
+import com.example.bookstore.dto.Publisher.PublisherResponseDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.dto.genre.GenreRequestDto;
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
 import com.example.bookstore.entities.Book;
-import lombok.*;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
-
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-
-public class BookRequestDto {
+public class BookDto {
     private Long id;
     private Integer price;
-    private PublisherResponseDto publisher;
     private String name;
     private Integer numberOfPages;
     private LocalDate yearOfIssue;
@@ -30,10 +24,9 @@ public class BookRequestDto {
     private List<GenreRequestDto> genreList;
     private List<AuthorResponseDto> authorList;
 
-    public Book convertBookRequestDtoToEntity() {
+    public Book convertBookDtoToEntity() {
         Book book = new Book();
         book.setName(this.getName());
-        book.setPublisher(this.getPublisher().convertPublisherRequestDtoToEntity());
         book.setPrice(this.getPrice());
         book.setYearOfIssue(this.getYearOfIssue());
         book.setId(this.getId());
@@ -44,9 +37,5 @@ public class BookRequestDto {
         book.setNumberOfPages(this.getNumberOfPages());
         return book;
     }
-
-
-
-
 
 }

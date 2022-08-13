@@ -57,14 +57,13 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public void update(PublisherUpdateDto publisherUpdateDto) {
+    public void update(PublisherResponseDto publisherResponseDto) {
         Publisher existingPublisher;
-        List<Book> books = bookRepo.findAllByIdIn(publisherUpdateDto.getPublishedBooksIds());
 
-        Publisher publisher = publisherUpdateDto.convertPublisherUpdateDtoToEntity(books);
+        Publisher publisher = publisherResponseDto.convertPublisherRequestDtoToEntity();
 
         existingPublisher = publisherRepo.findById(publisher.getId()).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("The publisher with ID: %d is not found or doesn't exist", publisherUpdateDto.getId())));
+                new ResourceNotFoundException(String.format("The publisher with ID: %d is not found or doesn't exist", publisher.getId())));
         existingPublisher.setName(publisher.getName());
         existingPublisher.setId(publisher.getId());
         existingPublisher.setPublishedBooksList(publisher.getPublishedBooksList());
@@ -81,6 +80,6 @@ public class PublisherServiceImpl implements PublisherService {
                     .stream().map(Publisher::convertPublisherToRequestDto)
                     .toList();
         else throw
-                new ResourceNotFoundException(String.format("The book with name %s is not found or doesn't exist", name));
+                new ResourceNotFoundException(String.format("The publisher with name %s is not found or doesn't exist", name));
     }
 }

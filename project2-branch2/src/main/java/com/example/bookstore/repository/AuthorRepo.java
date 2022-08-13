@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Repository
 public interface AuthorRepo extends JpaRepository<Author,Long> {
-    List<Author> findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(String name, String surname, String patronymic );
+    List<Author> findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(String surname, String name, String patronymic );
     @Query(value="""
             SELECT *
             FROM author a ,

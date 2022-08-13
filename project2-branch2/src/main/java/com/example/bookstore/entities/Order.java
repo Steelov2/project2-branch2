@@ -47,7 +47,7 @@ public class Order {
 
         orderRequestDto.setOrderedBooks(this.getOrderedBooks()
                 .stream()
-                .map(Book::convertBookToResponseDto)
+                .map(Book::convertBookToBookRequestDto)
                 .toList());
         orderRequestDto.setCreatedAt(this.getCreatedAt());
         return orderRequestDto;

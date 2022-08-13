@@ -3,19 +3,19 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.dto.book.BookResponseDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
-import com.example.bookstore.entities.Author;
-import com.example.bookstore.entities.Genre;
-import com.example.bookstore.entities.Publisher;
+import com.example.bookstore.entities.*;
+import com.example.bookstore.exceptions.LimitedRightsException;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.AuthorRepo;
 import com.example.bookstore.repository.BookRepo;
 import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.repository.PublisherRepo;
-import com.example.bookstore.entities.Book;
 import com.example.bookstore.services.BookService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -35,7 +35,6 @@ public class BookServiceImpl implements BookService {
         this.genreRepo = genreRepo;
         this.publisherRepo = publisherRepo;
     }
-
     @Override
     public List<BookRequestDto> getAll() {
         return bookRepo.findAll().stream().map(Book::convertBookToBookRequestDto).toList();
@@ -57,11 +56,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookResponseDto create(BookResponseDto bookResponseDto) {
-        Book book = bookResponseDto.convertBookRequestDtoDtoToEntity();
-        Book bookCreated = bookRepo.save(book);
-        return bookCreated.convertBookToResponseDto();
-    }
+    public BookUpdateDto create(BookUpdateDto bookUpdateDto) {
+        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
+        List<Author> authors = authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
+        List<Genre> genres = genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
+        Book book = bookUpdateDto.convertAuthorUpdateDtoToEntity(genres,authors,publishers);
+        return bookRepo.save(book).convertBookToBookUpdateDto();}
+
+
 
 
     @Override
@@ -95,20 +97,20 @@ public class BookServiceImpl implements BookService {
                     .stream()
                     .map(Book::convertBookToBookRequestDto).toList();
         else
-            throw new ResourceNotFoundException(String.format("The book with name: \"%s\" is not found or doesnt exist", name));
+            throw new ResourceNotFoundException(String.format("The book with name: %s is not found or doesnt exist", name));
     }
 
     @Override
-    public Set<BookResponseDto> getByGenreName(List<String> genreName) {
+    public Set<BookRequestDto> getByGenreName(List<String> genreName) {
         if (genreRepo.existsByGenreNameIn(genreName))
 
                 return bookRepo.findAllByGenre(genreName)
                         .stream()
-                        .map(Book::convertBookToResponseDto).collect(Collectors.toSet());
+                        .map(Book::convertBookToBookRequestDto).collect(Collectors.toSet());
 
 
         else
-            throw new ResourceNotFoundException(String.format("The genre with name \"%s\" doesn't exist"), String.valueOf(genreName));
+            throw new ResourceNotFoundException(String.format("The genre with name %s doesn't exist", genreName.toString()));
     }
 
 

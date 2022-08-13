@@ -90,7 +90,7 @@ public class Author {
         authorRequestDto.setSurname(this.getSurname());
         authorRequestDto.setId(this.getId());
         authorRequestDto.setPatronymic(this.getPatronymic());
-        //authorRequestDto.setAuthorsGenresList(this.getAuthorsGenresList());
+        authorRequestDto.setAuthorsGenreList(this.getAuthorsGenresList().stream().map(Genre::convertGenreRequestToDto).toList());
         authorRequestDto.setAuthorsBooksList(this.getAuthorsBooksList().stream().map(Book::convertBookToResponseDto).toList());
         authorRequestDto.setDateOfBirth(this.getDateOfBirth());
         return authorRequestDto;

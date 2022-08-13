@@ -1,6 +1,6 @@
 package com.example.bookstore.dto.order;
 
-import com.example.bookstore.dto.book.BookResponseDto;
+import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.entities.Order;
 import com.example.bookstore.entities.Status;
 import com.example.bookstore.entities.User;
@@ -18,7 +18,7 @@ import java.util.List;
 public class OrderRequestDto {
     private Long id;
     private Long userId;
-    private List<BookResponseDto> orderedBooks;
+    private List<BookRequestDto> orderedBooks;
     private Status status;
     private LocalDate createdAt = LocalDate.now();
 
@@ -31,7 +31,7 @@ public class OrderRequestDto {
         order.setOrderedBooks(this.
                 getOrderedBooks()
                 .stream()
-                .map(BookResponseDto::convertBookRequestDtoDtoToEntity)
+                .map(BookRequestDto::convertBookRequestDtoToEntity)
                 .toList());
         order.setCreatedAt(this.getCreatedAt());
         return order;

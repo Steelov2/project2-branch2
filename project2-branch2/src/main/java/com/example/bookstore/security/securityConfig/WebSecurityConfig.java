@@ -2,7 +2,9 @@ package com.example.bookstore.security.securityConfig;
 
 import com.example.bookstore.repository.UserRepo;
 //import com.example.bookstore.services.implementations.UserDetailsImpl;
+import com.example.bookstore.security.MyBasicAuthenticationEntryPoint;
 import com.example.bookstore.services.implementations.UserDetailsImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,14 +16,12 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
-
-
-
-
     @Bean
     public UserDetailsService userDetailsService(UserRepo userRepo) {
         return new UserDetailsImpl(userRepo);
     }
+    @Autowired
+    private MyBasicAuthenticationEntryPoint myBasicAuthenticationEntryPoint;
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,14 +46,14 @@ public class WebSecurityConfig {
 
                 .antMatchers("/api/v1/users/**").hasAuthority("ADMIN")
 
-                .antMatchers("/api/v1/user/users/crateUser").permitAll()
+                .antMatchers("/api/v1/user/users/saveUser").permitAll()
                 .antMatchers("/api/v1/user/**").hasAuthority("USER")
 
 
                 .anyRequest()
                 .authenticated()
                 .and().formLogin()
-                .and().httpBasic();
+                .and().httpBasic().authenticationEntryPoint(myBasicAuthenticationEntryPoint);
 
         return http.build();
 

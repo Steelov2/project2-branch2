@@ -43,11 +43,9 @@ public class OrderServiceImpl implements OrderService {
             for (Book book : order.getOrderedBooks()) {
                 priceOfBooks += book.getPrice();
             }
-            if (priceOfBooks <= 10000 && !order.getUser().getIsBlocked())
+            if (priceOfBooks <= 10000)
                 orderRepo.save(order).convertOrderToCrateDto();
-            else if (priceOfBooks > 10000)
-                throw new LimitedRightsException("You have reached your purchase limit of 10000 ");
-            else throw new UserIsBlockedException(String.format("The user %s is blocked", user.getUsername()));
+            else throw new LimitedRightsException("You have reached your purchase limit of 10000 ");
         } else throw new LimitedRightsException("You are not allowed to create order");
     }
 
@@ -64,7 +62,7 @@ public class OrderServiceImpl implements OrderService {
         //он вытаскивает из репы
         Order existingOrder = orderRepo.findById(order.getId()).orElseThrow();
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
-            if (!order.getUser().getIsBlocked()) {
+
                 for (Book book : order.getOrderedBooks()) {
                     priceOfBooks += book.getPrice();
                 }
@@ -72,54 +70,15 @@ public class OrderServiceImpl implements OrderService {
 
                     order1.setOrderedBooks(order.getOrderedBooks());
                     order1.setUser(order.getUser());
-                    order1.setId(order.getId());
+
+                    order1.setId(existingOrder.getId());
+                    order1.setStatus(existingOrder.getStatus());
+                    order1.setCreatedAt(existingOrder.getCreatedAt());
 
                     orderRepo.save(order1);
                 } else throw new LimitedRightsException("You have reached your purchase limit of 10000 ");
-            } else throw new UserIsBlockedException("The user " + user.getUsername() + "is blocked");
         } else throw new LimitedRightsException("You are not allowed to update this order");
     }
-
-//    @SneakyThrows
-//    @Override
-//    public void updateAdmin(OrderUpdateForAdmin orderUpdateForAdmin) throws Exception {
-//        int priceOfBooks=0;
-//        int existingBooks=0;
-//        val user=userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow();
-//        Order existingOrder=orderRepo.findById(orderUpdateForAdmin.getId()).orElseThrow();
-//        Order order=orderUpdateForAdmin.convertToEntity(user, books);
-//        for (Book book : order.getBooks()) {
-//            priceOfBooks += book.getPrice();
-//            if (bookRepo.existsById(book.getId()))
-//                existingBooks += 1;
-//        }
-//        if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), existingOrder.getUser().getLogin())) {
-//            if (priceOfBooks < 10000 && order.getUser().getIsBlocked() == false && existingBooks == order.getBooks().size())
-//                orderRepo.save(new Order(
-//                        order.getId(),
-//                        order.getUser(),
-//                        existingOrder.getCreatedAt(),
-//                        order.getBooks(),
-//                        order.getStatus()
-//                ));
-//            else
-//                throw new Exception("Price of the books is higher than 10K and is " + priceOfBooks + " or User is blocked");
-//        }
-//        else{
-//            if (priceOfBooks < 10000 && order.getUser().getIsBlocked() == false && existingBooks == order.getBooks().size()){
-//                orderRepo.save(new Order(
-//                        existingOrder.getId(),
-//                        existingOrder.getUser(),
-//                        existingOrder.getCreatedAt(),
-//                        existingOrder.getBooks(),
-//                        order.getStatus()
-//                ));
-//            }
-//        }
-//    }
-//}
-
-
     @Override
     public void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin) {
         int priceOfBooks = 0;

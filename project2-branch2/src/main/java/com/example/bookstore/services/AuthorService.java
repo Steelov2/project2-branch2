@@ -18,7 +18,7 @@ public interface AuthorService {
 
     void update(AuthorResponseDto authorResponseDto) throws Throwable;
 
-    List<AuthorRequestDto> getByName(String name);
+    List<AuthorRequestDto> getByName(String surname, String name, String Patronymic);
 
     Set<AuthorResponseDto> getAuthorsByGenreName(List<String> genreName);
 

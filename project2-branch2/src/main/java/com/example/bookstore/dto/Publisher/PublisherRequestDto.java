@@ -1,5 +1,7 @@
 package com.example.bookstore.dto.Publisher;
 
+import com.example.bookstore.dto.book.BookDto;
+import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.dto.book.BookResponseDto;
 import com.example.bookstore.entities.Publisher;
 import lombok.*;
@@ -17,7 +19,7 @@ public class PublisherRequestDto {
 
     private String name;
 
-    private List<BookResponseDto> publishedBooks;
+    private List<BookDto> publishedBooks;
 
     public  Publisher convertPublisherResponseDtoToEntity( ) {
         Publisher publisher = new Publisher();
@@ -25,7 +27,7 @@ public class PublisherRequestDto {
         publisher.setId(this.getId());
         publisher.setPublishedBooksList(this.getPublishedBooks()
                 .stream()
-                .map(BookResponseDto::convertBookRequestDtoDtoToEntity)
+                .map(BookDto::convertBookDtoToEntity)
                 .toList());
         return publisher;
     }

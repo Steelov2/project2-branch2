@@ -21,39 +21,42 @@ public class BookController {
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }
-
+    //эндпойнт работает, но не работает со спецификацией
     @GetMapping("/booksList")
     public List<BookRequestDto> getAll() {
         return bookService.getAll();
     }
-
+    //полностью рабочий
     @GetMapping("/book/{bookID}")
     public Optional<BookRequestDto> getBookById(@PathVariable("bookID") Long id) {
         return bookService.getByID(id);
     }
-
+    //эндпойнт работает, но не работает со спецификацией
     @GetMapping("/book/bookName/{bookName}")
     public List<BookRequestDto> getBookByName(@PathVariable("bookName") String name) {
         return bookService.getByNameContaining(name);
     }
-
+    //эндпойнт работает, но не работает со спецификацией, выводит жанры по соответствию
     @GetMapping("/book/genreName/{genreName}")
-    public Set<BookResponseDto> getBookByGenreName(@PathVariable("genreName") List<String> name) {
+    public Set<BookRequestDto> getBookByGenreName(@PathVariable("genreName") List<String> name) {
         return bookService.getByGenreName(name);
     }
-
+    //полностью рабочий
     @DeleteMapping("/book/{bookID}")
     public void deleteBookById(@PathVariable("bookID") Long id) {
         bookService.deleteByID(id);
     }
+    //эндпойнт работает, но не работает со спецификацией
 
+    //TODO переписать на войд и попробовать респонс ентити
     @PostMapping("/saveBook")
-    public BookResponseDto saveBook(@RequestBody BookResponseDto bookResponseDto) {
-        return bookService.create(bookResponseDto);
+    public BookUpdateDto saveBook(@RequestBody BookUpdateDto bookUpdateDto) {
+        return bookService.create(bookUpdateDto);
     }
+    //эндпойнт работает, но не работает со спецификацией
 
     @PutMapping("/updateBook")
-    private void updateBook(@RequestBody BookUpdateDto bookUpdateDto) {
+    public void updateBook(@RequestBody BookUpdateDto bookUpdateDto) {
 
         bookService.update(bookUpdateDto);
     }

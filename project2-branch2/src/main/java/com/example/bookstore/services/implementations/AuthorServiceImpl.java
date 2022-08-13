@@ -3,6 +3,7 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.dto.author.AuthorRequestDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.dto.genre.GetByGenreDto;
+import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.repository.AuthorRepo;
 import com.example.bookstore.repository.GenreRepo;
@@ -27,6 +28,15 @@ public class AuthorServiceImpl implements AuthorService {
     private final BookService bookService;
     private final GenreService genreService;
     private final UserRepo userRepo;
+    public void displayAuthorsGenresLit(Author author){
+        for(Book book:author.getAuthorsBooksList()){
+            for(Genre genre:book.getBooksGenreList()){
+                if(!author.getAuthorsGenresList().contains(genre)){
+                    author.getAuthorsGenresList().add(genre);
+                }
+            }
+        }
+    }
 
 
     public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo, BookService bookService, GenreService genreService, UserRepo userRepo) {
@@ -51,23 +61,32 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<AuthorRequestDto> getAll() {
+        List<Author> authors = authorRepo.findAll();
+        for(Author author:authors){
+            displayAuthorsGenresLit(author);
+        }
         return authorRepo.findAll().stream().map(Author::convertAuthorToRequestDto).toList();
     }
 
     @Override
     public Optional<AuthorRequestDto> getByID(Long id) {
-        if (authorRepo.existsById(id))
-            return authorRepo.findById(id).map(Author::convertAuthorToRequestDto);
-        else throw new ResourceNotFoundException(String.format("The author with ID %d is not found", id));
+        Author author=authorRepo.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException(String.format("The author with ID %d is not found", id)));
+        displayAuthorsGenresLit(author);
+            return Optional.ofNullable(author.convertAuthorToRequestDto());
     }
 
     @Override
-    public List<AuthorRequestDto> getByName(String name) {
+    public List<AuthorRequestDto> getByName(String surname, String name, String patronymic) {
+        List<Author> authors = authorRepo.findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(surname, name, patronymic);
+        for(Author author:authors) {
+            displayAuthorsGenresLit(author);
+        }
         if (authorRepo.existsByNameIsContainingIgnoreCase(name) ||
-                authorRepo.existsBySurnameIsContainingIgnoreCase(name) ||
-                authorRepo.existsByPatronymicIsContainingIgnoreCase(name))
+                authorRepo.existsBySurnameIsContainingIgnoreCase(surname) ||
+                authorRepo.existsByPatronymicIsContainingIgnoreCase(patronymic))
             return authorRepo
-                    .findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(name, name, name)
+                    .findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(surname, name, patronymic)
                     .stream()
                     .map(Author::convertAuthorToRequestDto)
                     .toList();

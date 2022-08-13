@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserUserController {
     private final UserService userService;
-    @PostMapping("/createUser")
+    @PostMapping("/saveUser")
     public void saveUser(@RequestBody UserUpdateAndSaveUserDto userUpdateAndSaveUserDto)
     {
         userService.createForUser(userUpdateAndSaveUserDto);

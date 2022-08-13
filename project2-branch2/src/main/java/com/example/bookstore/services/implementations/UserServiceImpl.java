@@ -3,16 +3,20 @@ package com.example.bookstore.services.implementations;
 import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
 import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
 import com.example.bookstore.dto.User.UserResponseDto;
+import com.example.bookstore.entities.Role;
 import com.example.bookstore.exceptions.AlreadyRegisteredException;
+import com.example.bookstore.exceptions.LimitedRightsException;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.services.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -43,7 +47,7 @@ public class UserServiceImpl implements UserService {
     public void deleteByID(Long id) {
         if (userRepo.existsById(id))
             userRepo.deleteById(id);
-        throw
+        else throw
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or already deleted", id));
     }
 
@@ -51,6 +55,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createForUser(UserUpdateAndSaveUserDto userUpdateAndSaveUserDto) {
         User user = userUpdateAndSaveUserDto.convertUserUpdateAndSaveUserDtoToEntity();
+
         if (userRepo.existsByUsername(user.getUsername())) {
             throw
                     new AlreadyRegisteredException(String.format("The username %s is already in use", user.getUsername()));
@@ -60,26 +65,34 @@ public class UserServiceImpl implements UserService {
                     new User(
                             null,
                             userUpdateAndSaveUserDto.getUsername(),
-                            passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword())
+                            passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword()),
+                            Role.USER,
+                            false
                     )
             );
     }
 
     @Override
     public void updateForUser(UserUpdateAndSaveUserDto userUpdateAndSaveUserDto) {
+
         User user = userUpdateAndSaveUserDto.convertUserUpdateAndSaveUserDtoToEntity();
-        userRepo.findById(user.getId()).orElseThrow(() ->
+        User user2 = userRepo.findById(user.getId()).orElseThrow(() ->
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", user.getId())));
+        if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user2.getUsername())){
 
-        userRepo.saveAndFlush(
-                new User(
-                        userUpdateAndSaveUserDto.getId(),
-                        userUpdateAndSaveUserDto.getUsername(),
-                        passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword())
-                )
-        );
+            userRepo.saveAndFlush(
+                    new User(
+                            userUpdateAndSaveUserDto.getId(),
+                            userUpdateAndSaveUserDto.getUsername(),
+                            passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword()),
+                            user2.getRole(),
+                            user2.getIsBlocked())
+            );}
+     else throw new LimitedRightsException("You are not allowed to update this user");
 
-    }
+
+
+}
 
     @Override
     public void createForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {

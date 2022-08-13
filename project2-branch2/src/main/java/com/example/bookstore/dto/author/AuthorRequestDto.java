@@ -30,6 +30,8 @@ public class AuthorRequestDto {
     private String patronymic;
     private LocalDate dateOfBirth;
     private List<BookResponseDto> authorsBooksList;
+    private List<GenreRequestDto> authorsGenreList;
+
 
 
 

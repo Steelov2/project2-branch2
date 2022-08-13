@@ -2,6 +2,7 @@ package com.example.bookstore.dto.order;
 
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Order;
+import com.example.bookstore.entities.Status;
 import com.example.bookstore.entities.User;
 import lombok.*;
 
@@ -18,6 +19,7 @@ public class OrderCreateDto {
     private Long id;
     private Long userId;
     private LocalDate createdAt = LocalDate.now();
+    private Status status=Status.CREATED;
 
     private List<Long> orderedBooksIds;
 
@@ -26,6 +28,7 @@ public class OrderCreateDto {
         Order order = new Order();
         order.setId(this.getId());
         order.setCreatedAt(this.getCreatedAt());
+        order.setStatus(this.getStatus());
 
         order.setUser(uuu);
         order.setOrderedBooks(bbb);

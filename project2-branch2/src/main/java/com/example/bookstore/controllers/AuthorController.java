@@ -41,9 +41,9 @@ public class AuthorController {
 
     }
 //    @PreAuthorize("principal.accountNonLocked")
-    @GetMapping("/author/authorName/{name}")
-    public List<AuthorRequestDto> getAuthorByName(@PathVariable("name") String name) {
-        return authorService.getByName(name);
+    @GetMapping("/author/authorName/{surname}/{name}/{patronymic}")
+    public List<AuthorRequestDto> getAuthorByName(@PathVariable("name") String surname,@PathVariable("name") String name, @PathVariable("name") String patronymic) {
+        return authorService.getByName(surname ,name, patronymic);
     }
 //    @PreAuthorize("principal.accountNonLocked")
     @DeleteMapping("/author/{authorID}")

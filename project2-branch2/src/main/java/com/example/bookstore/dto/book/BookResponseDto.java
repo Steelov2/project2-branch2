@@ -1,7 +1,7 @@
 package com.example.bookstore.dto.book;
 
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
 import com.example.bookstore.entities.Book;
+import com.example.bookstore.entities.Publisher;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -16,19 +16,18 @@ import java.time.LocalDate;
 public class BookResponseDto {
     private Long id;
     private Integer price;
-    private PublisherResponseDto publisher;
+    private Long publisherId;
     private String name;
     private Integer numberOfPages;
     private LocalDate yearOfIssue;
 
-    public Book convertBookRequestDtoDtoToEntity() {
+    public Book convertBookResponseDtoToEntity(Publisher ppp) {
         Book book = new Book();
         book.setName(this.getName());
-        book.setPublisher(this.getPublisher().convertPublisherRequestDtoToEntity());
+        book.setPublisher(ppp);
         book.setPrice(this.getPrice());
         book.setYearOfIssue(this.getYearOfIssue());
-        if (this.getId() != null)
-            book.setId(this.getId());
+        book.setId(this.getId());
         book.setNumberOfPages(this.getNumberOfPages());
         return book;
     }
