@@ -1,8 +1,8 @@
 package com.example.bookstore.controllers;
 
+import com.example.bookstore.dto.book.BookCreateDto;
 import com.example.bookstore.dto.book.BookRequestDto;
 
-import com.example.bookstore.dto.book.BookResponseDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
 import com.example.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +50,8 @@ public class BookController {
 
     //TODO переписать на войд и попробовать респонс ентити
     @PostMapping("/saveBook")
-    public BookUpdateDto saveBook(@RequestBody BookUpdateDto bookUpdateDto) {
-        return bookService.create(bookUpdateDto);
+    public BookCreateDto saveBook(@RequestBody BookCreateDto bookCreateDto) {
+        return bookService.create(bookCreateDto);
     }
     //эндпойнт работает, но не работает со спецификацией
 

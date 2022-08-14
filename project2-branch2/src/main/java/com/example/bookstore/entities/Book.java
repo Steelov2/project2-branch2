@@ -1,22 +1,18 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.dto.book.BookDto;
-import com.example.bookstore.dto.book.BookResponseDto;
-import com.example.bookstore.dto.book.BookRequestDto;
-import com.example.bookstore.dto.book.BookUpdateDto;
+import com.example.bookstore.dto.book.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-import static javax.persistence.CascadeType.*;
-
 @Entity
 @Table(name = "BOOK")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Book {
     @Id
@@ -38,39 +34,21 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> authorList;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {MERGE, DETACH, REFRESH}, targetEntity = Genre.class)
+    @ManyToMany()
     @JoinTable(
             name = "book_genre",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> booksGenreList;
-
-
-
     @ManyToOne
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
     private String name;
     private int numberOfPages;
     private LocalDate yearOfIssue;
+    private Boolean isInStock;
 
-    public Book(Long id,
-                int price,
-                List<Author> authorList,
-                List<Genre> booksGenreList,
-                Publisher publisher,
-                String name,
-                int numberOfPages,
-                LocalDate yearOfIssue) {
-        this.id = id;
-        this.price = price;
-        this.authorList = authorList;
-        this.booksGenreList = booksGenreList;
-        this.publisher = publisher;
-        this.name = name;
-        this.numberOfPages = numberOfPages;
-        this.yearOfIssue = yearOfIssue;
-    }
+
 
     public BookRequestDto convertBookToBookRequestDto() {
         BookRequestDto bookRequestDto = new BookRequestDto();
@@ -118,6 +96,17 @@ public class Book {
         bookUpdateDto.setNumberOfPages(this.getNumberOfPages());
         bookUpdateDto.setYearOfIssue(this.getYearOfIssue());
         return bookUpdateDto;
+    } public BookCreateDto convertBookToCreateDto() {
+        BookCreateDto bookCreateDto = new BookCreateDto();
+        bookCreateDto.setName(this.getName());
+        bookCreateDto.setId(this.getId());
+        bookCreateDto.setPrice(this.getPrice());
+        if (this.getPublisher() != null)
+            bookCreateDto.setPublisherIds(bookCreateDto.getId());
+        bookCreateDto.setIsInStock(true);
+        bookCreateDto.setNumberOfPages(this.getNumberOfPages());
+        bookCreateDto.setYearOfIssue(this.getYearOfIssue());
+        return bookCreateDto;
     }
 
 

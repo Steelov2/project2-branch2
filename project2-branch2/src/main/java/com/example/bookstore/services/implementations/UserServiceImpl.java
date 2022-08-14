@@ -87,7 +87,8 @@ public class UserServiceImpl implements UserService {
                             passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword()),
                             user2.getRole(),
                             user2.getIsBlocked())
-            );}
+            );
+        }
      else throw new LimitedRightsException("You are not allowed to update this user");
 
 
@@ -117,7 +118,7 @@ public class UserServiceImpl implements UserService {
     public void updateForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
         User user = adminUpdateAndSaveUserDto.convertAdminUpdatesUserDtoToEntity();
         userRepo.findById(user.getId()).orElseThrow(() ->
-                new ResourceNotFoundException(String.format("The publisher with ID: %d is not found or doesn't exist", user.getId())));
+                new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", user.getId())));
 
         userRepo.save(
                 new User(

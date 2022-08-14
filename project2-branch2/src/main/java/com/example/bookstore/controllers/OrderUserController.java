@@ -1,6 +1,6 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderCreatDto;
 import com.example.bookstore.dto.order.OrderUpdateForUserDto;
 import com.example.bookstore.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +20,8 @@ public class OrderUserController {
         orderService.updateForUser(orderUpdateForUserDto);
     }
     @PostMapping("/saveOrder")
-    public void create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
-        orderService.create(orderCreateDto);
+    public void create(@RequestBody OrderCreatDto orderCreatDto) throws Exception {
+        orderService.create(orderCreatDto);
     }
 
 }

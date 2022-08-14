@@ -6,7 +6,6 @@ import com.example.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -41,10 +40,12 @@ public class AuthorController {
 
     }
 //    @PreAuthorize("principal.accountNonLocked")
-    @GetMapping("/author/authorName/{surname}/{name}/{patronymic}")
-    public List<AuthorRequestDto> getAuthorByName(@PathVariable("name") String surname,@PathVariable("name") String name, @PathVariable("name") String patronymic) {
-        return authorService.getByName(surname ,name, patronymic);
+    @GetMapping ("/author/authorName")
+    @ResponseBody
+    public List<AuthorRequestDto> getAuthorByName(@RequestParam(required = false) String surname,@RequestParam(required = false) String name, @RequestParam(required = false) String patronymic) {
+        return authorService.getByFullNameName(surname ,name, patronymic);
     }
+    ///Bolatov Muslim
 //    @PreAuthorize("principal.accountNonLocked")
     @DeleteMapping("/author/{authorID}")
     public void deleteAuthorById(@PathVariable("authorID") Long id) {

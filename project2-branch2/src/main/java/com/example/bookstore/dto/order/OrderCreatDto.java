@@ -15,20 +15,17 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class OrderCreateDto {
+public class OrderCreatDto {
     private Long id;
     private Long userId;
-    private LocalDate createdAt = LocalDate.now();
-    private Status status=Status.CREATED;
-
     private List<Long> orderedBooksIds;
 
 
     public Order convertOrderCreateDtoToEntity(List<Book> bbb, User uuu) {
         Order order = new Order();
         order.setId(this.getId());
-        order.setCreatedAt(this.getCreatedAt());
-        order.setStatus(this.getStatus());
+        order.setCreatedAt(LocalDate.now());
+        order.setStatus(Status.CREATED);
 
         order.setUser(uuu);
         order.setOrderedBooks(bbb);

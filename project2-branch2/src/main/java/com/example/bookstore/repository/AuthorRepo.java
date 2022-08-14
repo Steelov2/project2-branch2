@@ -6,12 +6,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Repository
 public interface AuthorRepo extends JpaRepository<Author,Long> {
-    List<Author> findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(String surname, String name, String patronymic );
+    @Query(value="""
+            select *
+            from author a
+            where (a.name = :name AND a.surname = :surname AND a.patronymic = :patronymic)
+               OR (a.name = :name AND a.surname = :surname)
+               OR (a.name = :name AND a.surname = :patronymic)
+               OR (a.name = :surname AND a.surname = :patronymic)
+               OR a.name = :name
+               OR a.surname = :surname
+               OR a.patronymic = :patronymic
+""",nativeQuery = true)
+    List<Author> findByFullName(String surname, String name, String patronymic );
     @Query(value="""
             SELECT *
             FROM author a ,
@@ -24,6 +33,8 @@ public interface AuthorRepo extends JpaRepository<Author,Long> {
               and g.name in :genreName
 """,nativeQuery = true)
     List<Author> findAllByGenre(List<String> genreName);
+
+
 
 
 

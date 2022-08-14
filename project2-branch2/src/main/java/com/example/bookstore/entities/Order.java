@@ -1,6 +1,6 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderCreatDto;
 import com.example.bookstore.dto.order.OrderRequestDto;
 import lombok.*;
 
@@ -53,16 +53,16 @@ public class Order {
         return orderRequestDto;
     }
 
-    public OrderCreateDto convertOrderToCrateDto(){
-        OrderCreateDto orderCreateDto = new OrderCreateDto();
-        orderCreateDto.setId(this.getId());
-        orderCreateDto.setUserId(this.getUser().getId());
-        orderCreateDto.setOrderedBooksIds(this.getOrderedBooks()
+    public OrderCreatDto convertOrderToCrateDto(){
+        OrderCreatDto orderCreatDto = new OrderCreatDto();
+        orderCreatDto.setId(this.getId());
+        orderCreatDto.setUserId(this.getUser().getId());
+        orderCreatDto.setOrderedBooksIds(this.getOrderedBooks()
                 .stream()
                 .map(Book::getId)
                 .toList());
-        orderCreateDto.setCreatedAt(this.getCreatedAt());
-        return orderCreateDto;
+        //orderCreateDto.setCreatedAt(this.getCreatedAt());
+        return orderCreatDto;
     }
 
 

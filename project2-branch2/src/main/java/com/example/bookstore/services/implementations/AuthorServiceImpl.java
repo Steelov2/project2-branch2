@@ -2,7 +2,6 @@ package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.dto.author.AuthorRequestDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
-import com.example.bookstore.dto.genre.GetByGenreDto;
 import com.example.bookstore.entities.Book;
 import com.example.bookstore.entities.Genre;
 import com.example.bookstore.repository.AuthorRepo;
@@ -25,27 +24,20 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepo authorRepo;
     private final GenreRepo genreRepo;
-    private final BookService bookService;
-    private final GenreService genreService;
-    private final UserRepo userRepo;
+
     public void displayAuthorsGenresLit(Author author){
         for(Book book:author.getAuthorsBooksList()){
             for(Genre genre:book.getBooksGenreList()){
-                if(!author.getAuthorsGenresList().contains(genre)){
-                    author.getAuthorsGenresList().add(genre);
-                }
+                author.getAuthorsGenresList().add(genre);
             }
         }
     }
 
 
-    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo, BookService bookService, GenreService genreService, UserRepo userRepo) {
+    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo) {
         this.authorRepo = authorRepo;
         this.genreRepo = genreRepo;
-        this.bookService = bookService;
-        this.genreService = genreService;
 
-        this.userRepo = userRepo;
     }
 //    private String username=SecurityContextHolder.getContext().getAuthentication().g;
 //    private Boolean ifExists;
@@ -77,8 +69,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<AuthorRequestDto> getByName(String surname, String name, String patronymic) {
-        List<Author> authors = authorRepo.findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(surname, name, patronymic);
+    public List<AuthorRequestDto> getByFullNameName(String surname, String name, String patronymic) {
+        List<Author> authors = authorRepo.findByFullName(surname, name, patronymic);
         for(Author author:authors) {
             displayAuthorsGenresLit(author);
         }
@@ -86,7 +78,7 @@ public class AuthorServiceImpl implements AuthorService {
                 authorRepo.existsBySurnameIsContainingIgnoreCase(surname) ||
                 authorRepo.existsByPatronymicIsContainingIgnoreCase(patronymic))
             return authorRepo
-                    .findByNameIsContainingIgnoreCaseOrSurnameIsContainingIgnoreCaseOrPatronymicIsContainingIgnoreCase(surname, name, patronymic)
+                    .findByFullName(surname, name, patronymic)
                     .stream()
                     .map(Author::convertAuthorToRequestDto)
                     .toList();

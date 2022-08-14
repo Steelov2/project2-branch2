@@ -1,21 +1,15 @@
 package com.example.bookstore.services.implementations;
 
+import com.example.bookstore.dto.book.BookCreateDto;
 import com.example.bookstore.dto.book.BookRequestDto;
-import com.example.bookstore.dto.book.BookResponseDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
 import com.example.bookstore.entities.*;
-import com.example.bookstore.exceptions.LimitedRightsException;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
-import com.example.bookstore.repository.AuthorRepo;
-import com.example.bookstore.repository.BookRepo;
-import com.example.bookstore.repository.GenreRepo;
-import com.example.bookstore.repository.PublisherRepo;
+import com.example.bookstore.repository.*;
 import com.example.bookstore.services.BookService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,12 +50,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookUpdateDto create(BookUpdateDto bookUpdateDto) {
-        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
-        List<Author> authors = authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
-        List<Genre> genres = genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
-        Book book = bookUpdateDto.convertAuthorUpdateDtoToEntity(genres,authors,publishers);
-        return bookRepo.save(book).convertBookToBookUpdateDto();}
+    public BookCreateDto create(BookCreateDto bookCreateDto) {
+        Publisher publishers = publisherRepo.findById(bookCreateDto.getPublisherIds()).orElseThrow(()->new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookCreateDto.getPublisherIds())));
+        List<Author> authors = authorRepo.findAllByIdIn(bookCreateDto.getAuthorListIds());
+        List<Genre> genres = genreRepo.findAllByIdIn(bookCreateDto.getGenreListIds());
+        Book book = bookCreateDto.convertAuthorCreateDtoToEntity(genres,authors,publishers);
+        return bookRepo.save(book).convertBookToCreateDto();
+    }
 
 
 
@@ -71,7 +66,7 @@ public class BookServiceImpl implements BookService {
         Book existingBook;
         List<Author> authors = authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
         List<Genre> genres = genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
-        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow();
+        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow(()->new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookUpdateDto.getPublisherIds())));
 
         Book book = bookUpdateDto.convertAuthorUpdateDtoToEntity(genres, authors, publishers);
 
@@ -85,6 +80,7 @@ public class BookServiceImpl implements BookService {
         existingBook.setYearOfIssue(book.getYearOfIssue());
         existingBook.setAuthorList(book.getAuthorList());
         existingBook.setBooksGenreList(book.getBooksGenreList());
+        existingBook.setIsInStock(book.getIsInStock());
         bookRepo.save(book);
 
 

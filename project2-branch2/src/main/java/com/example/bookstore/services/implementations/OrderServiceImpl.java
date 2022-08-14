@@ -1,6 +1,6 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderCreatDto;
 import com.example.bookstore.dto.order.OrderRequestDto;
 import com.example.bookstore.dto.order.OrderUpdateForAdmin;
 import com.example.bookstore.dto.order.OrderUpdateForUserDto;
@@ -34,19 +34,24 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public void create(OrderCreateDto orderCreateDto) throws Exception {
+    public void create(OrderCreatDto orderCreatDto) throws Exception {
         int priceOfBooks = 0;
-        List<Book> books = bookRepo.findAllByIdIn(orderCreateDto.getOrderedBooksIds());
-        User user = userRepo.findById(orderCreateDto.getUserId()).orElseThrow();
-        Order order = orderCreateDto.convertOrderCreateDtoToEntity(books, user);
+        List<Book> books = bookRepo.findAllByIdIn(orderCreatDto.getOrderedBooksIds());
+        Book book1=new Book();
+        User user = userRepo.findById(orderCreatDto.getUserId()).orElseThrow(()->new ResourceNotFoundException("There is no such user"));
+        Order order = orderCreatDto.convertOrderCreateDtoToEntity(books, user);
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             for (Book book : order.getOrderedBooks()) {
                 priceOfBooks += book.getPrice();
+                if(!book.getIsInStock())
+                    throw new ResourceNotFoundException("No such book in stock");
             }
             if (priceOfBooks <= 10000)
                 orderRepo.save(order).convertOrderToCrateDto();
             else throw new LimitedRightsException("You have reached your purchase limit of 10000 ");
         } else throw new LimitedRightsException("You are not allowed to create order");
+
+
     }
 
 
@@ -55,16 +60,18 @@ public class OrderServiceImpl implements OrderService {
     public void updateForUser(OrderUpdateForUserDto orderUpdateForUserDto) {
         int priceOfBooks = 0;
         List<Book> books = bookRepo.findAllByIdIn(orderUpdateForUserDto.getOrderedBookIds());
-        User user = userRepo.findById(orderUpdateForUserDto.getUserId()).orElseThrow();
+        User user = userRepo.findById(orderUpdateForUserDto.getUserId()).orElseThrow(()->new ResourceNotFoundException("There is no such user"));
         Order order = orderUpdateForUserDto.convertOrderUpdateForUserDtoToEntity(books, user);
         //он сохраняет новые данные
         Order order1 = new Order();
         //он вытаскивает из репы
-        Order existingOrder = orderRepo.findById(order.getId()).orElseThrow();
+        Order existingOrder = orderRepo.findById(order.getId()).orElseThrow(()->new ResourceNotFoundException(String.format("There is no order with ID: %d", order.getId())));
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
 
                 for (Book book : order.getOrderedBooks()) {
                     priceOfBooks += book.getPrice();
+                    if(!book.getIsInStock())
+                        throw new ResourceNotFoundException("No such book in stock");
                 }
                 if (priceOfBooks <= 10000) {
 
@@ -82,14 +89,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin) {
         int priceOfBooks = 0;
-        User user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow();
+        User user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow(()->new ResourceNotFoundException("No such user"));
         //получает то что я написал в постмане
         Order order = orderUpdateForAdmin.convertOrderUpdateForAdminToEntity(user);
         //он сохраняет новые данные
         Order order1 = new Order();
         //он вытаскивает из репы
-        Order existingOrder = orderRepo.findById(order.getId()).orElseThrow();
-         if (!order.getUser().getIsBlocked()) {
+        Order existingOrder = orderRepo.findById(order.getId()).orElseThrow(()->new ResourceNotFoundException("There is no such order"));
 
                 order1.setStatus(order.getStatus());
                 order1.setOrderedBooks(existingOrder.getOrderedBooks());
@@ -97,7 +103,6 @@ public class OrderServiceImpl implements OrderService {
                 order1.setId(existingOrder.getId());
                 order1.setCreatedAt(existingOrder.getCreatedAt());
                 orderRepo.save(order1);
-        } else throw new UserIsBlockedException("The user " + user.getUsername() + "is blocked");
 
 
     }
@@ -107,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
     public void deleteById(Long id) {
         if (orderRepo.existsById(id)) orderRepo.deleteById(id);
         else
-            throw new ResourceNotFoundException(String.format("The genre with ID: %d is not found or already deleted", id));
+            throw new ResourceNotFoundException(String.format("The order with ID: %d is not found or already deleted", id));
     }
 
     @Override
@@ -119,7 +124,7 @@ public class OrderServiceImpl implements OrderService {
     public Optional<OrderRequestDto> getByID(Long id) {
         if (orderRepo.existsById(id)) return orderRepo.findById(id).map(Order::convertOrderToDto);
         else
-            throw new ResourceNotFoundException(String.format("The genre with ID: %d is not found or doesn't exist", id));
+            throw new ResourceNotFoundException(String.format("The order with ID: %d is not found or doesn't exist", id));
     }
 
 }

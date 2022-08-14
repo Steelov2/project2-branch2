@@ -1,5 +1,5 @@
 package com.example.bookstore.controllers;
-import com.example.bookstore.dto.order.OrderCreateDto;
+import com.example.bookstore.dto.order.OrderCreatDto;
 import com.example.bookstore.dto.order.OrderRequestDto;
 import com.example.bookstore.dto.order.OrderUpdateForAdmin;
 import com.example.bookstore.services.OrderService;
@@ -33,8 +33,8 @@ public class OrderController {
         orderService.updateForAdmin(orderUpdateForAdmin);
     }
     @PostMapping("/saveOrder")
-    public void create(@RequestBody OrderCreateDto orderCreateDto) throws Exception {
-         orderService.create(orderCreateDto);
+    public void create(@RequestBody OrderCreatDto orderCreatDto) throws Exception {
+         orderService.create(orderCreatDto);
     }
     @DeleteMapping("/order/{orderID}")
     public void delete(@PathVariable("orderID") long id){
