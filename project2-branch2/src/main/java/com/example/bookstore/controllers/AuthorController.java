@@ -42,7 +42,7 @@ public class AuthorController {
 //    @PreAuthorize("principal.accountNonLocked")
     @GetMapping ("/author/authorName")
     @ResponseBody
-    public List<AuthorRequestDto> getAuthorByName(@RequestParam(required = false) String surname,@RequestParam(required = false) String name, @RequestParam(required = false) String patronymic) {
+    public List<AuthorRequestDto> getAuthorByFullName(@RequestParam(required = false) String surname, @RequestParam(required = false) String name, @RequestParam(required = false) String patronymic) {
         return authorService.getByFullNameName(surname ,name, patronymic);
     }
     ///Bolatov Muslim

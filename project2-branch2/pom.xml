@@ -76,7 +76,7 @@
             <version>2.10.5</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+<!--&lt;!&ndash;         https://mvnrepository.com/artifact/org.flywaydb/flyway-core&ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.flywaydb</groupId>-->
 <!--            <artifactId>flyway-core</artifactId>-->
@@ -112,6 +112,17 @@
 <!--                    <target>16</target>-->
 <!--                </configuration>-->
 <!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--                <version>${project.parent.version}</version>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>8.0.0</version>
+            </plugin>
+
         </plugins>
     </build>
 

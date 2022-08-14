@@ -26,19 +26,29 @@ tags:
   - name: user-user-controller
     description: User User Controller
 paths:
-  /api/v1/authors/author/authorName/{name}:
+  /api/v1/authors/author/authorName:
     get:
       tags:
         - author-controller
-      summary: getAuthorByName
-      operationId: getAuthorByNameUsingGET
+      summary: getAuthorByFullName
+      operationId: getAuthorByFullNameUsingGET
       produces:
         - '*/*'
       parameters:
         - name: name
-          in: path
+          in: query
           description: name
-          required: true
+          required: false
+          type: string
+        - name: patronymic
+          in: query
+          description: patronymic
+          required: false
+          type: string
+        - name: surname
+          in: query
+          description: surname
+          required: false
           type: string
       responses:
         '200':
@@ -344,16 +354,16 @@ paths:
         - '*/*'
       parameters:
         - in: body
-          name: bookUpdateDto
-          description: bookUpdateDto
+          name: bookCreateDto
+          description: bookCreateDto
           required: true
           schema:
-            $ref: '#/definitions/BookUpdateDto'
+            $ref: '#/definitions/BookCreateDto'
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/BookUpdateDto'
+            $ref: '#/definitions/BookCreateDto'
         '201':
           description: Created
         '401':
@@ -491,8 +501,8 @@ paths:
     post:
       tags:
         - genre-controller
-      summary: saveGenre
-      operationId: saveGenreUsingPOST_1
+      summary: saveBook
+      operationId: saveBookUsingPOST_1
       consumes:
         - application/json
       produces:
@@ -521,8 +531,8 @@ paths:
     put:
       tags:
         - genre-controller
-      summary: updateGenre
-      operationId: updateGenreUsingPUT_1
+      summary: updateBook
+      operationId: updateBookUsingPUT_1
       consumes:
         - application/json
       produces:
@@ -627,11 +637,11 @@ paths:
         - '*/*'
       parameters:
         - in: body
-          name: orderCreateDto
-          description: orderCreateDto
+          name: orderCreatDto
+          description: orderCreatDto
           required: true
           schema:
-            $ref: '#/definitions/OrderCreateDto'
+            $ref: '#/definitions/OrderCreatDto'
       responses:
         '200':
           description: OK
@@ -838,11 +848,11 @@ paths:
         - '*/*'
       parameters:
         - in: body
-          name: orderCreateDto
-          description: orderCreateDto
+          name: orderCreatDto
+          description: orderCreatDto
           required: true
           schema:
-            $ref: '#/definitions/OrderCreateDto'
+            $ref: '#/definitions/OrderCreatDto'
       responses:
         '200':
           description: OK
@@ -1091,7 +1101,6 @@ paths:
           description: Forbidden
         '404':
           description: Not Found
-
 definitions:
   AdminUpdateAndSaveUserDto:
     type: object
@@ -1139,8 +1148,8 @@ definitions:
     type: object
     properties:
       dateOfBirth:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
       id:
         type: integer
         format: int64
@@ -1151,6 +1160,39 @@ definitions:
       surname:
         type: string
     title: AuthorResponseDto
+  BookCreateDto:
+    type: object
+    properties:
+      authorListIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      genreListIds:
+        type: array
+        items:
+          type: integer
+          format: int64
+      id:
+        type: integer
+        format: int64
+      isInStock:
+        type: boolean
+      name:
+        type: string
+      numberOfPages:
+        type: integer
+        format: int32
+      price:
+        type: integer
+        format: int32
+      publisherIds:
+        type: integer
+        format: int64
+      yearOfIssue:
+        type: string
+        format: date
+    title: BookCreateDto
   BookDto:
     type: object
     properties:
@@ -1174,8 +1216,8 @@ definitions:
         type: integer
         format: int32
       yearOfIssue:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
     title: BookDto
   BookRequestDto:
     type: object
@@ -1202,8 +1244,8 @@ definitions:
       publisher:
         $ref: '#/definitions/PublisherResponseDto'
       yearOfIssue:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
     title: BookRequestDto
   BookResponseDto:
     type: object
@@ -1223,8 +1265,8 @@ definitions:
         type: integer
         format: int64
       yearOfIssue:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
     title: BookResponseDto
   BookUpdateDto:
     type: object
@@ -1242,6 +1284,8 @@ definitions:
       id:
         type: integer
         format: int64
+      isInStock:
+        type: boolean
       name:
         type: string
       numberOfPages:
@@ -1254,8 +1298,8 @@ definitions:
         type: integer
         format: int64
       yearOfIssue:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
     title: BookUpdateDto
   GenreRequestDto:
     type: object
@@ -1266,12 +1310,9 @@ definitions:
       name:
         type: string
     title: GenreRequestDto
-  OrderCreateDto:
+  OrderCreatDto:
     type: object
     properties:
-      createdAt:
-        type: "string"
-        format: "date"
       id:
         type: integer
         format: int64
@@ -1280,23 +1321,16 @@ definitions:
         items:
           type: integer
           format: int64
-      status:
-        type: string
-        enum:
-          - CANCELLED
-          - CREATED
-          - PERFORMED
-          - PROCESSING
       userId:
         type: integer
         format: int64
-    title: OrderCreateDto
+    title: OrderCreatDto
   OrderRequestDto:
     type: object
     properties:
       createdAt:
-        type: "string"
-        format: "date"
+        type: string
+        format: date
       id:
         type: integer
         format: int64
@@ -1396,6 +1430,3 @@ definitions:
       username:
         type: string
     title: UserUpdateAndSaveUserDto
-
-
-
