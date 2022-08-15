@@ -38,9 +38,12 @@ public class OrderServiceImpl implements OrderService {
     public void create(OrderCreatDto orderCreatDto) throws Exception {
         int priceOfBooks = 0;
         List<Book> books = bookRepo.findAllByIdIn(orderCreatDto.getOrderedBooksIds());
+
         Book book1 = new Book();
         User user = userRepo.findById(orderCreatDto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("There is no such user"));
         Order order = orderCreatDto.convertOrderCreateDtoToEntity(books, user);
+        if(books.size()!=orderCreatDto.getOrderedBooksIds().size())
+            throw new ResourceNotFoundException("There is no such book with ID");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             for (Book book : order.getOrderedBooks()) {
                 priceOfBooks += book.getPrice();
@@ -69,6 +72,8 @@ public class OrderServiceImpl implements OrderService {
         //он вытаскивает из репы
         Order existingOrder = orderRepo.findById(order.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("There is no order with ID: %d", order.getId())));
+        if(books.size()!=orderUpdateForUserDto.getOrderedBookIds().size())
+            throw new ResourceNotFoundException("There is no such book with ID");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             if (existingOrder.getStatus() == Status.CANCELLED)
                 throw new LimitedRightsException("This order is cancelled, you cannot update it");
@@ -81,7 +86,8 @@ public class OrderServiceImpl implements OrderService {
                 if (priceOfBooks <= 10000) {
 
                         order1.setOrderedBooks(order.getOrderedBooks());
-                        order1.setUser(order.getUser());
+
+                        order1.setUser(existingOrder.getUser());
                         order1.setId(existingOrder.getId());
                         order1.setStatus(existingOrder.getStatus());
                         order1.setCreatedAt(existingOrder.getCreatedAt());

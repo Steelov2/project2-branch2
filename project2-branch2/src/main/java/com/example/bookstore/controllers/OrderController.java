@@ -32,10 +32,7 @@ public class OrderController {
 
         orderService.updateForAdmin(orderUpdateForAdmin);
     }
-    @PostMapping("/saveOrder")
-    public void create(@RequestBody OrderCreatDto orderCreatDto) throws Exception {
-         orderService.create(orderCreatDto);
-    }
+
     @DeleteMapping("/order/{orderID}")
     public void delete(@PathVariable("orderID") long id){
         orderService.deleteById(id);

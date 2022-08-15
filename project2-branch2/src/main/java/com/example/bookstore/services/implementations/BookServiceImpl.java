@@ -50,12 +50,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookCreateDto create(BookCreateDto bookCreateDto) {
+    public void create(BookCreateDto bookCreateDto) {
         Publisher publishers = publisherRepo.findById(bookCreateDto.getPublisherIds()).orElseThrow(()->new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookCreateDto.getPublisherIds())));
         List<Author> authors = authorRepo.findAllByIdIn(bookCreateDto.getAuthorListIds());
         List<Genre> genres = genreRepo.findAllByIdIn(bookCreateDto.getGenreListIds());
         Book book = bookCreateDto.convertAuthorCreateDtoToEntity(genres,authors,publishers);
-        return bookRepo.save(book).convertBookToCreateDto();
+        bookRepo.save(book).convertBookToCreateDto();
     }
 
 

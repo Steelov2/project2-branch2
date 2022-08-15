@@ -9,7 +9,7 @@ public interface GenreService {
     List<GenreRequestDto> getAll();
     Optional<GenreRequestDto> getByID(Long id);
     void deleteByID(Long id);
-    GenreRequestDto create(GenreRequestDto genre);
+    void create(GenreRequestDto genre);
     void update(GenreRequestDto genre);
     List<GenreRequestDto> getByNameContaining(String name);
 }

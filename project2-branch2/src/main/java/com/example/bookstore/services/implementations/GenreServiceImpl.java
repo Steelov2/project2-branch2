@@ -47,10 +47,10 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public GenreRequestDto create(GenreRequestDto genreRequestDTO) {
+    public void create(GenreRequestDto genreRequestDTO) {
         Genre genre = genreRequestDTO.convertGenreRequestDtoToEntity();
         Genre genreCreated = genreRepo.save(genre);
-        return genreCreated.convertGenreRequestToDto();
+        genreCreated.convertGenreRequestToDto();
     }
 
     @Override

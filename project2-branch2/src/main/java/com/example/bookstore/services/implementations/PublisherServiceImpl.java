@@ -2,16 +2,12 @@ package com.example.bookstore.services.implementations;
 
 import com.example.bookstore.dto.Publisher.PublisherRequestDto;
 import com.example.bookstore.dto.Publisher.PublisherResponseDto;
-import com.example.bookstore.dto.Publisher.PublisherUpdateDto;
-import com.example.bookstore.entities.Book;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.BookRepo;
 import com.example.bookstore.repository.PublisherRepo;
 
 import com.example.bookstore.entities.Publisher;
 import com.example.bookstore.services.PublisherService;
-import lombok.val;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,11 +17,9 @@ import java.util.Optional;
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepo publisherRepo;
 
-    private final BookRepo bookRepo;
 
-    public PublisherServiceImpl(PublisherRepo publisherRepo, BookRepo bookRepo) {
+    public PublisherServiceImpl(PublisherRepo publisherRepo) {
         this.publisherRepo = publisherRepo;
-        this.bookRepo = bookRepo;
     }
 
     @Override
@@ -50,10 +44,10 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public PublisherResponseDto create(PublisherResponseDto publisherResponseDto) {
+    public void create(PublisherResponseDto publisherResponseDto) {
         Publisher publisher = publisherResponseDto.convertPublisherRequestDtoToEntity();
         Publisher publisherCreated = publisherRepo.save(publisher);
-        return publisherCreated.convertPublisherToResponseDto();
+        publisherCreated.convertPublisherToResponseDto();
     }
 
     @Override

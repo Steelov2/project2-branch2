@@ -50,8 +50,8 @@ public class BookController {
 
     //TODO переписать на войд и попробовать респонс ентити
     @PostMapping("/saveBook")
-    public BookCreateDto saveBook(@RequestBody BookCreateDto bookCreateDto) {
-        return bookService.create(bookCreateDto);
+    public void saveBook(@RequestBody BookCreateDto bookCreateDto) {
+        bookService.create(bookCreateDto);
     }
     //эндпойнт работает, но не работает со спецификацией
 
