@@ -56,7 +56,8 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void create(BookCreateDto bookCreateDto) {
-        Publisher publishers = publisherRepo.findById(bookCreateDto.getPublisherIds()).orElseThrow(() -> new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookCreateDto.getPublisherIds())));
+        Publisher publishers = publisherRepo.findById(bookCreateDto.getPublisherIds())
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookCreateDto.getPublisherIds())));
         List<Author> authors = authorRepo.findAllByIdIn(bookCreateDto.getAuthorListIds());
         List<Genre> genres = genreRepo.findAllByIdIn(bookCreateDto.getGenreListIds());
         Book book = bookCreateDto.convertAuthorCreateDtoToEntity(genres, authors, publishers);
@@ -69,7 +70,8 @@ public class BookServiceImpl implements BookService {
         Book existingBook;
         List<Author> authors = authorRepo.findAllByIdIn(bookUpdateDto.getAuthorListIds());
         List<Genre> genres = genreRepo.findAllByIdIn(bookUpdateDto.getGenreListIds());
-        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds()).orElseThrow(() -> new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookUpdateDto.getPublisherIds())));
+        Publisher publishers = publisherRepo.findById(bookUpdateDto.getPublisherIds())
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("No such publisher with ID: %d", bookUpdateDto.getPublisherIds())));
 
         Book book = bookUpdateDto.convertAuthorUpdateDtoToEntity(genres, authors, publishers);
 

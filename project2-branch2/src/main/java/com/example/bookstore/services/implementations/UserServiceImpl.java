@@ -24,7 +24,6 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-
     @Autowired
     public UserServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
@@ -47,6 +46,7 @@ public class UserServiceImpl implements UserService {
                     .map(User::convertUserToDtoResponseDto);
         throw
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", id));
+
     }
 
     @Override

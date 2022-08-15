@@ -96,7 +96,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void create(AuthorResponseDto authorResponseDto) {
-
         authorRepo.save(
                 new Author(
                         authorResponseDto.getName(),
@@ -111,6 +110,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void update(AuthorResponseDto authorResponseDto) throws Throwable {
+
         Author existingAuthor;
         Author author = authorResponseDto.convertAuthorRequestDtoToEntity();
         existingAuthor = authorRepo.findById(author.getId()).orElseThrow(() ->

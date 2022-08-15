@@ -39,7 +39,6 @@ public class OrderServiceImpl implements OrderService {
         this.userRepo = userRepo;
     }
 
-
     @Override
     public void create(OrderCreatDto orderCreatDto) throws Exception {
         int priceOfBooks = 0;
@@ -105,13 +104,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin) {
-        User user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow(() -> new ResourceNotFoundException("No such user"));
+        User user = userRepo.findById(orderUpdateForAdmin.getUserId())
+                .orElseThrow(() -> new ResourceNotFoundException("No such user"));
         //получает то что я написал в постмане
         Order order = orderUpdateForAdmin.convertOrderUpdateForAdminToEntity(user);
         //он сохраняет новые данные
         Order order1 = new Order();
         //он вытаскивает из репы
-        Order existingOrder = orderRepo.findById(order.getId()).orElseThrow(() -> new ResourceNotFoundException("There is no such order"));
+        Order existingOrder = orderRepo.findById(order.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("There is no such order"));
         if (existingOrder.getStatus() == Status.CANCELLED)
             throw new LimitedRightsException("This order is cancelled, you cannot update it");
         else if(user.getIsBlocked())
@@ -131,9 +132,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteById(Long id) {
-        if (orderRepo.existsById(id)) orderRepo.deleteById(id);
+        Order existingOrder = orderRepo.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("The order with ID: %d is not found or already deleted", id));
+
+        if (existingOrder.getStatus()==Status.CANCELLED)
+            orderRepo.deleteById(id);
         else
-            throw new ResourceNotFoundException(String.format("The order with ID: %d is not found or already deleted", id));
+            throw new LimitedRightsException(String.format("You cannot delete the order with ID: %d, until it will not be cancelled ", id));
+
     }
 
     @Override

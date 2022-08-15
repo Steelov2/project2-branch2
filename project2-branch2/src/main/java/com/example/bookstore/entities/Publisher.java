@@ -26,7 +26,7 @@ public class Publisher {
     )
     private Long id;
     private String name;
-    @OneToMany(mappedBy = "publisher")
+    @OneToMany(cascade=CascadeType.REMOVE, mappedBy = "publisher")
     private List<Book> publishedBooksList;
 
     public PublisherRequestDto convertPublisherToRequestDto() {
