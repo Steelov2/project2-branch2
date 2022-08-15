@@ -3,6 +3,7 @@ package com.example.bookstore.services;
 import com.example.bookstore.dto.book.BookCreateDto;
 import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

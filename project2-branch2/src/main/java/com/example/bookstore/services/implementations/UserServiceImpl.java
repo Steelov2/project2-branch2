@@ -10,7 +10,7 @@ import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.services.UserService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,10 +20,15 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
+@Autowired
+    public UserServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 
     @Override
@@ -82,7 +87,7 @@ public class UserServiceImpl implements UserService {
 
             userRepo.saveAndFlush(
                     new User(
-                            userUpdateAndSaveUserDto.getId(),
+                            user2.getId(),
                             userUpdateAndSaveUserDto.getUsername(),
                             passwordEncoder.encode(userUpdateAndSaveUserDto.getPassword()),
                             user2.getRole(),
@@ -117,17 +122,22 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
         User user = adminUpdateAndSaveUserDto.convertAdminUpdatesUserDtoToEntity();
-        userRepo.findById(user.getId()).orElseThrow(() ->
+        User user2=userRepo.findById(user.getId()).orElseThrow(() ->
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", user.getId())));
+        if (userRepo.existsByUsername(user.getUsername()))
+            throw
+                    new AlreadyRegisteredException(String.format("The username %s is already in use", user.getUsername()));
 
         userRepo.save(
                 new User(
-                        adminUpdateAndSaveUserDto.getId(),
+                        user2.getId(),
                         adminUpdateAndSaveUserDto.getUsername(),
                         passwordEncoder.encode(adminUpdateAndSaveUserDto.getPassword()),
                         adminUpdateAndSaveUserDto.getRole(),
                         adminUpdateAndSaveUserDto.getIsBlocked()
                 ));
+
+
     }
 
     @Override

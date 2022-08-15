@@ -40,9 +40,9 @@ public class PublisherController {
         publisherService.deleteByID(id);
     }
     @PostMapping("/savePublisher")
-    public PublisherResponseDto savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
+    public void savePublisher(@RequestBody PublisherResponseDto publisherResponseDTO)
     {
-        return  publisherService.create(publisherResponseDTO);
+        publisherService.create(publisherResponseDTO);
     }
     @PutMapping("/updatePublisher")
     public void updatePublisher(@RequestBody PublisherResponseDto publisherResponseDto)    {

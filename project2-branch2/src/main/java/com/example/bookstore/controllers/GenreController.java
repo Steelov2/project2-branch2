@@ -41,8 +41,8 @@ public class GenreController {
         genreService.deleteByID(id);
     }
     @PostMapping("/saveGenre")
-    private GenreRequestDto saveBook(@RequestBody GenreRequestDto genreRequestDTO){
-        return genreService.create(genreRequestDTO);
+    private void saveBook(@RequestBody GenreRequestDto genreRequestDTO){
+        genreService.create(genreRequestDTO);
     }
     @PutMapping("/updateGenre")
     private void updateBook(@RequestBody GenreRequestDto genreRequestDTO)    {

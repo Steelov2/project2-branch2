@@ -4,9 +4,11 @@ import com.example.bookstore.dto.book.BookCreateDto;
 import com.example.bookstore.dto.book.BookRequestDto;
 import com.example.bookstore.dto.book.BookUpdateDto;
 import com.example.bookstore.entities.*;
+import com.example.bookstore.exceptions.LimitedRightsException;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.*;
 import com.example.bookstore.services.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class BookServiceImpl implements BookService {
 
     private final PublisherRepo publisherRepo;
 
-
+@Autowired
     public BookServiceImpl(BookRepo bookRepo, AuthorRepo authorRepo, GenreRepo genreRepo, PublisherRepo publisherRepo) {
         this.bookRepo = bookRepo;
         this.authorRepo = authorRepo;
@@ -44,9 +46,11 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteByID(Long id) {
-        if (bookRepo.existsById(id))
+        Book book = bookRepo.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException(String.format("The book with ID: %d is not found or already deleted", id)));
+        if(!book.getIsInStock())
             bookRepo.deleteById(id);
-        else throw new ResourceNotFoundException(String.format("The book with ID: %d is not found or already deleted", id));
+        else throw new LimitedRightsException(String.format("The book with ID: %d cannot be deleted", id));
     }
 
     @Override

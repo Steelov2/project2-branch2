@@ -2,6 +2,7 @@ package com.example.bookstore.services;
 
 import com.example.bookstore.dto.Publisher.PublisherRequestDto;
 import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

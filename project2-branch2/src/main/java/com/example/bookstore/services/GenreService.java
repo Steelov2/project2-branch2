@@ -1,6 +1,7 @@
 package com.example.bookstore.services;
 
 import com.example.bookstore.dto.genre.GenreRequestDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;

@@ -8,7 +8,6 @@ import com.example.bookstore.entities.Status;
 import com.example.bookstore.entities.User;
 import com.example.bookstore.exceptions.LimitedRightsException;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
-import com.example.bookstore.exceptions.UserIsBlockedException;
 import com.example.bookstore.repository.BookRepo;
 import com.example.bookstore.repository.OrderRepo;
 import com.example.bookstore.repository.UserRepo;
@@ -17,6 +16,7 @@ import com.example.bookstore.entities.Order;
 import com.example.bookstore.services.OrderService;
 import lombok.*;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -25,21 +25,24 @@ import java.util.Objects;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
 public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
 
     private final BookRepo bookRepo;
 
     private final UserRepo userRepo;
+    @Autowired
+    public OrderServiceImpl(OrderRepo orderRepo, BookRepo bookRepo, UserRepo userRepo) {
+        this.orderRepo = orderRepo;
+        this.bookRepo = bookRepo;
+        this.userRepo = userRepo;
+    }
 
 
     @Override
     public void create(OrderCreatDto orderCreatDto) throws Exception {
         int priceOfBooks = 0;
         List<Book> books = bookRepo.findAllByIdIn(orderCreatDto.getOrderedBooksIds());
-
-        Book book1 = new Book();
         User user = userRepo.findById(orderCreatDto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("There is no such user"));
         Order order = orderCreatDto.convertOrderCreateDtoToEntity(books, user);
         if(books.size()!=orderCreatDto.getOrderedBooksIds().size())
@@ -101,7 +104,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin) {
-        int priceOfBooks = 0;
         User user = userRepo.findById(orderUpdateForAdmin.getUserId()).orElseThrow(() -> new ResourceNotFoundException("No such user"));
         //получает то что я написал в постмане
         Order order = orderUpdateForAdmin.convertOrderUpdateForAdminToEntity(user);

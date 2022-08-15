@@ -362,8 +362,6 @@ paths:
       responses:
         '200':
           description: OK
-          schema:
-            $ref: '#/definitions/BookCreateDto'
         '201':
           description: Created
         '401':
@@ -431,8 +429,8 @@ paths:
     get:
       tags:
         - genre-controller
-      summary: getBookById
-      operationId: getBookByIdUsingGET_1
+      summary: getGenreById
+      operationId: getGenreByIdUsingGET_1
       produces:
         - '*/*'
       parameters:
@@ -456,8 +454,8 @@ paths:
     delete:
       tags:
         - genre-controller
-      summary: deleteBookById
-      operationId: deleteBookByIdUsingDELETE_1
+      summary: deleteGenreById
+      operationId: deleteGenreByIdUsingDELETE_1
       produces:
         - '*/*'
       parameters:
@@ -517,8 +515,6 @@ paths:
       responses:
         '200':
           description: OK
-          schema:
-            $ref: '#/definitions/GenreRequestDto'
         '201':
           description: Created
         '401':
@@ -619,34 +615,6 @@ paths:
             type: array
             items:
               $ref: '#/definitions/OrderRequestDto'
-        '401':
-          description: Unauthorized
-        '403':
-          description: Forbidden
-        '404':
-          description: Not Found
-  /api/v1/orders/saveOrder:
-    post:
-      tags:
-        - order-controller
-      summary: create
-      operationId: createUsingPOST
-      consumes:
-        - application/json
-      produces:
-        - '*/*'
-      parameters:
-        - in: body
-          name: orderCreatDto
-          description: orderCreatDto
-          required: true
-          schema:
-            $ref: '#/definitions/OrderCreatDto'
-      responses:
-        '200':
-          description: OK
-        '201':
-          description: Created
         '401':
           description: Unauthorized
         '403':
@@ -798,8 +766,6 @@ paths:
       responses:
         '200':
           description: OK
-          schema:
-            $ref: '#/definitions/PublisherResponseDto'
         '201':
           description: Created
         '401':
@@ -841,7 +807,7 @@ paths:
       tags:
         - order-user-controller
       summary: create
-      operationId: createUsingPOST_1
+      operationId: createUsingPOST
       consumes:
         - application/json
       produces:
@@ -1008,8 +974,8 @@ paths:
     get:
       tags:
         - user-controller
-      summary: getAuthorByUserName
-      operationId: getAuthorByUserNameUsingGET
+      summary: getUserByUserName
+      operationId: getUserByUserNameUsingGET
       produces:
         - '*/*'
       parameters:

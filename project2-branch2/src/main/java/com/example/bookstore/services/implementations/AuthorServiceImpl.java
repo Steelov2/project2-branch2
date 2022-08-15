@@ -8,10 +8,9 @@ import com.example.bookstore.repository.AuthorRepo;
 import com.example.bookstore.repository.GenreRepo;
 import com.example.bookstore.entities.Author;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
-import com.example.bookstore.repository.UserRepo;
 import com.example.bookstore.services.AuthorService;
-import com.example.bookstore.services.BookService;
-import com.example.bookstore.services.GenreService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,19 +24,20 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepo authorRepo;
     private final GenreRepo genreRepo;
 
+
+
+    @Autowired
+    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo) {
+        this.authorRepo = authorRepo;
+        this.genreRepo = genreRepo;
+
+    }
     public void displayAuthorsGenresLit(Author author) {
         for (Book book : author.getAuthorsBooksList()) {
             for (Genre genre : book.getBooksGenreList()) {
                 author.getAuthorsGenresList().add(genre);
             }
         }
-    }
-
-
-    public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo) {
-        this.authorRepo = authorRepo;
-        this.genreRepo = genreRepo;
-
     }
 
     @Override
@@ -81,11 +81,7 @@ public class AuthorServiceImpl implements AuthorService {
             throw new ResourceNotFoundException(String.format("The genre %s is not found or doesn't exist", name));
 
         return authorRepo.findAllByGenre(name).stream().map(Author::convertAuthorToResponseDto).collect(Collectors.toSet());
-//            Второй способ получить автора по жанру
-//            List<Author> authorList = new ArrayList<>();
-//            bookService.getAuthorByGenreName1(name)
-//                    .forEach(book -> authorList.addAll(book.getAuthorList().stream().toList()));
-//            return authorList.stream().map(Author::convertAuthorToResponseDto).collect(Collectors.toSet());
+
 
     }
 

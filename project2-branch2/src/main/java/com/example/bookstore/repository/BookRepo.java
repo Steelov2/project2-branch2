@@ -16,9 +16,20 @@ public interface BookRepo extends JpaRepository<Book,Long> {
                  genre g
             WHERE b.id = bg.book_id
               and bg.genre_id = g.id
-              and g.name  in :genreName
+              and g.name  in lower(:genreName)
 """,nativeQuery = true)
     List<Book> findAllByGenre(List<String> genreName);
+    @Query(value="""
+            SELECT b.*
+            FROM book b,
+                 book_genre bg,
+                 genre g
+            WHERE b.id = bg.book_id
+              and bg.genre_id = g.id
+              and g.id = :genreId
+""",nativeQuery = true)
+    List<Book> findByGenreId(Long genreId);
+
 
     Boolean existsByNameIsContainingIgnoreCase(String name);
     List<Book> findAllByIdIn(List<Long> ids);
