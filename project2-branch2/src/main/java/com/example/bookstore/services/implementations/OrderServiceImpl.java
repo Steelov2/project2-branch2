@@ -114,6 +114,8 @@ public class OrderServiceImpl implements OrderService {
         Order existingOrder = orderRepo.findById(order.getId()).orElseThrow(() -> new ResourceNotFoundException("There is no such order"));
         if (existingOrder.getStatus() == Status.CANCELLED)
             throw new LimitedRightsException("This order is cancelled, you cannot update it");
+        else if(user.getIsBlocked())
+            throw new LimitedRightsException("This user is blocked, you cannot the order it");
         else {
             order1.setStatus(order.getStatus());
             order1.setOrderedBooks(existingOrder.getOrderedBooks());
