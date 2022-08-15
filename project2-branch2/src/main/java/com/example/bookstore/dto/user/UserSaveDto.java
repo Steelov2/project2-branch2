@@ -1,4 +1,4 @@
-package com.example.bookstore.dto.User;
+package com.example.bookstore.dto.user;
 
 import com.example.bookstore.entities.Role;
 import lombok.Data;

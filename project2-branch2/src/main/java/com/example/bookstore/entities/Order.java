@@ -7,13 +7,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.*;
+
 @Entity
 @Table(name = "orders")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Order {
     @Id
     @SequenceGenerator(
@@ -39,7 +39,7 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public OrderRequestDto convertOrderToDto(){
+    public OrderRequestDto convertOrderToDto() {
         OrderRequestDto orderRequestDto = new OrderRequestDto();
         orderRequestDto.setId(this.getId());
         orderRequestDto.setUserId(this.getUser().getId());
@@ -53,7 +53,7 @@ public class Order {
         return orderRequestDto;
     }
 
-    public OrderCreatDto convertOrderToCrateDto(){
+    public OrderCreatDto convertOrderToCrateDto() {
         OrderCreatDto orderCreatDto = new OrderCreatDto();
         orderCreatDto.setId(this.getId());
         orderCreatDto.setUserId(this.getUser().getId());

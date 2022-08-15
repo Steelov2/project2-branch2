@@ -1,14 +1,11 @@
-package com.example.bookstore.dto.User;
+package com.example.bookstore.dto.user;
 
 import com.example.bookstore.entities.Role;
 import com.example.bookstore.entities.User;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class AdminUpdateAndSaveUserDto {
     private Long id;
     private String username;

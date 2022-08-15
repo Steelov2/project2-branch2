@@ -1,8 +1,8 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
-import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.dto.User.UserResponseDto;
+import com.example.bookstore.dto.user.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.dto.user.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.user.UserResponseDto;
 import com.example.bookstore.entities.Role;
 import com.example.bookstore.exceptions.AlreadyRegisteredException;
 import com.example.bookstore.exceptions.LimitedRightsException;
@@ -24,7 +24,8 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
-@Autowired
+
+    @Autowired
     public UserServiceImpl(UserRepo userRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
@@ -83,7 +84,7 @@ public class UserServiceImpl implements UserService {
         User user = userUpdateAndSaveUserDto.convertUserUpdateAndSaveUserDtoToEntity();
         User user2 = userRepo.findById(user.getId()).orElseThrow(() ->
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", user.getId())));
-        if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user2.getUsername())){
+        if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user2.getUsername())) {
 
             userRepo.saveAndFlush(
                     new User(
@@ -93,12 +94,10 @@ public class UserServiceImpl implements UserService {
                             user2.getRole(),
                             user2.getIsBlocked())
             );
-        }
-     else throw new LimitedRightsException("You are not allowed to update this user");
+        } else throw new LimitedRightsException("You are not allowed to update this user");
 
 
-
-}
+    }
 
     @Override
     public void createForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
@@ -122,7 +121,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateForAdmin(AdminUpdateAndSaveUserDto adminUpdateAndSaveUserDto) {
         User user = adminUpdateAndSaveUserDto.convertAdminUpdatesUserDtoToEntity();
-        User user2=userRepo.findById(user.getId()).orElseThrow(() ->
+        User user2 = userRepo.findById(user.getId()).orElseThrow(() ->
                 new ResourceNotFoundException(String.format("The user with ID: %d is not found or doesn't exist", user.getId())));
         if (userRepo.existsByUsername(user.getUsername()))
             throw

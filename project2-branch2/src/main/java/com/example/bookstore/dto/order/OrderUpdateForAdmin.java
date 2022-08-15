@@ -6,11 +6,6 @@ import com.example.bookstore.entities.User;
 import lombok.*;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class OrderUpdateForAdmin {
     private Long id;
     private Long userId;

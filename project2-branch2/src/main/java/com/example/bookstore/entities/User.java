@@ -1,7 +1,7 @@
 package com.example.bookstore.entities;
 
-import com.example.bookstore.dto.User.UserUpdateAndSaveUserDto;
-import com.example.bookstore.dto.User.UserResponseDto;
+import com.example.bookstore.dto.user.UserUpdateAndSaveUserDto;
+import com.example.bookstore.dto.user.UserResponseDto;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,9 +14,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @AllArgsConstructor
-//@RequiredArgsConstructor
 @NoArgsConstructor
-@ToString
 public class User implements UserDetails {
     @Id
     @SequenceGenerator(

@@ -31,6 +31,7 @@ public class OrderServiceImpl implements OrderService {
     private final BookRepo bookRepo;
 
     private final UserRepo userRepo;
+
     @Autowired
     public OrderServiceImpl(OrderRepo orderRepo, BookRepo bookRepo, UserRepo userRepo) {
         this.orderRepo = orderRepo;
@@ -45,7 +46,7 @@ public class OrderServiceImpl implements OrderService {
         List<Book> books = bookRepo.findAllByIdIn(orderCreatDto.getOrderedBooksIds());
         User user = userRepo.findById(orderCreatDto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("There is no such user"));
         Order order = orderCreatDto.convertOrderCreateDtoToEntity(books, user);
-        if(books.size()!=orderCreatDto.getOrderedBooksIds().size())
+        if (books.size() != orderCreatDto.getOrderedBooksIds().size())
             throw new ResourceNotFoundException("There is no such book with ID");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             for (Book book : order.getOrderedBooks()) {
@@ -75,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
         //он вытаскивает из репы
         Order existingOrder = orderRepo.findById(order.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("There is no order with ID: %d", order.getId())));
-        if(books.size()!=orderUpdateForUserDto.getOrderedBookIds().size())
+        if (books.size() != orderUpdateForUserDto.getOrderedBookIds().size())
             throw new ResourceNotFoundException("There is no such book with ID");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             if (existingOrder.getStatus() == Status.CANCELLED)
@@ -88,14 +89,14 @@ public class OrderServiceImpl implements OrderService {
                 }
                 if (priceOfBooks <= 10000) {
 
-                        order1.setOrderedBooks(order.getOrderedBooks());
+                    order1.setOrderedBooks(order.getOrderedBooks());
 
-                        order1.setUser(existingOrder.getUser());
-                        order1.setId(existingOrder.getId());
-                        order1.setStatus(existingOrder.getStatus());
-                        order1.setCreatedAt(existingOrder.getCreatedAt());
+                    order1.setUser(existingOrder.getUser());
+                    order1.setId(existingOrder.getId());
+                    order1.setStatus(existingOrder.getStatus());
+                    order1.setCreatedAt(existingOrder.getCreatedAt());
 
-                        orderRepo.save(order1);
+                    orderRepo.save(order1);
 
                 } else throw new LimitedRightsException("You have reached your purchase limit of 10000 ");
             }
@@ -114,12 +115,12 @@ public class OrderServiceImpl implements OrderService {
         if (existingOrder.getStatus() == Status.CANCELLED)
             throw new LimitedRightsException("This order is cancelled, you cannot update it");
         else {
-        order1.setStatus(order.getStatus());
-        order1.setOrderedBooks(existingOrder.getOrderedBooks());
-        order1.setUser(existingOrder.getUser());
-        order1.setId(existingOrder.getId());
-        order1.setCreatedAt(existingOrder.getCreatedAt());
-        orderRepo.save(order1);
+            order1.setStatus(order.getStatus());
+            order1.setOrderedBooks(existingOrder.getOrderedBooks());
+            order1.setUser(existingOrder.getUser());
+            order1.setId(existingOrder.getId());
+            order1.setCreatedAt(existingOrder.getCreatedAt());
+            orderRepo.save(order1);
         }
 
 

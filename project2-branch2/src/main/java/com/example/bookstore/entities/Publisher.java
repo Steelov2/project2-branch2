@@ -3,8 +3,8 @@ package com.example.bookstore.entities;
 import javax.persistence.*;
 import java.util.List;
 
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
-import com.example.bookstore.dto.Publisher.PublisherRequestDto;
+import com.example.bookstore.dto.publisher.PublisherResponseDto;
+import com.example.bookstore.dto.publisher.PublisherRequestDto;
 import lombok.*;
 
 @Entity
@@ -13,7 +13,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Publisher {
     @Id
     @SequenceGenerator(
@@ -44,7 +43,6 @@ public class Publisher {
         publisherResponseDto.setId(this.getId());
         return publisherResponseDto;
     }
-
 
 
 }

@@ -10,11 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+
 public class OrderCreatDto {
     private Long id;
     private Long userId;

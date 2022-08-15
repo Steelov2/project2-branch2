@@ -16,13 +16,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
-@Getter
-@Setter
-//@RequiredArgsConstructor
-//@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-
 public class AuthorRequestDto {
     private Long id;
     private String surname;

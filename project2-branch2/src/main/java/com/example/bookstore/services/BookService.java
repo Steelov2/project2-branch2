@@ -10,14 +10,19 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface BookService {
-     List<BookRequestDto> getAll();
-     Optional<BookRequestDto> getByID(Long id);
-     void deleteByID(Long id);
-     void create(BookCreateDto bookCreateDto);
-     void update(BookUpdateDto bookUpdateDto);
-     List<BookRequestDto> getByNameContaining(String name);
-     Set<BookRequestDto> getByGenreName(List<String> genreName);
+    List<BookRequestDto> getAll();
 
+    Optional<BookRequestDto> getByID(Long id);
+
+    void deleteByID(Long id);
+
+    void create(BookCreateDto bookCreateDto);
+
+    void update(BookUpdateDto bookUpdateDto);
+
+    List<BookRequestDto> getByNameContaining(String name);
+
+    Set<BookRequestDto> getByGenreName(List<String> genreName);
 
 
 }

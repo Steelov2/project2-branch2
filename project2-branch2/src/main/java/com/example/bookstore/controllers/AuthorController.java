@@ -3,6 +3,8 @@ package com.example.bookstore.controllers;
 import com.example.bookstore.dto.author.AuthorRequestDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.services.AuthorService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,41 +25,34 @@ public class AuthorController {
         this.authorService = authorService;
 
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @GetMapping("/authorsList")
     public List<AuthorRequestDto> getAll() {
         return authorService.getAll();
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @GetMapping("/author/{authorID}")
     public Optional<AuthorRequestDto> getAuthorById(@PathVariable("authorID") Long id) {
         return authorService.getByID(id);
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @GetMapping("/author/genreName/{genreName}")
     public Set<AuthorResponseDto> getAuthorByGenreName(@PathVariable("genreName") List<String> name) {
         return authorService.getAuthorsByGenreName(name);
 
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @GetMapping ("/author/authorName")
     @ResponseBody
     public List<AuthorRequestDto> getAuthorByFullName(@RequestParam(required = false) String surname, @RequestParam(required = false) String name, @RequestParam(required = false) String patronymic) {
         return authorService.getByFullNameName(surname ,name, patronymic);
     }
-    ///Bolatov Muslim
-//    @PreAuthorize("principal.accountNonLocked")
+
     @DeleteMapping("/author/{authorID}")
     public void deleteAuthorById(@PathVariable("authorID") Long id) {
         authorService.deleteByID(id);
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @PostMapping("/saveAuthor")
     ResponseEntity<Void>saveAuthor(@RequestBody AuthorResponseDto authorResponseDto) {
         authorService.create(authorResponseDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
-//    @PreAuthorize("principal.accountNonLocked")
     @PutMapping("/updateAuthor")
     public void updateAuthor(@RequestBody AuthorResponseDto authorResponseDto) throws Throwable {
 

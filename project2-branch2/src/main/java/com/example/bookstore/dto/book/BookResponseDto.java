@@ -7,11 +7,7 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
+
 
 public class BookResponseDto {
     private Long id;

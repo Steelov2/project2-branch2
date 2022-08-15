@@ -1,9 +1,9 @@
 package com.example.bookstore.controllers;
 
-import com.example.bookstore.dto.User.AdminUpdateAndSaveUserDto;
-import com.example.bookstore.dto.User.UserResponseDto;
+import com.example.bookstore.dto.user.AdminUpdateAndSaveUserDto;
+import com.example.bookstore.dto.user.UserResponseDto;
 import com.example.bookstore.services.UserService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +11,12 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
-@AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
 
     @GetMapping("/usersList")
@@ -27,7 +30,7 @@ public class UserController {
         return userService.getByID(id);
     }
     @GetMapping("/user/userName/{userName}")
-    public List<UserResponseDto> getAuthorByUserName(@PathVariable("userName") String username){
+    public List<UserResponseDto> getUserByUserName(@PathVariable("userName") String username){
         return userService.getByUsernameContaining(username);
     }
     @DeleteMapping("/user/{userID}")

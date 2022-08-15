@@ -56,21 +56,15 @@ public class Author {
     private Set<Genre> authorsGenresList;
 
 
-
-
-
-
-
-
-
-    public Author(String surname, String name, String patronymic, LocalDate dateOfBirth) {
+    public Author(String surname,
+                  String name,
+                  String patronymic,
+                  LocalDate dateOfBirth) {
         this.surname = surname;
         this.name = name;
         this.patronymic = patronymic;
         this.dateOfBirth = dateOfBirth;
     }
-
-
 
 
     public AuthorResponseDto convertAuthorToResponseDto() {
@@ -95,15 +89,6 @@ public class Author {
         authorRequestDto.setDateOfBirth(this.getDateOfBirth());
         return authorRequestDto;
     }
-
-
-
-
-
-
-
-
-
 
 
 }

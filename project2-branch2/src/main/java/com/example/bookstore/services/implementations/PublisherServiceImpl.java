@@ -1,7 +1,7 @@
 package com.example.bookstore.services.implementations;
 
-import com.example.bookstore.dto.Publisher.PublisherRequestDto;
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import com.example.bookstore.dto.publisher.PublisherRequestDto;
+import com.example.bookstore.dto.publisher.PublisherResponseDto;
 import com.example.bookstore.exceptions.ResourceNotFoundException;
 import com.example.bookstore.repository.PublisherRepo;
 
@@ -17,7 +17,7 @@ import java.util.Optional;
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepo publisherRepo;
 
-@Autowired
+    @Autowired
     public PublisherServiceImpl(PublisherRepo publisherRepo) {
         this.publisherRepo = publisherRepo;
     }

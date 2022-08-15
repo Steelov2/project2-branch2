@@ -3,6 +3,7 @@ package com.example.bookstore.entities;
 import com.example.bookstore.dto.genre.GenreRequestDto;
 
 import javax.persistence.*;
+
 import lombok.*;
 
 @Entity
@@ -11,12 +12,11 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Genre {
     @Id
     @SequenceGenerator(
-            name="genre_sequence",
-            sequenceName="genre_sequence",
+            name = "genre_sequence",
+            sequenceName = "genre_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
@@ -29,13 +29,11 @@ public class Genre {
     private String genreName;
 
     public GenreRequestDto convertGenreRequestToDto() {
-        GenreRequestDto genreRequestDto =new GenreRequestDto();
+        GenreRequestDto genreRequestDto = new GenreRequestDto();
         genreRequestDto.setName(this.getGenreName());
         genreRequestDto.setId(this.getId());
         return genreRequestDto;
     }
-
-
 
 
 }

@@ -25,13 +25,13 @@ public class AuthorServiceImpl implements AuthorService {
     private final GenreRepo genreRepo;
 
 
-
     @Autowired
     public AuthorServiceImpl(AuthorRepo authorRepo, GenreRepo genreRepo) {
         this.authorRepo = authorRepo;
         this.genreRepo = genreRepo;
 
     }
+
     public void displayAuthorsGenresLit(Author author) {
         for (Book book : author.getAuthorsBooksList()) {
             for (Genre genre : book.getBooksGenreList()) {

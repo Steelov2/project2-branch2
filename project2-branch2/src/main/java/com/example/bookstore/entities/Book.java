@@ -13,12 +13,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Book {
     @Id
     @SequenceGenerator(
-            name="book_sequence",
-            sequenceName="book_sequence",
+            name = "book_sequence",
+            sequenceName = "book_sequence",
             allocationSize = 1
     )
     @GeneratedValue(
@@ -49,7 +48,6 @@ public class Book {
     private Boolean isInStock;
 
 
-
     public BookRequestDto convertBookToBookRequestDto() {
         BookRequestDto bookRequestDto = new BookRequestDto();
         bookRequestDto.setName(this.getName());
@@ -74,6 +72,7 @@ public class Book {
         bookResponseDto.setYearOfIssue(this.getYearOfIssue());
         return bookResponseDto;
     }
+
     public BookDto convertBookToDto() {
         BookDto bookDto = new BookDto();
         bookDto.setName(this.getName());
@@ -96,7 +95,9 @@ public class Book {
         bookUpdateDto.setNumberOfPages(this.getNumberOfPages());
         bookUpdateDto.setYearOfIssue(this.getYearOfIssue());
         return bookUpdateDto;
-    } public BookCreateDto convertBookToCreateDto() {
+    }
+
+    public BookCreateDto convertBookToCreateDto() {
         BookCreateDto bookCreateDto = new BookCreateDto();
         bookCreateDto.setName(this.getName());
         bookCreateDto.setId(this.getId());
@@ -108,7 +109,6 @@ public class Book {
         bookCreateDto.setYearOfIssue(this.getYearOfIssue());
         return bookCreateDto;
     }
-
 
 
 }

@@ -3,7 +3,7 @@ package com.example.bookstore.dto.book;
 
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.dto.genre.GenreRequestDto;
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
+import com.example.bookstore.dto.publisher.PublisherResponseDto;
 import com.example.bookstore.entities.Book;
 import lombok.*;
 
@@ -12,11 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 
 public class BookRequestDto {
     private Long id;

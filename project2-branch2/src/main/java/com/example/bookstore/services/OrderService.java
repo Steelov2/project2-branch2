@@ -13,9 +13,12 @@ public interface OrderService {
     void create(OrderCreatDto orderCreatDto) throws Exception;
 
     void updateForUser(OrderUpdateForUserDto orderUpdateForUserDto);
+
     void updateForAdmin(OrderUpdateForAdmin orderUpdateForAdmin);
 
     void deleteById(Long id);
+
     List<OrderRequestDto> getAll();
+
     Optional<OrderRequestDto> getByID(Long id);
 }

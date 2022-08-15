@@ -1,18 +1,14 @@
 package com.example.bookstore.dto.book;
 
-import com.example.bookstore.dto.Publisher.PublisherResponseDto;
 import com.example.bookstore.dto.author.AuthorResponseDto;
 import com.example.bookstore.dto.genre.GenreRequestDto;
 import com.example.bookstore.entities.Book;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class BookDto {
     private Long id;
     private Integer price;

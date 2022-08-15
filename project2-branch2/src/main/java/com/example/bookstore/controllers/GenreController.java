@@ -24,7 +24,7 @@ public class GenreController {
         return  genreService.getAll();
     }
     @GetMapping("/genre/{genreID}")
-    public Optional<GenreRequestDto> getBookById(@PathVariable("genreID") Long id)
+    public Optional<GenreRequestDto> getGenreById(@PathVariable("genreID") Long id)
     {
         return genreService.getByID(id);
     }
@@ -36,16 +36,16 @@ public class GenreController {
 
 
     @DeleteMapping("/genre/{genreID}")
-    private void deleteBookById(@PathVariable("genreID") Long id)
+    private void deleteGenreById(@PathVariable("genreID") Long id)
     {
         genreService.deleteByID(id);
     }
     @PostMapping("/saveGenre")
-    private void saveBook(@RequestBody GenreRequestDto genreRequestDTO){
+    private void saveGenre(@RequestBody GenreRequestDto genreRequestDTO){
         genreService.create(genreRequestDTO);
     }
     @PutMapping("/updateGenre")
-    private void updateBook(@RequestBody GenreRequestDto genreRequestDTO)    {
+    private void updateGenre(@RequestBody GenreRequestDto genreRequestDTO)    {
 
         genreService.update(genreRequestDTO);
     }

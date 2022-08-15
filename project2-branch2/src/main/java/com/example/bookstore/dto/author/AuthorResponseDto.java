@@ -6,12 +6,6 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Data
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-
 public class AuthorResponseDto {
     private Long id;
     private String surname;
@@ -19,15 +13,7 @@ public class AuthorResponseDto {
     private String patronymic;
     private LocalDate dateOfBirth;
 
-    public AuthorResponseDto(String surname,
-                             String name,
-                             String patronymic,
-                             LocalDate dateOfBirth) {
-        this.surname = surname;
-        this.name = name;
-        this.patronymic = patronymic;
-        this.dateOfBirth = dateOfBirth;
-    }
+
 
     public Author convertAuthorRequestDtoToEntity() {
         Author author = new Author();
