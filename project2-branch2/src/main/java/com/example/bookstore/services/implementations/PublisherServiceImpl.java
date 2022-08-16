@@ -37,7 +37,6 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public void deleteByID(Long id) {
-
         if (publisherRepo.existsById(id))
             publisherRepo.deleteById(id);
         else throw

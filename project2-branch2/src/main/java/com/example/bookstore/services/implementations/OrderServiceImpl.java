@@ -46,12 +46,12 @@ public class OrderServiceImpl implements OrderService {
         User user = userRepo.findById(orderCreatDto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("There is no such user"));
         Order order = orderCreatDto.convertOrderCreateDtoToEntity(books, user);
         if (books.size() != orderCreatDto.getOrderedBooksIds().size())
-            throw new ResourceNotFoundException("There is no such book with ID");
+            throw new ResourceNotFoundException("There is no such book(s)");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             for (Book book : order.getOrderedBooks()) {
                 priceOfBooks += book.getPrice();
                 if (!book.getIsInStock())
-                    throw new ResourceNotFoundException("No such book in stock");
+                    throw new ResourceNotFoundException("No such book(s) in stock");
             }
             if (priceOfBooks <= 10000)
                 orderRepo.save(order).convertOrderToCrateDto();
@@ -76,15 +76,17 @@ public class OrderServiceImpl implements OrderService {
         Order existingOrder = orderRepo.findById(order.getId())
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("There is no order with ID: %d", order.getId())));
         if (books.size() != orderUpdateForUserDto.getOrderedBookIds().size())
-            throw new ResourceNotFoundException("There is no such book with ID");
+            throw new ResourceNotFoundException("There is no such book(s)");
         if (Objects.equals(SecurityContextHolder.getContext().getAuthentication().getName(), user.getUsername())) {
             if (existingOrder.getStatus() == Status.CANCELLED)
                 throw new LimitedRightsException("This order is cancelled, you cannot update it");
+            else if(existingOrder.getStatus() == Status.PERFORMED)
+                throw new LimitedRightsException("This order is performed, you cannot update it");
             else {
                 for (Book book : order.getOrderedBooks()) {
                     priceOfBooks += book.getPrice();
                     if (!book.getIsInStock())
-                        throw new ResourceNotFoundException("No such book in stock");
+                        throw new ResourceNotFoundException("No such book(s) in stock");
                 }
                 if (priceOfBooks <= 10000) {
 
@@ -115,8 +117,10 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new ResourceNotFoundException("There is no such order"));
         if (existingOrder.getStatus() == Status.CANCELLED)
             throw new LimitedRightsException("This order is cancelled, you cannot update it");
-        else if(user.getIsBlocked())
-            throw new LimitedRightsException("This user is blocked, you cannot the order it");
+        else if (existingOrder.getStatus() == Status.PERFORMED) {
+            throw new LimitedRightsException("This order is performed, you cannot update it");
+        } else if(user.getIsBlocked())
+            throw new LimitedRightsException("This user is blocked, you cannot update the order it");
         else {
             order1.setStatus(order.getStatus());
             order1.setOrderedBooks(existingOrder.getOrderedBooks());
@@ -135,10 +139,11 @@ public class OrderServiceImpl implements OrderService {
         Order existingOrder = orderRepo.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("The order with ID: %d is not found or already deleted", id)));
 
-        if (existingOrder.getStatus()==Status.CANCELLED)
+        if (existingOrder.getStatus()==Status.CANCELLED
+                ||existingOrder.getStatus()==Status.PERFORMED)
             orderRepo.deleteById(id);
         else
-            throw new LimitedRightsException(String.format("You cannot delete the order with ID: %d, until it will not be cancelled ", id));
+            throw new LimitedRightsException(String.format("You cannot delete the order with ID: %d, until it will not be cancelled or performed", id));
 
     }
 
