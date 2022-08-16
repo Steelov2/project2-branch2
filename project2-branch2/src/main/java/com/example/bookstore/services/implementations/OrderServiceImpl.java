@@ -133,7 +133,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteById(Long id) {
         Order existingOrder = orderRepo.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("The order with ID: %d is not found or already deleted", id));
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("The order with ID: %d is not found or already deleted", id)));
 
         if (existingOrder.getStatus()==Status.CANCELLED)
             orderRepo.deleteById(id);
